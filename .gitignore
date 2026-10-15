@@ -1,0 +1,66 @@
+# Dependencies
+/node_modules/
+/.pnp
+.pnp.*
+.yarn/install-state.gz
+
+# Test output
+/coverage/
+/test-results/
+/playwright-report/
+
+# Build output and caches
+/.next/
+/out/
+
+/build/
+/dist/
+/.cache/
+/.turbo/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Private keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Local environment variables
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+
+# Hosting metadata
+.vercel/
+.netlify/
+
+# Generated TypeScript files
+*.tsbuildinfo
+next-env.d.ts
+
+# Local agent and cloud configuration
+/.aws/
+/.codex/
+/.agents/
+
+# Editor and temporary files
+/.idea/
+/.vscode/
+*.swp
+*.swo
+*~
+*.tmp
+*.temp
