@@ -1,6 +1,6 @@
 "use client";
 
-import grainImage from "@/assets/images/grain.jpg";
+import grainImage from "@/assets/images/grain.webp";
 import { SpeakerWaveIcon, SpeakerXMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
@@ -53,7 +53,7 @@ export const AudioPlayer = () => {
 				aria-hidden="true"
 				onVolumeChange={() => setIsMuted(audioRef.current?.muted ?? false)}
 			>
-				<source src="/audio/Divine%20Throne%20OST.mp3" type="audio/mpeg" />
+				<source src="/audio/divine-throne-ost.mp3" type="audio/mpeg" />
 			</audio>
 			<motion.button
 				type="button"

@@ -8,7 +8,7 @@ Personal portfolio of **Rakan Fadhil Prayata**, an IT graduate from Universitas 
 
 - Responsive single-page layout with scroll-aware navigation.
 - Animated introduction, section decorations, and scrolling tech stack.
-- Professional experience timeline with detail dialogs.
+- Professional experience timeline with keyboard-accessible detail dialogs.
 - Project filtering for web development, data science/AI, networking, and videography.
 - Shared fullscreen image viewer for projects and certificates, with keyboard navigation.
 - Draggable certificate carousel with automatic scrolling.
@@ -50,6 +50,9 @@ Open [localhost:3000](http://localhost:3000). No environment variables, database
 | `npm run format`       | Format source code, configuration, and documentation. |
 | `npm run format:check` | Check formatting without changing files.              |
 
+Next.js uses the default `.next/` directory for development and production build output.
+Stop the development server before running `npm run build`.
+
 Before committing, run:
 
 ```sh
@@ -63,16 +66,16 @@ npm run build
 
 ```text
 public/
-  audio/          Background audio
-  certificate/    Certificate images
-  cv/             Downloadable curriculum vitae
-  robots.txt      Crawler directives
+  audio/             Background audio
+  certificates/      Certificate images
+  curriculum-vitae/  Downloadable curriculum vitae
+  robots.txt         Crawler directives
 src/
   app/            Page composition, layout, metadata, and global CSS
   assets/
     icons/        SVG icons imported as React components
     images/       Profile, project, company, and decorative images
-  components/     Reusable cards, headers, image viewers, and controls
+  components/     Reusable cards, headers, dialogs, image viewers, and controls
   sections/       Navbar, Hero, About, Experiences, Projects, Certificates, Footer
 next.config.mjs   Section route rewrites and SVG loader configuration
 tailwind.config.ts
@@ -80,15 +83,19 @@ tailwind.config.ts
 
 ## Updating content
 
-- **Introduction and CV:** edit `src/sections/Hero.tsx`; the PDF lives at `public/cv/curriculum-vitae.pdf`.
+- **Introduction and CV:** edit `src/sections/Hero.tsx`; the PDF lives at `public/curriculum-vitae/CV_Rakan Fadhil Prayata.pdf`.
 - **Biography and tech stack:** edit `src/sections/About.tsx`.
 - **Experience:** update the `experiences` array in `src/sections/Experiences.tsx`.
 - **Projects:** update `portfolioProjects` in `src/sections/Projects.tsx` and place project images in `src/assets/images/`.
-- **Certificates:** add images to `public/certificate/` and update the `certificates` array in `src/sections/Certificates.tsx`. Array order controls display order.
+- **Certificates:** add images to `public/certificates/` and update the `certificates` array in `src/sections/Certificates.tsx`. Array order controls display order.
 - **Contact links:** edit `src/sections/Hero.tsx` and `src/sections/Footer.tsx`.
 - **Metadata and theme:** edit `src/app/layout.tsx`, `src/app/globals.css`, and `tailwind.config.ts`.
 
 All content is stored locally. Keep existing section IDs and their mappings in `Navbar.tsx` and `next.config.mjs` synchronized when changing navigation.
+
+Use lowercase, hyphen-separated asset filenames and update their imports or public URLs when renaming them. The CV keeps the filename `CV_Rakan Fadhil Prayata.pdf`.
+
+Use the existing WebP versions for image imports and certificate URLs. Keep the original PNG, JPG, and JPEG files alongside them.
 
 ## Routes and deployment
 

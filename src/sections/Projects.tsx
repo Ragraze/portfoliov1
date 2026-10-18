@@ -1,25 +1,27 @@
 "use client";
-import portfolioImage from "@/assets/images/portfolio.png";
-import homeServerTopology from "@/assets/images/topologi-homeserver-portfolio.png";
-import sentimentAnalysisImage from "@/assets/images/sentimen-analysis.png";
-import twiLandingPage from "@/assets/images/landingpagetwi.png";
-import twnsLandingPage from "@/assets/images/landingpagetwns.png";
-import inductionImage from "@/assets/images/induction.png";
+
+import portfolioImage from "@/assets/images/portfolio.webp";
+import homeServerTopology from "@/assets/images/home-server-topology.webp";
+import sentimentAnalysisImage from "@/assets/images/sentiment-analysis.webp";
+import twiLandingPage from "@/assets/images/tri-wall-indonesia-landing-page.webp";
+import twnsLandingPage from "@/assets/images/tri-wall-natura-surabaya-landing-page.webp";
+import inductionImage from "@/assets/images/safety-induction.webp";
 import Image from "next/image";
 import CheckCircleIcon from "@/assets/icons/check-circle.svg";
 import ArrowUpRightIcon from "@/assets/icons/arrow-up-right.svg";
-import NextjsIcon from "@/assets/icons/nextdotjs.svg";
+import NextjsIcon from "@/assets/icons/nextjs.svg";
 import ReactIcon from "@/assets/icons/react.svg";
-import TailwindCssIcon from "@/assets/icons/tailwind-css-brands-solid-full.svg";
+import FramerIcon from "@/assets/icons/framer.svg";
+import TailwindCssIcon from "@/assets/icons/tailwind-css.svg";
 import HTMLIcon from "@/assets/icons/html5.svg";
 import CssIcon from "@/assets/icons/css3.svg";
-import JavascriptIcon from "@/assets/icons/square-js.svg";
-import WordpressIcon from "@/assets/icons/wordpress-brands-solid-full.svg";
+import JavascriptIcon from "@/assets/icons/javascript.svg";
+import TypescriptIcon from "@/assets/icons/typescript.svg";
+import WordpressIcon from "@/assets/icons/wordpress.svg";
 import PythonIcon from "@/assets/icons/python.svg";
-import CloudflareIcon from "@/assets/icons/cloudflare-brands-solid-full.svg";
-import DebianIcon from "@/assets/icons/debian.svg";
+import CloudflareIcon from "@/assets/icons/cloudflare.svg";
+import LinuxIcon from "@/assets/icons/linux.svg";
 import GmailIcon from "@/assets/icons/gmail.svg";
-import GithubIcon from "@/assets/icons/github.svg";
 import StarIcon from "@/assets/icons/star.svg";
 import VegasIcon from "@/assets/icons/vegas.svg";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -31,14 +33,15 @@ const portfolioProjects = [
 	{
 		company: "Personal Project",
 		year: "2026",
-		title: "Web Portfolio 1.0",
+		title: "Portfoliov1",
 		category: "App/Website",
 		techStack: [
 			{ title: "HTML", iconType: HTMLIcon },
 			{ title: "CSS", iconType: CssIcon },
-			{ title: "JavaScript", iconType: JavascriptIcon },
+			{ title: "TypeScript", iconType: TypescriptIcon },
 			{ title: "Next.js", iconType: NextjsIcon },
 			{ title: "ReactJS", iconType: ReactIcon },
+			{ title: "Framer Motion", iconType: FramerIcon },
 			{ title: "Tailwind CSS", iconType: TailwindCssIcon },
 		],
 		results: [
@@ -47,7 +50,6 @@ const portfolioProjects = [
 			{ title: "Smooth animations and category-based project filtering" },
 		],
 		link: "https://rakanfadhil.com",
-		githubLink: "",
 		image: portfolioImage,
 	},
 	{
@@ -67,7 +69,6 @@ const portfolioProjects = [
 			{ title: "SEO optimization and multilingual content management" },
 		],
 		link: "https://tri-wallindonesia.co.id",
-		githubLink: "",
 		image: twiLandingPage,
 	},
 	{
@@ -87,7 +88,6 @@ const portfolioProjects = [
 			{ title: "On-page SEO for packaging-related product articles" },
 		],
 		link: "https://twns.co.id",
-		githubLink: "",
 		image: twnsLandingPage,
 	},
 	{
@@ -102,7 +102,6 @@ const portfolioProjects = [
 			{ title: "Explore sentiment trends through data visualization" },
 		],
 		link: "",
-		githubLink: "",
 		image: sentimentAnalysisImage,
 	},
 	{
@@ -111,7 +110,7 @@ const portfolioProjects = [
 		title: "Self-Hosted Home Server with Hyper-V & Cloudflare Tunnel",
 		category: "Network",
 		techStack: [
-			{ title: "Debian", iconType: DebianIcon },
+			{ title: "Linux", iconType: LinuxIcon },
 			{ title: "Cloudflare Tunnel", iconType: CloudflareIcon },
 			{ title: "Gmail", iconType: GmailIcon },
 		],
@@ -121,7 +120,6 @@ const portfolioProjects = [
 			{ title: "Explore virtual networking and remote service access" },
 		],
 		link: "",
-		githubLink: "",
 		image: homeServerTopology,
 	},
 	{
@@ -135,7 +133,6 @@ const portfolioProjects = [
 			{ title: "Produced as part of my IT Staff internship" },
 		],
 		link: "",
-		githubLink: "",
 		image: inductionImage,
 	},
 ];
@@ -206,9 +203,10 @@ export const ProjectsSection = () => {
 					description="Explore my projects in web development, data science, AI, networking, and videography."
 				/>
 
-				<div className="flex flex-wrap gap-3 mt-10 md:mt-16 justify-center ">
+				<div className="flex flex-wrap gap-3 mt-10 md:mt-16 justify-center">
 					{filterCategories.map((category) => (
 						<button
+							type="button"
 							key={category}
 							aria-pressed={activeFilter === category}
 							onClick={() => setActiveFilter(category)}
@@ -302,18 +300,6 @@ export const ProjectsSection = () => {
 											>
 												<span>View</span>
 											</button>
-										)}
-										{project.githubLink && (
-											<a
-												href={project.githubLink}
-												target="_blank"
-												rel="noopener noreferrer"
-												aria-label={`View ${project.title} on GitHub`}
-												title="View GitHub Repository"
-												className="bg-white text-gray-950 size-12 shrink-0 rounded-xl inline-flex items-center justify-center"
-											>
-												<GithubIcon className="size-5 fill-current" aria-hidden="true" />
-											</a>
 										)}
 									</div>
 								)}

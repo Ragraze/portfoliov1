@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 
 const links = [
 	{ id: "/", label: "Home", href: "/" },
@@ -11,7 +12,8 @@ const links = [
 ];
 
 export const Header = () => {
-	const [active, setActive] = useState<string>("/");
+	const [active, setActive] = useState("/");
+	const reduceMotion = useReducedMotion();
 	const navRef = useRef<HTMLElement>(null);
 
 	const scrollToSection = useCallback((id: string, behavior: ScrollBehavior) => {
@@ -27,7 +29,7 @@ export const Header = () => {
 	const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string, href: string) => {
 		if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
 		e.preventDefault();
-		scrollToSection(id, "smooth");
+		scrollToSection(id, reduceMotion ? "instant" : "smooth");
 		if (window.location.pathname !== href || window.location.hash) {
 			history.pushState(null, "", href);
 		}

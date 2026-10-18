@@ -1,44 +1,53 @@
 "use client";
+
 import { SectionHeader } from "@/components/SectionHeader";
 import { SectionStars } from "@/components/SectionStars";
 import { Card } from "@/components/Card";
-import profile from "@/assets/images/Profile.png";
+import profile from "@/assets/images/profile.webp";
 import Image from "next/image";
-import JavascriptIcon from "@/assets/icons/square-js.svg";
+import JavascriptIcon from "@/assets/icons/javascript.svg";
+import TypescriptIcon from "@/assets/icons/typescript.svg";
 import ReactIcon from "@/assets/icons/react.svg";
+import FramerIcon from "@/assets/icons/framer.svg";
 import GithubIcon from "@/assets/icons/github.svg";
 import CssIcon from "@/assets/icons/css3.svg";
 import HTMLIcon from "@/assets/icons/html5.svg";
-import LaravelIcon from "@/assets/icons/laravel-brands-solid-full.svg";
-import FigmaIcon from "@/assets/icons/figma-brands-solid-full.svg";
+import LaravelIcon from "@/assets/icons/laravel.svg";
+import FigmaIcon from "@/assets/icons/figma.svg";
 import CanvaIcon from "@/assets/icons/canva.svg";
-import CloudflareIcon from "@/assets/icons/cloudflare-brands-solid-full.svg";
-import NodeIcon from "@/assets/icons/node-brands-solid-full.svg";
-import WordpressIcon from "@/assets/icons/wordpress-brands-solid-full.svg";
-import TailwindCssIcon from "@/assets/icons/tailwind-css-brands-solid-full.svg";
-import PhpIcon from "@/assets/icons/php-brands-solid-full.svg";
+import CloudflareIcon from "@/assets/icons/cloudflare.svg";
+import NodeIcon from "@/assets/icons/nodejs.svg";
+import ExpressIcon from "@/assets/icons/express.svg";
+import WordpressIcon from "@/assets/icons/wordpress.svg";
+import TailwindCssIcon from "@/assets/icons/tailwind-css.svg";
+import PhpIcon from "@/assets/icons/php.svg";
 import FirebaseIcon from "@/assets/icons/firebase.svg";
-import GoogleCloudIcon from "@/assets/icons/googlecloud.svg";
-import NextjsIcon from "@/assets/icons/nextdotjs.svg";
+import GoogleCloudIcon from "@/assets/icons/google-cloud.svg";
+import NextjsIcon from "@/assets/icons/nextjs.svg";
 import ProxmoxIcon from "@/assets/icons/proxmox.svg";
-import DebianIcon from "@/assets/icons/debian.svg";
+import LinuxIcon from "@/assets/icons/linux.svg";
+import WindowsIcon from "@/assets/icons/windows.svg";
 import GitIcon from "@/assets/icons/git.svg";
-import BootstrapIcon from "@/assets/icons/bootstrap-brands-solid-full.svg";
+import BootstrapIcon from "@/assets/icons/bootstrap.svg";
 import OpencodeIcon from "@/assets/icons/opencode.svg";
 import PostgresqlIcon from "@/assets/icons/postgresql.svg";
-import DockerIcon from "@/assets/icons/docker-brands-solid-full.svg";
+import DockerIcon from "@/assets/icons/docker.svg";
 import ViteIcon from "@/assets/icons/vite.svg";
-import ObsStudioIcon from "@/assets/icons/obsstudio.svg";
+import ObsStudioIcon from "@/assets/icons/obs-studio.svg";
 import VegasIcon from "@/assets/icons/vegas.svg";
-import ClaudeCodeIcon from "@/assets/icons/claudecode.svg";
+import ClaudeCodeIcon from "@/assets/icons/claude-code.svg";
 import PythonIcon from "@/assets/icons/python.svg";
 import AstroIcon from "@/assets/icons/astro.svg";
 import VercelIcon from "@/assets/icons/vercel.svg";
 import MongodbIcon from "@/assets/icons/mongodb.svg";
-import AlibabaCloudIcon from "@/assets/icons/alibabacloud.svg";
+import AlibabaCloudIcon from "@/assets/icons/alibaba-cloud.svg";
 import CiscoIcon from "@/assets/icons/cisco.svg";
-import mapImage from "@/assets/images/map.png";
-import smileMemoji from "@/assets/images/memoji-smile.png";
+import VisualStudioCodeIcon from "@/assets/icons/visual-studio-code.svg";
+import CursorIcon from "@/assets/icons/cursor.svg";
+import FlaskIcon from "@/assets/icons/flask.svg";
+import CodexIcon from "@/assets/icons/codex.svg";
+import mapImage from "@/assets/images/map.webp";
+import smileMemoji from "@/assets/images/memoji-smile.webp";
 import { CardHeader } from "@/components/CardHeader";
 import { ToolboxItems } from "@/components/ToolboxItems";
 import { motion } from "framer-motion";
@@ -46,6 +55,7 @@ import { motion } from "framer-motion";
 const topToolboxItems = [
 	{ title: "Git", iconType: GitIcon },
 	{ title: "GitHub", iconType: GithubIcon },
+	{ title: "Visual Studio Code", iconType: VisualStudioCodeIcon },
 	{ title: "Figma", iconType: FigmaIcon },
 	{ title: "Canva", iconType: CanvaIcon },
 	{ title: "OBS Studio", iconType: ObsStudioIcon },
@@ -54,7 +64,8 @@ const topToolboxItems = [
 	{ title: "Vite", iconType: ViteIcon },
 	{ title: "Docker", iconType: DockerIcon },
 	{ title: "Proxmox", iconType: ProxmoxIcon },
-	{ title: "Debian", iconType: DebianIcon },
+	{ title: "Linux", iconType: LinuxIcon },
+	{ title: "Windows", iconType: WindowsIcon },
 	{ title: "PostgreSQL", iconType: PostgresqlIcon },
 	{ title: "MongoDB", iconType: MongodbIcon },
 	{ title: "Firebase", iconType: FirebaseIcon },
@@ -63,21 +74,27 @@ const topToolboxItems = [
 	{ title: "Cloudflare", iconType: CloudflareIcon },
 	{ title: "Vercel", iconType: VercelIcon },
 	{ title: "Claude Code", iconType: ClaudeCodeIcon },
+	{ title: "Codex", iconType: CodexIcon },
+	{ title: "Cursor", iconType: CursorIcon },
 	{ title: "OpenCode", iconType: OpencodeIcon },
 	{ title: "Cisco", iconType: CiscoIcon },
 ];
 
 const bottomToolboxItems = [
 	{ title: "JavaScript", iconType: JavascriptIcon },
+	{ title: "TypeScript", iconType: TypescriptIcon },
 	{ title: "Python", iconType: PythonIcon },
 	{ title: "PHP", iconType: PhpIcon },
 	{ title: "HTML5", iconType: HTMLIcon },
 	{ title: "CSS3", iconType: CssIcon },
 	{ title: "ReactJS", iconType: ReactIcon },
+	{ title: "Framer Motion", iconType: FramerIcon },
 	{ title: "Next.js", iconType: NextjsIcon },
 	{ title: "Astro", iconType: AstroIcon },
 	{ title: "Laravel", iconType: LaravelIcon },
 	{ title: "Node.js", iconType: NodeIcon },
+	{ title: "Express.js", iconType: ExpressIcon },
+	{ title: "Flask", iconType: FlaskIcon },
 	{ title: "Tailwind CSS", iconType: TailwindCssIcon },
 	{ title: "Bootstrap", iconType: BootstrapIcon },
 ];
@@ -117,7 +134,7 @@ export const AboutSection = () => {
 							<Card className="h-[320px]">
 								<CardHeader title="Profile" description="" />
 								<div className="w-52 mx-auto -mt-12 flex-1 flex items-start justify-center">
-									<Image src={profile} alt="book" />
+									<Image src={profile} alt="Rakan Fadhil Prayata" sizes="208px" />
 								</div>
 							</Card>
 						</motion.div>
@@ -134,13 +151,12 @@ export const AboutSection = () => {
 								<CardHeader title="Tech Stack" description="" className="p-4" />
 								<ToolboxItems
 									items={topToolboxItems}
-									className=""
-									itemsWrapperClassName="animate-move-left [animation-duration:84s] hover:[animation-play-state:paused]"
+									itemsWrapperClassName="animate-move-left [animation-duration:100s] hover:[animation-play-state:paused]"
 								/>
 								<ToolboxItems
 									items={bottomToolboxItems}
 									className="mt-4 md:mt-6"
-									itemsWrapperClassName="animate-move-right [animation-duration:56s] hover:[animation-play-state:paused]"
+									itemsWrapperClassName="animate-move-right [animation-duration:64s] hover:[animation-play-state:paused]"
 								/>
 							</Card>
 						</motion.div>
@@ -187,12 +203,13 @@ export const AboutSection = () => {
 								<Image
 									src={mapImage}
 									alt="map"
+									sizes="(min-width: 1200px) 304px, (min-width: 768px) 40vw, 100vw"
 									className="h-full w-full object-cover object-left-top md:object-center"
 								/>
-								<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-12 rounded-full  after:content-[''] after:absolute after: inset-0 after:outline after:outline-2 after:outline-offset-2 after:rounded-full after:outline-gray-950/30 ">
-									<div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-300 to-sky-400  -z-20 animate-ping [animation-duration:2s]"></div>
-									<div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-300 to-sky-400  -z-10"></div>
-									<Image src={smileMemoji} alt="smile memoji" className="size-12" />
+								<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-12 rounded-full after:content-[''] after:absolute after:inset-0 after:outline after:outline-2 after:outline-offset-2 after:rounded-full after:outline-gray-950/30">
+									<div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-300 to-sky-400 -z-20 animate-ping [animation-duration:2s]" />
+									<div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-300 to-sky-400 -z-10" />
+									<Image src={smileMemoji} alt="smile memoji" className="size-12" sizes="48px" />
 								</div>
 							</Card>
 						</motion.div>

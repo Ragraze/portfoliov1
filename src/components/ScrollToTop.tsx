@@ -1,7 +1,7 @@
 "use client";
 
 import ArrowDown from "@/assets/icons/arrow-down.svg";
-import grainImage from "@/assets/images/grain.jpg";
+import grainImage from "@/assets/images/grain.webp";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 

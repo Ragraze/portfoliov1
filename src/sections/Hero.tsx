@@ -1,26 +1,25 @@
 "use client";
 
-import memojiImage from "@/assets/images/memoji-computer.png";
+import memojiImage from "@/assets/images/memoji-computer.webp";
 import Image from "next/image";
 import ArrowDown from "@/assets/icons/arrow-down.svg";
-import grainImage from "@/assets/images/grain.jpg";
+import grainImage from "@/assets/images/grain.webp";
 import StarIcon from "@/assets/icons/star.svg";
 import SparkleIcon from "@/assets/icons/sparkle.svg";
 import { HeroOrbit } from "@/components/HeroOrbit";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
-export const HeroSection = () => {
-	const words = useMemo(
-		() => ["Web Developer", "IT Support", "IT Infrastructure", "Fresh Graduate"],
-		[],
-	);
+const words = ["Web Developer", "IT Support", "IT Infrastructure", "Fresh Graduate"];
 
+export const HeroSection = () => {
+	const reduceMotion = useReducedMotion();
 	const [wordIndex, setWordIndex] = useState(0);
 	const [charIndex, setCharIndex] = useState(0);
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	useEffect(() => {
+		if (reduceMotion) return;
 		const currentWord = words[wordIndex];
 		const isWordCompleted = !isDeleting && charIndex === currentWord.length;
 		const isWordCleared = isDeleting && charIndex === 0;
@@ -41,14 +40,13 @@ export const HeroSection = () => {
 		}, timeoutDelay);
 
 		return () => clearTimeout(timeoutId);
-	}, [charIndex, isDeleting, wordIndex, words]);
+	}, [charIndex, isDeleting, wordIndex, reduceMotion]);
 
-	const typedText = words[wordIndex].slice(0, charIndex);
-	const reduceMotion = useReducedMotion();
+	const typedText = reduceMotion ? words[0] : words[wordIndex].slice(0, charIndex);
 	const [connectHover, setConnectHover] = useState(false);
 	const [ripples, setRipples] = useState<{ id: number; x: number; y: number; size: number }[]>([]);
-	const [rippleId, setRippleId] = useState(0);
-	const cvUrl = "/cv/curriculum-vitae.pdf";
+	const rippleId = useRef(0);
+	const cvUrl = "/curriculum-vitae/CV_Rakan%20Fadhil%20Prayata.pdf";
 
 	return (
 		<section
@@ -172,6 +170,7 @@ export const HeroSection = () => {
 					<Image
 						src={memojiImage}
 						className="size-[100px]"
+						sizes="100px"
 						alt="Person peeking from behind laptop"
 						priority
 					/>
@@ -242,12 +241,8 @@ export const HeroSection = () => {
 							const x = e.clientX - rect.left;
 							const y = e.clientY - rect.top;
 							const size = Math.max(rect.width, rect.height) * 1.2;
-							const id = rippleId + 1;
-							setRippleId(id);
+							const id = rippleId.current++;
 							setRipples((prev) => [...prev, { id, x, y, size }]);
-							setTimeout(() => {
-								setRipples((prev) => prev.filter((r) => r.id !== id));
-							}, 650);
 						}}
 						className="relative overflow-hidden inline-flex items-center gap-2 border border-white bg-white text-gray-900 h-12 px-6 rounded-xl"
 						aria-label="Let’s connect"
@@ -280,6 +275,9 @@ export const HeroSection = () => {
 								initial={{ scale: 0, opacity: 0.6 }}
 								animate={{ scale: 1, opacity: 0 }}
 								transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+								onAnimationComplete={() => {
+									setRipples((prev) => prev.filter((ripple) => ripple.id !== r.id));
+								}}
 							/>
 						))}
 						<motion.span

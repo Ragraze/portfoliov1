@@ -1,28 +1,31 @@
 "use client";
+
 import { SectionHeader } from "@/components/SectionHeader";
 import { SectionStars } from "@/components/SectionStars";
 import { Card } from "@/components/Card";
-import triwallImage from "@/assets/images/triwallindo.png";
-import twnsImage from "@/assets/images/twns.png";
-import bangkitImage from "@/assets/images/bangkit.png";
-import assistantImage from "@/assets/images/asistant.png";
-import emifImage from "@/assets/images/emif.png";
+import { Modal } from "@/components/Modal";
+import triwallImage from "@/assets/images/tri-wall-indonesia.webp";
+import twnsImage from "@/assets/images/tri-wall-natura-surabaya.webp";
+import bangkitImage from "@/assets/images/bangkit.webp";
+import assistantImage from "@/assets/images/teaching-assistant.webp";
+import emifImage from "@/assets/images/emif.webp";
 import Image, { type StaticImageData } from "next/image";
-import { useEffect, useState, type ComponentType, type SVGProps } from "react";
+import { useState, type ComponentType, type SVGProps } from "react";
 import { motion } from "framer-motion";
 import { CodeBracketIcon, ServerStackIcon } from "@heroicons/react/24/solid";
 import { twMerge } from "tailwind-merge";
 
-import JavascriptIcon from "@/assets/icons/square-js.svg";
+import JavascriptIcon from "@/assets/icons/javascript.svg";
 import GithubIcon from "@/assets/icons/github.svg";
 import CssIcon from "@/assets/icons/css3.svg";
 import HTMLIcon from "@/assets/icons/html5.svg";
-import GoogleCloudIcon from "@/assets/icons/googlecloud.svg";
-import NodeIcon from "@/assets/icons/node-brands-solid-full.svg";
-import PhpIcon from "@/assets/icons/php-brands-solid-full.svg";
-import LaravelIcon from "@/assets/icons/laravel-brands-solid-full.svg";
-import FigmaIcon from "@/assets/icons/figma-brands-solid-full.svg";
+import GoogleCloudIcon from "@/assets/icons/google-cloud.svg";
+import NodeIcon from "@/assets/icons/nodejs.svg";
+import PhpIcon from "@/assets/icons/php.svg";
+import LaravelIcon from "@/assets/icons/laravel.svg";
+import FigmaIcon from "@/assets/icons/figma.svg";
 import CanvaIcon from "@/assets/icons/canva.svg";
+import WordpressIcon from "@/assets/icons/wordpress.svg";
 
 interface Experience {
 	id: string;
@@ -50,6 +53,10 @@ const experiences: Experience[] = [
 			"Remote web developer building a bilingual company website to support product visibility and lead generation.",
 		techStack: [
 			{
+				name: "WordPress",
+				icon: WordpressIcon,
+			},
+			{
 				name: "JavaScript",
 				icon: JavascriptIcon,
 			},
@@ -76,6 +83,10 @@ const experiences: Experience[] = [
 		description:
 			"On-site IT Staff in Nagasari, Bekasi, responsible for the company's multilingual website and internal media.",
 		techStack: [
+			{
+				name: "WordPress",
+				icon: WordpressIcon,
+			},
 			{
 				name: "JavaScript",
 				icon: JavascriptIcon,
@@ -235,23 +246,7 @@ function SlideInOnView({
 export const ExperiencesSection = () => {
 	const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
 
-	const handleExperienceClick = (experience: Experience) => {
-		setSelectedExperience(experience);
-	};
-
 	const closeModal = () => setSelectedExperience(null);
-
-	useEffect(() => {
-		if (!selectedExperience) return;
-		const rootOverflow = document.documentElement.style.overflow;
-		const bodyOverflow = document.body.style.overflow;
-		document.documentElement.style.overflow = "hidden";
-		document.body.style.overflow = "hidden";
-		return () => {
-			document.documentElement.style.overflow = rootOverflow;
-			document.body.style.overflow = bodyOverflow;
-		};
-	}, [selectedExperience]);
 
 	return (
 		<section
@@ -306,7 +301,7 @@ export const ExperiencesSection = () => {
 										<SlideInOnView dir="up">
 											<Card
 												className="p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02]"
-												onClick={() => handleExperienceClick(experience)}
+												onClick={() => setSelectedExperience(experience)}
 											>
 												<ExperienceCardInner experience={experience} />
 											</Card>
@@ -317,7 +312,7 @@ export const ExperiencesSection = () => {
 										<SlideInOnView dir={index % 2 === 0 ? "left" : "right"}>
 											<Card
 												className="p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02]"
-												onClick={() => handleExperienceClick(experience)}
+												onClick={() => setSelectedExperience(experience)}
 											>
 												<ExperienceCardInner experience={experience} />
 											</Card>
@@ -331,16 +326,17 @@ export const ExperiencesSection = () => {
 			</div>
 
 			{selectedExperience && (
-				<div
-					className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-					role="dialog"
-					aria-modal="true"
+				<Modal
+					onClose={closeModal}
+					label={selectedExperience.title}
+					className="bg-black/80 backdrop-blur-sm p-4"
 				>
 					<div className="bg-gray-800 rounded-3xl max-w-2xl w-full max-h-[90dvh] overflow-y-auto overscroll-contain relative">
 						<div className="sticky top-0 z-10 bg-gray-800 p-4 pr-14 sm:p-6 sm:pr-14 border-b border-white/10 rounded-t-3xl">
 							<button
+								type="button"
 								onClick={closeModal}
-								className="absolute top-4 right-4 text-white/60 hover:text-white text-2xl"
+								className="absolute top-4 right-4 text-white/60 hover:text-white text-2xl focus:outline-none focus-visible:text-emerald-300"
 								aria-label="Close"
 							>
 								×
@@ -349,12 +345,12 @@ export const ExperiencesSection = () => {
 								<ExperienceLogo experience={selectedExperience} className="md:h-20 md:w-24" />
 								<div>
 									<h2 className="font-serif text-lg md:text-2xl text-white">
-										{selectedExperience?.title}
+										{selectedExperience.title}
 									</h2>
 									<p className="text-emerald-300 text-lg font-medium">
-										{selectedExperience?.company}
+										{selectedExperience.company}
 									</p>
-									<p className="text-white/60">{selectedExperience?.period}</p>
+									<p className="text-white/60">{selectedExperience.period}</p>
 								</div>
 							</div>
 						</div>
@@ -362,13 +358,13 @@ export const ExperiencesSection = () => {
 						<div className="p-6">
 							<div className="mb-6">
 								<h3 className="font-serif text-xl text-white mb-3">Description</h3>
-								<p className="text-white/80 leading-relaxed">{selectedExperience?.description}</p>
+								<p className="text-white/80 leading-relaxed">{selectedExperience.description}</p>
 							</div>
 
 							<div className="mb-6">
 								<h3 className="font-serif text-xl text-white mb-3">Key Responsibilities</h3>
 								<ul className="space-y-2">
-									{selectedExperience?.responsibilities.map((r, idx) => (
+									{selectedExperience.responsibilities.map((r, idx) => (
 										<li key={idx} className="flex items-start gap-3 text-white/80">
 											<div className="w-2 h-2 bg-gradient-to-r from-emerald-300 to-sky-400 rounded-full mt-2 flex-shrink-0" />
 											{r}
@@ -380,7 +376,7 @@ export const ExperiencesSection = () => {
 							<div>
 								<h3 className="font-serif text-xl text-white mb-3">Skills</h3>
 								<div className="flex flex-wrap items-center gap-3">
-									{selectedExperience?.techStack.map((tech, index) => {
+									{selectedExperience.techStack.map((tech, index) => {
 										const Icon = tech.icon;
 										return (
 											<div
@@ -403,7 +399,7 @@ export const ExperiencesSection = () => {
 							</div>
 						</div>
 					</div>
-				</div>
+				</Modal>
 			)}
 		</section>
 	);
@@ -444,7 +440,10 @@ function ExperienceCardInner({ experience }: { experience: Experience }) {
 				<p className="text-white/60 text-sm mt-1">{experience.period}</p>
 				<p className="text-white/80 text-sm mt-3 line-clamp-2">{experience.description}</p>
 
-				<button className="mt-4 text-emerald-300 hover:text-emerald-200 text-sm font-medium transition-colors">
+				<button
+					type="button"
+					className="mt-4 text-emerald-300 hover:text-emerald-200 text-sm font-medium transition-colors"
+				>
 					View Details →
 				</button>
 			</div>

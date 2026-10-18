@@ -21,8 +21,13 @@ export const ToolboxItems = ({
 				className,
 			)}
 		>
-			<div className={twMerge("flex flex-none py-0.5 gap-6 pr-6", itemsWrapperClassName)}>
-				{...new Array(2).fill(0).map((_, idx) => (
+			<div
+				className={twMerge(
+					"flex flex-none py-0.5 gap-6 pr-6 motion-reduce:animate-none",
+					itemsWrapperClassName,
+				)}
+			>
+				{Array.from({ length: 2 }, (_, idx) => (
 					<Fragment key={idx}>
 						{items.map((item) => (
 							<div

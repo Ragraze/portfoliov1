@@ -1,7 +1,7 @@
 import ArrowUpRightIcon from "@/assets/icons/arrow-up-right.svg";
-import LinkedinIcon from "@/assets/icons/linkedin-in-brands-solid-full.svg";
-import GithubIcon from "@/assets/icons/square-github-brands-solid-full.svg";
-import WhatsappIcon from "@/assets/icons/whatsapp-brands-solid-full.svg";
+import LinkedinIcon from "@/assets/icons/linkedin.svg";
+import GithubIcon from "@/assets/icons/github-square.svg";
+import WhatsappIcon from "@/assets/icons/whatsapp.svg";
 
 const footerLinks = [
 	{ title: "LinkedIn", href: "https://www.linkedin.com/in/rakanfadhilp/", iconType: LinkedinIcon },
@@ -32,18 +32,9 @@ export const Footer = () => {
 									{title}
 									<span
 										aria-hidden
-										className="
-											pointer-events-none absolute -bottom-1 left-0 h-[2px] w-full overflow-hidden
-											opacity-0 transition-opacity duration-300 ease-out
-											group-hover:opacity-100"
+										className="pointer-events-none absolute -bottom-1 left-0 h-[2px] w-full overflow-hidden opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
 									>
-										<span
-											className="
-												block h-full w-[200%] -translate-x-1/2
-												bg-gradient-to-r from-emerald-300 via-cyan-300 to-blue-500
-												transition-transform duration-500 ease-out
-												group-hover:translate-x-0"
-										/>
+										<span className="block h-full w-[200%] -translate-x-1/2 bg-gradient-to-r from-emerald-300 via-cyan-300 to-blue-500 transition-transform duration-500 ease-out group-hover:translate-x-0" />
 									</span>
 								</span>
 								<ArrowUpRightIcon className="hidden md:block size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

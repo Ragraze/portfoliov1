@@ -1,8 +1,8 @@
 "use client";
 
 import Image, { type StaticImageData } from "next/image";
-import { useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
+import { Modal } from "./Modal";
 
 interface ViewerImage {
 	title: string;
@@ -30,72 +30,30 @@ export const ImageViewer = ({
 	label,
 	imageClassName,
 }: ImageViewerProps) => {
-	const dialogRef = useRef<HTMLDivElement>(null);
-	const closeButtonRef = useRef<HTMLButtonElement>(null);
 	const currentImage = images[currentIndex];
-	const isVisible = isOpen && !!currentImage;
 	const imageLabel = label.toLowerCase();
 
-	useEffect(() => {
-		if (!isVisible) return;
-		const activeElement = document.activeElement;
-		const rootOverflow = document.documentElement.style.overflow;
-		const bodyOverflow = document.body.style.overflow;
-		document.documentElement.style.overflow = "hidden";
-		document.body.style.overflow = "hidden";
-		closeButtonRef.current?.focus({ preventScroll: true });
-
-		return () => {
-			document.documentElement.style.overflow = rootOverflow;
-			document.body.style.overflow = bodyOverflow;
-			if (activeElement instanceof HTMLElement) {
-				activeElement.focus({ preventScroll: true });
-			}
-		};
-	}, [isVisible]);
-
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-		if (event.key === "Escape") {
-			event.preventDefault();
-			onClose();
-		} else if (images.length > 1 && event.key === "ArrowRight") {
+		if (images.length > 1 && event.key === "ArrowRight") {
 			event.preventDefault();
 			onNext();
 		} else if (images.length > 1 && event.key === "ArrowLeft") {
 			event.preventDefault();
 			onPrev();
-		} else if (event.key === "Tab") {
-			const buttons = dialogRef.current?.querySelectorAll<HTMLButtonElement>("button");
-			if (!buttons?.length) return;
-			const firstButton = buttons[0];
-			const lastButton = buttons[buttons.length - 1];
-			if (event.shiftKey && document.activeElement === firstButton) {
-				event.preventDefault();
-				lastButton.focus();
-			} else if (!event.shiftKey && document.activeElement === lastButton) {
-				event.preventDefault();
-				firstButton.focus();
-			}
 		}
 	};
 
-	if (!isVisible) return null;
+	if (!isOpen || !currentImage) return null;
 
 	return (
-		<div
-			ref={dialogRef}
-			role="dialog"
-			aria-modal="true"
-			aria-label={`${label} viewer`}
+		<Modal
+			onClose={onClose}
+			label={`${label} viewer`}
 			onKeyDown={handleKeyDown}
-			onClick={(event) => {
-				if (event.target === event.currentTarget) onClose();
-			}}
-			className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center px-2 py-14 sm:px-4"
+			className="bg-black/90 px-2 py-14 sm:px-4"
 		>
 			<div className="relative w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl max-h-full">
 				<button
-					ref={closeButtonRef}
 					type="button"
 					onClick={onClose}
 					aria-label={`Close ${imageLabel} viewer`}
@@ -138,6 +96,6 @@ export const ImageViewer = ({
 					)}
 				/>
 			</div>
-		</div>
+		</Modal>
 	);
 };
