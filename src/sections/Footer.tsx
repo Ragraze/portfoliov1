@@ -1,12 +1,18 @@
-import ArrowUpRightIcon from "@/assets/icons/arrow-up-right.svg";
+import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
 import LinkedinIcon from "@/assets/icons/linkedin.svg";
-import GithubIcon from "@/assets/icons/github-square.svg";
-import WhatsappIcon from "@/assets/icons/whatsapp.svg";
+import GithubIcon from "simple-icons/icons/github.svg";
+import WhatsappIcon from "simple-icons/icons/whatsapp.svg";
+import GmailIcon from "simple-icons/icons/gmail.svg";
 
 const footerLinks = [
 	{ title: "LinkedIn", href: "https://www.linkedin.com/in/rakanfadhilp/", iconType: LinkedinIcon },
 	{ title: "GitHub", href: "https://github.com/Ragraze", iconType: GithubIcon },
 	{ title: "WhatsApp", href: "https://wa.me/6285157573405", iconType: WhatsappIcon },
+	{
+		title: "Email",
+		href: "mailto:rakanfadhilp@gmail.com",
+		iconType: GmailIcon,
+	},
 ];
 
 export const Footer = () => {
@@ -37,7 +43,10 @@ export const Footer = () => {
 										<span className="block h-full w-[200%] -translate-x-1/2 bg-gradient-to-r from-emerald-300 via-cyan-300 to-blue-500 transition-transform duration-500 ease-out group-hover:translate-x-0" />
 									</span>
 								</span>
-								<ArrowUpRightIcon className="hidden md:block size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+								<ArrowUpRightIcon
+									className="hidden md:block size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+									strokeWidth={2}
+								/>
 							</a>
 						))}
 					</nav>

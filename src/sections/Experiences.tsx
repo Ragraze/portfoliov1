@@ -10,22 +10,22 @@ import bangkitImage from "@/assets/images/bangkit.webp";
 import assistantImage from "@/assets/images/teaching-assistant.webp";
 import emifImage from "@/assets/images/emif.webp";
 import Image, { type StaticImageData } from "next/image";
-import { useState, type ComponentType, type SVGProps } from "react";
+import { useState, type ComponentType, type ReactNode, type SVGProps } from "react";
 import { motion } from "framer-motion";
 import { CodeBracketIcon, ServerStackIcon } from "@heroicons/react/24/solid";
 import { twMerge } from "tailwind-merge";
 
-import JavascriptIcon from "@/assets/icons/javascript.svg";
-import GithubIcon from "@/assets/icons/github.svg";
-import CssIcon from "@/assets/icons/css3.svg";
-import HTMLIcon from "@/assets/icons/html5.svg";
-import GoogleCloudIcon from "@/assets/icons/google-cloud.svg";
-import NodeIcon from "@/assets/icons/nodejs.svg";
-import PhpIcon from "@/assets/icons/php.svg";
-import LaravelIcon from "@/assets/icons/laravel.svg";
-import FigmaIcon from "@/assets/icons/figma.svg";
+import JavascriptIcon from "simple-icons/icons/javascript.svg";
+import GithubIcon from "simple-icons/icons/github.svg";
+import CssIcon from "simple-icons/icons/css.svg";
+import HTMLIcon from "simple-icons/icons/html5.svg";
+import GoogleCloudIcon from "simple-icons/icons/googlecloud.svg";
+import NodeIcon from "simple-icons/icons/nodedotjs.svg";
+import PhpIcon from "simple-icons/icons/php.svg";
+import LaravelIcon from "simple-icons/icons/laravel.svg";
+import FigmaIcon from "simple-icons/icons/figma.svg";
 import CanvaIcon from "@/assets/icons/canva.svg";
-import WordpressIcon from "@/assets/icons/wordpress.svg";
+import WordpressIcon from "simple-icons/icons/wordpress.svg";
 
 interface Experience {
 	id: string;
@@ -228,7 +228,7 @@ function SlideInOnView({
 	amount = 0.35,
 }: {
 	dir: "left" | "right" | "up";
-	children: React.ReactNode;
+	children: ReactNode;
 	amount?: number;
 }) {
 	return (
@@ -254,7 +254,7 @@ export const ExperiencesSection = () => {
 			className="scroll-mt-36 md:scroll-mt-40 lg:scroll-mt-44 py-20 lg:py-28"
 		>
 			<SectionStars />
-			<div className="container">
+			<div className="container tablet-portrait:max-w-none">
 				<SectionHeader
 					eyebrow="Career Journey"
 					title="Professional Experiences"
@@ -263,7 +263,7 @@ export const ExperiencesSection = () => {
 
 				<div className="mt-20 relative">
 					<motion.div
-						className="absolute left-1/2 -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-emerald-300 to-sky-400 hidden md:block"
+						className="absolute left-1/2 -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-emerald-300 to-sky-400 hidden md:block tablet-portrait:hidden"
 						initial={{ opacity: 0, scaleY: 0.9 }}
 						whileInView={{ opacity: 1, scaleY: 1 }}
 						viewport={{ once: true, amount: 0.1 }}
@@ -275,13 +275,13 @@ export const ExperiencesSection = () => {
 						{experiences.map((experience, index) => (
 							<div
 								key={experience.id}
-								className={`relative flex flex-col md:flex-row items-center gap-8 ${
+								className={`relative flex flex-col md:flex-row items-center gap-8 tablet-portrait:flex-col ${
 									index % 2 === 0 ? "md:flex-row-reverse" : ""
 								}`}
 							>
 								<motion.div
 									aria-hidden
-									className="hidden md:block absolute left-1/2 top-1/2"
+									className="hidden md:block absolute left-1/2 top-1/2 tablet-portrait:hidden"
 									style={{ x: "-50%", y: "-50%" }}
 									initial={{ scale: 0.6, opacity: 0 }}
 									whileInView={{ scale: 1, opacity: 1 }}
@@ -294,10 +294,12 @@ export const ExperiencesSection = () => {
 									</span>
 								</motion.div>
 
-								<div className="hidden md:block md:w-1/2" />
+								<div className="hidden md:block md:w-1/2 tablet-portrait:hidden" />
 
-								<div className={`w-full md:w-1/2 ${index % 2 === 0 ? "md:mr-8" : "md:ml-8"}`}>
-									<div className="block md:hidden">
+								<div
+									className={`w-full md:w-1/2 tablet-portrait:w-full tablet-portrait:mx-0 ${index % 2 === 0 ? "md:mr-8" : "md:ml-8"}`}
+								>
+									<div className="block md:hidden tablet-portrait:block">
 										<SlideInOnView dir="up">
 											<Card
 												className="p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02]"
@@ -308,10 +310,10 @@ export const ExperiencesSection = () => {
 										</SlideInOnView>
 									</div>
 
-									<div className="hidden md:block">
+									<div className="hidden md:block tablet-portrait:hidden">
 										<SlideInOnView dir={index % 2 === 0 ? "left" : "right"}>
 											<Card
-												className="p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+												className="p-6 tablet-portrait:p-4 cursor-pointer transition-all duration-300 hover:scale-[1.02]"
 												onClick={() => setSelectedExperience(experience)}
 											>
 												<ExperienceCardInner experience={experience} />
@@ -430,8 +432,11 @@ function ExperienceLogo({ experience, className }: { experience: Experience; cla
 
 function ExperienceCardInner({ experience }: { experience: Experience }) {
 	return (
-		<div className="flex items-start gap-4">
-			<ExperienceLogo experience={experience} />
+		<div className="flex items-start gap-4 tablet-portrait:gap-3">
+			<ExperienceLogo
+				experience={experience}
+				className="tablet-portrait:h-12 tablet-portrait:w-16"
+			/>
 			<div className="flex-1 min-w-0">
 				<h3 className="font-serif text-lg md:text-2xl text-white group-hover:text-emerald-300 transition-colors">
 					{experience.title}

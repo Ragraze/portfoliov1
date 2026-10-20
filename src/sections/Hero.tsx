@@ -2,7 +2,7 @@
 
 import memojiImage from "@/assets/images/memoji-computer.webp";
 import Image from "next/image";
-import ArrowDown from "@/assets/icons/arrow-down.svg";
+import { ArrowDownIcon as ArrowDown } from "@heroicons/react/24/outline";
 import grainImage from "@/assets/images/grain.webp";
 import StarIcon from "@/assets/icons/star.svg";
 import SparkleIcon from "@/assets/icons/sparkle.svg";
@@ -51,7 +51,7 @@ export const HeroSection = () => {
 	return (
 		<section
 			id="/"
-			className="scroll-mt-36 md:scroll-mt-40 lg:scroll-mt-44 min-h-[100svh] flex items-center py-24 md:py-32 relative z-0 overflow-x-clip"
+			className="scroll-mt-36 md:scroll-mt-40 lg:scroll-mt-44 min-h-[100svh] flex items-center py-24 lg:py-32 tablet-landscape:py-20 relative z-0 overflow-x-clip"
 		>
 			<div
 				className="absolute inset-0 pointer-events-none"
@@ -169,8 +169,8 @@ export const HeroSection = () => {
 				<div className="flex flex-col items-center">
 					<Image
 						src={memojiImage}
-						className="size-[100px]"
-						sizes="100px"
+						className="size-[100px] tablet-landscape:size-16"
+						sizes="(min-width: 768px) and (orientation: landscape) and (pointer: coarse) 64px, 100px"
 						alt="Person peeking from behind laptop"
 						priority
 					/>
@@ -178,16 +178,18 @@ export const HeroSection = () => {
 						<div className="bg-green-500 size-2.5 rounded-full relative">
 							<div className="bg-green-500 absolute inset-0 rounded-full animate-ping-large" />
 						</div>
-						<div className="text-sm font-medium">Exploring New Opportunity</div>
+						<div className="text-sm font-medium tablet-landscape:text-xs">
+							Exploring New Opportunity
+						</div>
 					</div>
 				</div>
 
-				<div className="max-w-lg mx-auto">
-					<h1 className="font-serif text-3xl md:text-5xl text-center mt-8 tracking-wide">
+				<div className="max-w-lg md:max-w-xl lg:max-w-lg tablet-landscape:max-w-xl mx-auto">
+					<h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-center mt-8 tracking-wide tablet-landscape:mt-4 tablet-landscape:text-3xl">
 						<span>{typedText}</span>
 						<span className="after:content-['|'] after:ml-1 animate-pulse" />
 					</h1>
-					<p className="mt-4 text-center text-sm leading-relaxed text-white/60 md:text-base">
+					<p className="mt-4 text-center text-sm leading-relaxed text-white/60 md:text-base tablet-landscape:mt-3 tablet-landscape:text-sm">
 						Hi, I’m <span className="font-semibold">Rakan Fadhil Prayata</span>, an IT graduate from
 						Universitas Brawijaya. I’ve built company websites and supported IT operations during
 						internships. I’m interested in web development, AI, cloud computing, and networking. I’m
@@ -195,12 +197,12 @@ export const HeroSection = () => {
 					</p>
 				</div>
 
-				<div className="flex flex-col md:flex-row justify-center items-center mt-8 gap-4">
+				<div className="flex flex-col md:flex-row tablet-portrait:flex-row justify-center items-center mt-8 gap-4 tablet-portrait:gap-3 tablet-landscape:mt-6">
 					<motion.a
 						href={cvUrl}
 						whileHover={{ y: -2, scale: 1.02 }}
 						whileTap={{ scale: 0.98 }}
-						className="group relative inline-flex items-center gap-2 border border-white/15 px-6 h-12 rounded-xl overflow-hidden"
+						className="group relative inline-flex items-center gap-2 border border-white/15 px-6 h-12 rounded-xl overflow-hidden tablet-portrait:px-4 tablet-portrait:text-sm tablet-portrait:whitespace-nowrap tablet-landscape:h-11 tablet-landscape:text-sm"
 						aria-label="Download my CV"
 					>
 						<span
@@ -244,7 +246,7 @@ export const HeroSection = () => {
 							const id = rippleId.current++;
 							setRipples((prev) => [...prev, { id, x, y, size }]);
 						}}
-						className="relative overflow-hidden inline-flex items-center gap-2 border border-white bg-white text-gray-900 h-12 px-6 rounded-xl"
+						className="relative overflow-hidden inline-flex items-center gap-2 border border-white bg-white text-gray-900 h-12 px-6 rounded-xl tablet-portrait:px-4 tablet-portrait:text-sm tablet-portrait:whitespace-nowrap tablet-landscape:h-11 tablet-landscape:text-sm"
 						aria-label="Let’s connect"
 					>
 						<motion.span
@@ -284,7 +286,7 @@ export const HeroSection = () => {
 							aria-hidden
 							animate={{ rotateZ: connectHover && !reduceMotion ? [0, 18, -10, 18, -6, 0] : 0 }}
 							transition={{ duration: 0.9, ease: "easeInOut" }}
-							className="text-xl relative z-10"
+							className="text-xl relative z-10 tablet-portrait:text-lg"
 							style={{ display: "inline-block", transformOrigin: "70% 70%" }}
 						>
 							🖐️
@@ -294,7 +296,7 @@ export const HeroSection = () => {
 					</motion.a>
 				</div>
 			</div>
-			<div className="absolute bottom-6 inset-x-0 flex justify-center md:bottom-8 lg:bottom-12">
+			<div className="absolute bottom-6 inset-x-0 flex justify-center md:bottom-8 lg:bottom-12 tablet-landscape:bottom-4">
 				<a
 					href="/about"
 					aria-label="Scroll to About"

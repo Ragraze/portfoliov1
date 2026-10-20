@@ -11,6 +11,22 @@ const config: Config = {
 			sm: "375px",
 			md: "768px",
 			lg: "1200px",
+			// Raw tablet queries disable automatic max-* variants, so keep mobile explicit.
+			"max-md": {
+				max: "767.98px",
+			},
+			tablet: {
+				raw: "(min-width: 768px) and (max-width: 1199.98px), (min-width: 768px) and (pointer: coarse)",
+			},
+			"tablet-portrait": {
+				raw: "(min-width: 600px) and (orientation: portrait) and (pointer: coarse)",
+			},
+			"tablet-landscape": {
+				raw: "(min-width: 768px) and (orientation: landscape) and (pointer: coarse)",
+			},
+			desktop: {
+				raw: "(min-width: 1200px) and (pointer: fine)",
+			},
 		},
 		container: {
 			center: true,

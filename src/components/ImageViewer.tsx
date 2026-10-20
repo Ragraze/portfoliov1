@@ -1,6 +1,7 @@
 "use client";
 
 import Image, { type StaticImageData } from "next/image";
+import type { KeyboardEvent } from "react";
 import { twMerge } from "tailwind-merge";
 import { Modal } from "./Modal";
 
@@ -33,7 +34,7 @@ export const ImageViewer = ({
 	const currentImage = images[currentIndex];
 	const imageLabel = label.toLowerCase();
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+	const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
 		if (images.length > 1 && event.key === "ArrowRight") {
 			event.preventDefault();
 			onNext();

@@ -1,6 +1,6 @@
 "use client";
 
-import ArrowDown from "@/assets/icons/arrow-down.svg";
+import { ArrowDownIcon as ArrowDown } from "@heroicons/react/24/outline";
 import grainImage from "@/assets/images/grain.webp";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";

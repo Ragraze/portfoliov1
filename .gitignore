@@ -4,6 +4,22 @@
 .pnp.*
 .yarn/install-state.gz
 
+# Original images and unused local icons are archived on the main branch.
+/public/certificates/*.jpg
+/public/certificates/*.jpeg
+/public/certificates/*.png
+/src/assets/images/*.jpg
+/src/assets/images/*.jpeg
+/src/assets/images/*.png
+/src/assets/icons/*.svg
+!/src/assets/icons/canva.svg
+!/src/assets/icons/codex.svg
+!/src/assets/icons/linkedin.svg
+!/src/assets/icons/sparkle.svg
+!/src/assets/icons/star.svg
+!/src/assets/icons/visual-studio-code.svg
+!/src/assets/icons/windows.svg
+
 # Test output
 /coverage/
 /test-results/

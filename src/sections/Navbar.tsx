@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
 import { useReducedMotion } from "framer-motion";
 
 const links = [
@@ -26,7 +26,7 @@ export const Header = () => {
 		setActive(id);
 	}, []);
 
-	const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string, href: string) => {
+	const handleClick = (e: MouseEvent<HTMLAnchorElement>, id: string, href: string) => {
 		if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
 		e.preventDefault();
 		scrollToSection(id, reduceMotion ? "instant" : "smooth");

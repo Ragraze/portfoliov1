@@ -1,8 +1,8 @@
 "use client";
 
-import { useId } from "react";
+import { useId, type ElementType } from "react";
 
-export const TechIcon = ({ component }: { component: React.ElementType }) => {
+export const TechIcon = ({ component }: { component: ElementType }) => {
 	const Component = component;
 	const gradientId = useId();
 	return (

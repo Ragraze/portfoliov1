@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import { TechIcon } from "./TechIcon";
-import { Fragment } from "react";
+import { Fragment, type ElementType } from "react";
 
 export const ToolboxItems = ({
 	items,
@@ -9,7 +9,7 @@ export const ToolboxItems = ({
 }: {
 	items: Array<{
 		title: string;
-		iconType: React.ElementType;
+		iconType: ElementType;
 	}>;
 	className?: string;
 	itemsWrapperClassName?: string;

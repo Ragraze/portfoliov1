@@ -1,5 +1,5 @@
 import grainImage from "@/assets/images/grain.webp";
-import { ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithoutRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 export const Card = ({ className, children, ...other }: ComponentPropsWithoutRef<"div">) => {

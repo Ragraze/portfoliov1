@@ -244,7 +244,7 @@ export const CertificatesSection = () => {
 
 					<div
 						ref={containerRef}
-						className="mt-12 lg:mt-20 relative overflow-hidden py-2 max-md:left-1/2 max-md:-translate-x-1/2 max-md:w-screen lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(1280px,calc(100vw-4rem))]"
+						className="mt-12 lg:mt-20 relative overflow-hidden py-2 max-md:left-1/2 max-md:-translate-x-1/2 max-md:w-screen lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(1280px,calc(100vw-4rem))] tablet-portrait:left-1/2 tablet-portrait:-translate-x-1/2 tablet-portrait:w-screen"
 						style={{
 							maskImage,
 							WebkitMaskImage: maskImage,
