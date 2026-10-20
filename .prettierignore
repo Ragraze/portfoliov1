@@ -1,5 +1,0 @@
-# Preserve third-party assets and generated dependency metadata.
-src/assets/
-public/
-package-lock.json
-next-env.d.ts
