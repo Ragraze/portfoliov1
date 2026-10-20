@@ -38,6 +38,20 @@ npm run dev
 
 Open [localhost:3000](http://localhost:3000). No environment variables, database, or backend service are required. The initial build needs internet access to fetch the Inter and Calistoga fonts through `next/font/google`.
 
+### Including archived assets
+
+To get the application from `main` and the backup assets from `master` in one local folder, use this sequence for a fresh clone:
+
+```sh
+git clone --branch main https://github.com/Ragraze/portfoliov1.git
+cd portfoliov1
+git restore --source=origin/master --worktree --overlay -- src/assets public/certificates
+npm ci
+npm run dev
+```
+
+`--overlay` adds the archived assets and preserves existing application files. The working branch stays on `main`, and its README is preserved. The archive files keep their original paths and are ignored by `.gitignore` on `main`.
+
 ## Commands
 
 | Command                | Description                                           |
