@@ -1,16 +1,16 @@
 # Portfolio asset archive
 
-This branch stores original images and local SVG icons that are not used by the current application.
+This branch stores original images, retired WebP previews, and local SVG icons that are not used by the current application.
 
 The complete application, configuration, documentation, and active assets are on the [main branch](https://github.com/Ragraze/portfoliov1/tree/main).
 
 ## Contents
 
 - `public/certificates/`: 27 original JPG, JPEG, and PNG certificate images.
-- `src/assets/images/`: 16 original JPG and PNG project, profile, and decorative images.
+- `src/assets/images/`: 19 original JPG and PNG project, profile, and decorative images, plus 2 retired WebP previews.
 - `src/assets/icons/`: 43 unused local SVG icons.
 
-The 86 assets retain their original paths and file contents. The application uses WebP images, dependency icons, and seven active local SVG icons kept on `main`.
+The 91 assets retain their original paths. The application uses WebP images, dependency icons, and seven active local SVG icons kept on `main`.
 
 ## Using the application
 
