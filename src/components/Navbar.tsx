@@ -2,16 +2,18 @@
 
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
 import { useReducedMotion } from "framer-motion";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const links = [
-	{ id: "/", label: "Home", href: "/" },
-	{ id: "about", label: "About", href: "/about" },
-	{ id: "experiences", label: "Experiences", href: "/experience" },
-	{ id: "projects", label: "Projects", href: "/project" },
-	{ id: "certificates", label: "Certificates", href: "/certificates" },
-];
+	{ id: "/", label: "home", href: "/" },
+	{ id: "about", label: "about", href: "/about" },
+	{ id: "experiences", label: "experiences", href: "/experience" },
+	{ id: "projects", label: "projects", href: "/project" },
+	{ id: "certificates", label: "certificates", href: "/certificates" },
+] as const;
 
 export const Header = () => {
+	const { t } = useLanguage();
 	const [active, setActive] = useState("/");
 	const reduceMotion = useReducedMotion();
 	const navRef = useRef<HTMLElement>(null);
@@ -81,8 +83,10 @@ export const Header = () => {
 	return (
 		<div className="flex justify-center items-center fixed top-3 w-full z-10 max-md:inset-x-0">
 			<nav
+				id="main-navigation"
 				ref={navRef}
-				className="flex max-w-full overflow-x-auto gap-1 p-0.5 border border-white/15 rounded-full bg-white/10 backdrop-blur"
+				aria-label={t.nav.label}
+				className="flex max-w-full overflow-x-auto gap-1 p-0.5 border border-white/15 rounded-full bg-white/10 backdrop-blur-sm"
 			>
 				{links.map((link) => (
 					<a
@@ -96,7 +100,7 @@ export const Header = () => {
 								: ""
 						}`}
 					>
-						{link.label}
+						{t.nav[link.label]}
 					</a>
 				))}
 			</nav>

@@ -1,7 +1,7 @@
 "use client";
 
 import { SectionHeader } from "@/components/SectionHeader";
-import { SectionStars } from "@/components/SectionStars";
+import { SectionBackground } from "@/components/SectionBackground";
 import { Card } from "@/components/Card";
 import profile from "@/assets/images/profile.webp";
 import Image from "next/image";
@@ -51,6 +51,8 @@ import smileMemoji from "@/assets/images/memoji-smile.webp";
 import { CardHeader } from "@/components/CardHeader";
 import { ToolboxItems } from "@/components/ToolboxItems";
 import { motion } from "framer-motion";
+import { Fragment } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const topToolboxItems = [
 	{ title: "Git", iconType: GitIcon },
@@ -100,6 +102,7 @@ const bottomToolboxItems = [
 ];
 
 export const AboutSection = () => {
+	const { t } = useLanguage();
 	const v = {
 		up: { hidden: { y: -40, opacity: 0 }, show: { y: 0, opacity: 1 } },
 		right: { hidden: { x: 60, opacity: 0 }, show: { x: 0, opacity: 1 } },
@@ -113,12 +116,12 @@ export const AboutSection = () => {
 			id="about"
 			className="relative scroll-mt-36 md:scroll-mt-40 lg:scroll-mt-44 py-20 lg:py-28"
 		>
-			<SectionStars />
+			<SectionBackground />
 			<div className="container tablet-portrait:max-w-5xl">
 				<SectionHeader
-					eyebrow="About Me"
-					title="A Glimpse Into My World"
-					description="Get to know me a bit better"
+					eyebrow={t.about.eyebrow}
+					title={t.about.title}
+					description={t.about.description}
 				/>
 
 				<div className="mt-20 flex flex-col gap-8">
@@ -131,8 +134,12 @@ export const AboutSection = () => {
 							transition={{ ...spring, delay: 0.05 }}
 							className="md:col-span-2 lg:col-span-1 tablet-portrait:col-span-1 tablet-portrait:min-w-0"
 						>
-							<Card className="h-[320px]">
-								<CardHeader title="Profile" description="" className="tablet-portrait:px-6" />
+							<Card className="about-card [--about-card-tilt:-1.5deg] h-[320px]">
+								<CardHeader
+									title={t.about.profile}
+									description=""
+									className="tablet-portrait:px-6"
+								/>
 								<div className="w-52 mx-auto -mt-12 flex-1 flex items-start justify-center">
 									<Image src={profile} alt="Rakan Fadhil Prayata" sizes="208px" />
 								</div>
@@ -147,9 +154,9 @@ export const AboutSection = () => {
 							transition={{ ...spring, delay: 0.12 }}
 							className="md:col-span-3 lg:col-span-2 tablet-portrait:col-span-1 tablet-portrait:min-w-0"
 						>
-							<Card className="pb-4 md:h-[320px] md:pb-0 tablet-portrait:h-[320px] tablet-portrait:pb-0">
+							<Card className="about-card [--about-card-tilt:1.5deg] pb-4 md:h-[320px] md:pb-0 tablet-portrait:h-[320px] tablet-portrait:pb-0">
 								<CardHeader
-									title="Tech Stack"
+									title={t.about.techStack}
 									description=""
 									className="p-4 tablet-portrait:py-8 tablet-portrait:px-10"
 								/>
@@ -175,32 +182,23 @@ export const AboutSection = () => {
 							transition={{ ...spring, delay: 0.05 }}
 							className="md:col-span-3 lg:col-span-2 tablet-portrait:col-span-1 tablet-portrait:min-w-0"
 						>
-							<Card className="min-h-[320px] p-0 flex flex-col">
+							<Card className="about-card [--about-card-tilt:1.5deg] min-h-[320px] p-0 flex flex-col">
 								<CardHeader
-									title="About Myself"
+									title={t.about.myself}
 									description=""
 									className="px-6 pt-6 pb-0 md:pt-8 md:pb-0 lg:pt-10"
 								/>
 								<div>
 									<p className="px-6 pt-2 pb-6 text-[13px] md:py-2 md:text-sm lg:px-8 lg:py-4 lg:text-base text-white/60 tablet-portrait:px-6 tablet-portrait:pb-6 tablet-portrait:text-sm">
-										Hi, I’m Rakan Fadhil Prayata — an{" "}
-										<strong className="font-bold text-gray-300">
-											Informatics Engineering (GPA 3.56)
-										</strong>{" "}
-										graduate from Universitas Brawijaya. I{" "}
-										<strong className="font-bold text-gray-300">built a company website</strong>{" "}
-										with content management and SEO optimization,{" "}
-										<strong className="font-bold text-gray-300">supported IT operations</strong>,
-										and produced a safety induction video. I also worked on a capstone project
-										through Bangkit Academy and helped students learn web programming as a{" "}
-										<strong className="font-bold text-gray-300">teaching assistant</strong> at my
-										faculty. My thesis focused on analyzing public sentiment using{" "}
-										<strong className="font-bold text-gray-300">NLP and machine learning</strong>.
-										Currently, I’m interested in{" "}
-										<strong className="font-bold text-gray-300">
-											self-hosting and running a home server
-										</strong>
-										.
+										{t.about.biography.map((part) =>
+											part.strong ? (
+												<strong key={part.text} className="font-bold text-gray-300">
+													{part.text}
+												</strong>
+											) : (
+												<Fragment key={part.text}>{part.text}</Fragment>
+											),
+										)}
 									</p>
 								</div>
 							</Card>
@@ -214,17 +212,22 @@ export const AboutSection = () => {
 							transition={{ ...spring, delay: 0.12 }}
 							className="md:col-span-2 lg:col-span-1 tablet-portrait:col-span-1 tablet-portrait:min-w-0"
 						>
-							<Card className="h-[320px] p-0 relative tablet-portrait:h-full tablet-portrait:min-h-[320px]">
+							<Card className="about-card [--about-card-tilt:-1.5deg] h-[320px] p-0 relative tablet-portrait:h-full tablet-portrait:min-h-[320px]">
 								<Image
 									src={mapImage}
-									alt="map"
+									alt={t.about.mapAlt}
 									sizes="(min-width: 1024px) and (orientation: portrait) and (pointer: coarse) 464px, (min-width: 768px) and (orientation: portrait) and (pointer: coarse) calc(50vw - 3rem), (min-width: 600px) and (orientation: portrait) and (pointer: coarse) calc(50vw - 2rem), (min-width: 1200px) 304px, (min-width: 768px) 40vw, 100vw"
 									className="h-full w-full object-cover object-left-top md:object-center"
 								/>
 								<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-12 rounded-full">
-									<div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-300 to-sky-400 -z-20 animate-ping [animation-duration:2s]" />
-									<div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-300 to-sky-400 -z-10" />
-									<Image src={smileMemoji} alt="smile memoji" className="size-12" sizes="48px" />
+									<div className="absolute inset-0 rounded-full bg-linear-to-r/srgb from-emerald-300 to-sky-400 -z-20 animate-ping [animation-duration:2s]" />
+									<div className="absolute inset-0 rounded-full bg-linear-to-r/srgb from-emerald-300 to-sky-400 -z-10" />
+									<Image
+										src={smileMemoji}
+										alt={t.about.memojiAlt}
+										className="size-12"
+										sizes="48px"
+									/>
 								</div>
 							</Card>
 						</motion.div>

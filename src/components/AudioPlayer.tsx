@@ -1,14 +1,14 @@
 "use client";
 
-import grainImage from "@/assets/images/grain.webp";
 import { SpeakerWaveIcon, SpeakerXMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useLanguage } from "@/lib/LanguageContext";
+import { FloatingButton } from "@/components/FloatingButton";
 
-export const AudioPlayer = () => {
+export const AudioPlayer = ({ isVisible = true }: { isVisible?: boolean }) => {
+	const { t } = useLanguage();
 	const audioRef = useRef<HTMLAudioElement>(null);
 	const [isMuted, setIsMuted] = useState(true);
-	const reduceMotion = useReducedMotion();
 
 	useEffect(() => {
 		const audio = audioRef.current;
@@ -50,31 +50,20 @@ export const AudioPlayer = () => {
 				loop
 				preload="auto"
 				hidden
-				aria-hidden="true"
 				onVolumeChange={() => setIsMuted(audioRef.current?.muted ?? false)}
 			>
 				<source src="/audio/divine-throne-ost.mp3" type="audio/mpeg" />
 			</audio>
-			<motion.button
-				type="button"
-				aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+			<FloatingButton
+				tabIndex={isVisible ? 0 : -1}
+				aria-label={isMuted ? t.controls.unmute : t.controls.mute}
 				onClick={() => {
 					const audio = audioRef.current;
 					if (audio) audio.muted = !audio.muted;
 				}}
-				initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-				animate={{ opacity: 1, y: 0 }}
-				whileHover={reduceMotion ? undefined : { y: -3, scale: 1.05 }}
-				whileTap={reduceMotion ? undefined : { scale: 0.95 }}
-				className="fixed bottom-4 right-4 z-40 inline-flex size-12 items-center justify-center bg-gray-800 rounded-3xl overflow-hidden text-white after:-z-10 after:content-[''] after:absolute after:inset-0 after:outline-2 after:outline after:-outline-offset-2 after:rounded-3xl after:outline-white/20 after:pointer-events-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300 md:bottom-6 md:right-6"
 			>
-				<span
-					aria-hidden="true"
-					className="pointer-events-none absolute inset-0 -z-10 opacity-5"
-					style={{ backgroundImage: `url(${grainImage.src})` }}
-				/>
 				{isMuted ? <SpeakerXMarkIcon className="size-5" /> : <SpeakerWaveIcon className="size-5" />}
-			</motion.button>
+			</FloatingButton>
 		</>
 	);
 };

@@ -1,12 +1,12 @@
-import { Header } from "@/sections/Navbar";
-import { HeroSection } from "@/sections/Hero";
-import { AboutSection } from "@/sections/About";
-import { ExperiencesSection } from "@/sections/Experiences";
-import { ProjectsSection } from "@/sections/Projects";
-import { CertificatesSection } from "@/sections/Certificates";
-import { Footer } from "@/sections/Footer";
-import { AudioPlayer } from "@/components/AudioPlayer";
+import { Header } from "@/components/Navbar";
+import { HeroSection } from "@/components/Hero";
+import { AboutSection } from "@/components/About";
+import { ExperiencesSection } from "@/components/Experiences";
+import { ProjectsSection } from "@/components/Projects";
+import { CertificatesSection } from "@/components/Certificates";
+import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { StarCursor } from "@/components/StarCursor";
 
 export default function Home() {
 	return (
@@ -20,8 +20,8 @@ export default function Home() {
 				<CertificatesSection />
 			</main>
 			<Footer />
-			<AudioPlayer />
 			<ScrollToTop />
+			<StarCursor />
 		</>
 	);
 }

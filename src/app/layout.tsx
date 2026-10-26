@@ -3,11 +3,13 @@ import type { ReactNode } from "react";
 import { Inter, Calistoga } from "next/font/google";
 import "./globals.css";
 import { twMerge } from "tailwind-merge";
+import { LanguageProvider } from "@/lib/LanguageContext";
+import { PageLoader } from "@/components/PageLoader";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const calistoga = Calistoga({
 	subsets: ["latin"],
-	variable: "--font-serif",
+	variable: "--font-calistoga",
 	weight: "400",
 });
 
@@ -30,7 +32,9 @@ export default function RootLayout({
 					"bg-gray-900 text-white antialiased font-sans",
 				)}
 			>
-				{children}
+				<LanguageProvider>
+					<PageLoader>{children}</PageLoader>
+				</LanguageProvider>
 			</body>
 		</html>
 	);

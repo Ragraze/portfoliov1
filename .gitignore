@@ -4,13 +4,15 @@
 .pnp.*
 .yarn/install-state.gz
 
-# Original images and unused local icons are archived on the master branch.
+# Original images and unused assets are archived on the master branch.
 /public/certificates/*.jpg
 /public/certificates/*.jpeg
 /public/certificates/*.png
 /src/assets/images/*.jpg
 /src/assets/images/*.jpeg
 /src/assets/images/*.png
+/src/assets/images/accuracy-distribution.webp
+/src/assets/images/sentiment-analysis.webp
 /src/assets/icons/*.svg
 !/src/assets/icons/canva.svg
 !/src/assets/icons/codex.svg

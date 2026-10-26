@@ -4,6 +4,7 @@ import Image, { type StaticImageData } from "next/image";
 import type { KeyboardEvent } from "react";
 import { twMerge } from "tailwind-merge";
 import { Modal } from "./Modal";
+import { useLanguage } from "@/lib/LanguageContext";
 
 interface ViewerImage {
 	title: string;
@@ -31,8 +32,8 @@ export const ImageViewer = ({
 	label,
 	imageClassName,
 }: ImageViewerProps) => {
+	const { t } = useLanguage();
 	const currentImage = images[currentIndex];
-	const imageLabel = label.toLowerCase();
 
 	const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
 		if (images.length > 1 && event.key === "ArrowRight") {
@@ -49,7 +50,7 @@ export const ImageViewer = ({
 	return (
 		<Modal
 			onClose={onClose}
-			label={`${label} viewer`}
+			label={`${t.viewer.title}: ${label}`}
 			onKeyDown={handleKeyDown}
 			className="bg-black/90 px-2 py-14 sm:px-4"
 		>
@@ -57,7 +58,7 @@ export const ImageViewer = ({
 				<button
 					type="button"
 					onClick={onClose}
-					aria-label={`Close ${imageLabel} viewer`}
+					aria-label={t.viewer.close}
 					className="absolute -top-12 right-0 h-11 w-11 text-white text-xl sm:text-2xl hover:text-gray-300 transition-colors z-10"
 				>
 					✕
@@ -68,7 +69,7 @@ export const ImageViewer = ({
 						<button
 							type="button"
 							onClick={onPrev}
-							aria-label={`Previous ${imageLabel}`}
+							aria-label={t.viewer.previous}
 							className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 text-white text-2xl sm:text-4xl hover:text-gray-300 transition-colors bg-black/50 rounded-full w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center z-10"
 						>
 							‹
@@ -77,7 +78,7 @@ export const ImageViewer = ({
 						<button
 							type="button"
 							onClick={onNext}
-							aria-label={`Next ${imageLabel}`}
+							aria-label={t.viewer.next}
 							className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 text-white text-2xl sm:text-4xl hover:text-gray-300 transition-colors bg-black/50 rounded-full w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center z-10"
 						>
 							›

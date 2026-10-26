@@ -7,42 +7,14 @@ import grainImage from "@/assets/images/grain.webp";
 import StarIcon from "@/assets/icons/star.svg";
 import SparkleIcon from "@/assets/icons/sparkle.svg";
 import { HeroOrbit } from "@/components/HeroOrbit";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-
-const words = ["Web Developer", "IT Support", "IT Infrastructure", "Fresh Graduate"];
+import { useLanguage } from "@/lib/LanguageContext";
+import { Typewriter } from "@/components/Typewriter";
 
 export const HeroSection = () => {
+	const { language, t } = useLanguage();
 	const reduceMotion = useReducedMotion();
-	const [wordIndex, setWordIndex] = useState(0);
-	const [charIndex, setCharIndex] = useState(0);
-	const [isDeleting, setIsDeleting] = useState(false);
-
-	useEffect(() => {
-		if (reduceMotion) return;
-		const currentWord = words[wordIndex];
-		const isWordCompleted = !isDeleting && charIndex === currentWord.length;
-		const isWordCleared = isDeleting && charIndex === 0;
-
-		let timeoutDelay = 80;
-		if (isDeleting) timeoutDelay = 40;
-		if (isWordCompleted) timeoutDelay = 1200;
-		if (isWordCleared) timeoutDelay = 300;
-
-		const timeoutId = setTimeout(() => {
-			if (isWordCompleted) setIsDeleting(true);
-			else if (isWordCleared) {
-				setIsDeleting(false);
-				setWordIndex((prev) => (prev + 1) % words.length);
-			} else {
-				setCharIndex((prev) => prev + (isDeleting ? -1 : 1));
-			}
-		}, timeoutDelay);
-
-		return () => clearTimeout(timeoutId);
-	}, [charIndex, isDeleting, wordIndex, reduceMotion]);
-
-	const typedText = reduceMotion ? words[0] : words[wordIndex].slice(0, charIndex);
 	const [connectHover, setConnectHover] = useState(false);
 	const [ripples, setRipples] = useState<{ id: number; x: number; y: number; size: number }[]>([]);
 	const rippleId = useRef(0);
@@ -171,29 +143,26 @@ export const HeroSection = () => {
 						src={memojiImage}
 						className="size-[100px] tablet-landscape:size-16"
 						sizes="(min-width: 768px) and (orientation: landscape) and (pointer: coarse) 64px, 100px"
-						alt="Person peeking from behind laptop"
-						priority
+						alt={t.hero.imageAlt}
+						preload
 					/>
 					<div className="bg-gray-950 border border-gray-800 px-4 py-1.5 inline-flex items-center gap-4 rounded-lg">
 						<div className="bg-green-500 size-2.5 rounded-full relative">
 							<div className="bg-green-500 absolute inset-0 rounded-full animate-ping-large" />
 						</div>
-						<div className="text-sm font-medium tablet-landscape:text-xs">
-							Exploring New Opportunity
-						</div>
+						<div className="text-sm font-medium tablet-landscape:text-xs">{t.hero.available}</div>
 					</div>
 				</div>
 
 				<div className="max-w-lg md:max-w-xl lg:max-w-lg tablet-landscape:max-w-xl mx-auto">
 					<h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-center mt-8 tracking-wide tablet-landscape:mt-4 tablet-landscape:text-3xl">
-						<span>{typedText}</span>
+						<Typewriter key={language} words={t.hero.words} />
 						<span className="after:content-['|'] after:ml-1 animate-pulse" />
 					</h1>
-					<p className="mt-4 text-center text-sm leading-relaxed text-white/60 md:text-base tablet-landscape:mt-3 tablet-landscape:text-sm">
-						Hi, I’m <span className="font-semibold">Rakan Fadhil Prayata</span>, an IT graduate from
-						Universitas Brawijaya. I’ve built company websites and supported IT operations during
-						internships. I’m interested in web development, AI, cloud computing, and networking. I’m
-						looking for an opportunity where I can contribute and keep learning.
+					<p className="mt-4 text-center text-sm leading-relaxed text-white/60 md:text-base md:leading-6 tablet-landscape:mt-3 tablet-landscape:text-sm tablet-landscape:leading-5">
+						{t.hero.intro}
+						<span className="font-semibold">Rakan Fadhil Prayata</span>
+						{t.hero.description}
 					</p>
 				</div>
 
@@ -203,7 +172,7 @@ export const HeroSection = () => {
 						whileHover={{ y: -2, scale: 1.02 }}
 						whileTap={{ scale: 0.98 }}
 						className="group relative inline-flex items-center gap-2 border border-white/15 px-6 h-12 rounded-xl overflow-hidden tablet-portrait:px-4 tablet-portrait:text-sm tablet-portrait:whitespace-nowrap tablet-landscape:h-11 tablet-landscape:text-sm"
-						aria-label="Download my CV"
+						aria-label={t.hero.downloadCvLabel}
 					>
 						<span
 							className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -215,8 +184,8 @@ export const HeroSection = () => {
 								maskComposite: "exclude",
 							}}
 						/>
-						<span className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/2 -skew-x-12 bg-white/10 blur-sm opacity-0 group-hover:opacity-100 group-hover:left-full transition-all duration-700" />
-						<span className="font-semibold relative z-10">Download My CV</span>
+						<span className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/2 -skew-x-12 bg-white/10 blur-xs opacity-0 group-hover:opacity-100 group-hover:left-full transition-all duration-700" />
+						<span className="font-semibold relative z-10">{t.hero.downloadCv}</span>
 						<motion.span
 							className="relative z-10"
 							animate={{ y: 0 }}
@@ -247,7 +216,7 @@ export const HeroSection = () => {
 							setRipples((prev) => [...prev, { id, x, y, size }]);
 						}}
 						className="relative overflow-hidden inline-flex items-center gap-2 border border-white bg-white text-gray-900 h-12 px-6 rounded-xl tablet-portrait:px-4 tablet-portrait:text-sm tablet-portrait:whitespace-nowrap tablet-landscape:h-11 tablet-landscape:text-sm"
-						aria-label="Let’s connect"
+						aria-label={t.hero.connect}
 					>
 						<motion.span
 							className="pointer-events-none absolute inset-0 rounded-xl"
@@ -292,14 +261,14 @@ export const HeroSection = () => {
 							🖐️
 						</motion.span>
 
-						<span className="font-semibold relative z-10">Let’s Connect</span>
+						<span className="font-semibold relative z-10">{t.hero.connect}</span>
 					</motion.a>
 				</div>
 			</div>
 			<div className="absolute bottom-6 inset-x-0 flex justify-center md:bottom-8 lg:bottom-12 tablet-landscape:bottom-4">
 				<a
 					href="/about"
-					aria-label="Scroll to About"
+					aria-label={t.hero.scrollToAbout}
 					onClick={(e) => {
 						if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
 						e.preventDefault();
@@ -310,7 +279,7 @@ export const HeroSection = () => {
 							history.pushState(null, "", "/about");
 						}
 					}}
-					className="inline-flex size-12 items-center justify-center text-white/70 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+					className="inline-flex size-12 items-center justify-center text-white/70 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
 				>
 					<motion.span
 						aria-hidden="true"

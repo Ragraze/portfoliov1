@@ -45,7 +45,7 @@ export const SectionHeader = ({
 			viewport={{ once: true, amount: 0.35 }}
 		>
 			<motion.div variants={item} className="flex justify-center">
-				<p className="uppercase font-semibold tracking-widest bg-gradient-to-r from-emerald-300 to-sky-400 text-center bg-clip-text text-transparent">
+				<p className="uppercase font-semibold tracking-widest bg-linear-to-r/srgb from-emerald-300 to-sky-400 text-center bg-clip-text text-transparent">
 					{eyebrow}
 				</p>
 			</motion.div>
