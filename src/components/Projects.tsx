@@ -146,9 +146,6 @@ export const ProjectsSection = () => {
 		const contents = Array.from(
 			projectsRef.current?.querySelectorAll<HTMLDivElement>("[data-project-content]") ?? [],
 		);
-		const images = Array.from(
-			projectsRef.current?.querySelectorAll<HTMLButtonElement>("[data-project-image]") ?? [],
-		);
 		if (contents.length < 2) {
 			setCardHeight(0);
 			return;
@@ -159,12 +156,9 @@ export const ProjectsSection = () => {
 				const card = content.parentElement;
 				if (!card) return 0;
 				const styles = window.getComputedStyle(card);
-				const image = card.querySelector<HTMLButtonElement>("[data-project-image]");
-				const imageHeight =
-					styles.display === "flex" ? (image?.getBoundingClientRect().height ?? 0) : 0;
+				if (styles.display === "flex") return 0;
 				return (
 					content.getBoundingClientRect().height +
-					imageHeight +
 					parseFloat(styles.paddingTop) +
 					parseFloat(styles.paddingBottom)
 				);
@@ -177,9 +171,6 @@ export const ProjectsSection = () => {
 		contents.forEach((content) => {
 			observer.observe(content);
 		});
-		images.forEach((image) => {
-			observer.observe(image);
-		});
 		window.addEventListener("resize", measure);
 		return () => {
 			observer.disconnect();
@@ -190,7 +181,7 @@ export const ProjectsSection = () => {
 	return (
 		<section
 			id="projects"
-			className="scroll-mt-36 md:scroll-mt-40 desktop:scroll-mt-44 pb-16 desktop:py-24"
+			className="scroll-mt-36 md:scroll-mt-40 desktop:scroll-mt-44 max-md:pt-16 pb-16 desktop:py-24"
 		>
 			<SectionBackground />
 			<div className="container tablet-portrait:max-w-none">
@@ -318,7 +309,7 @@ export const ProjectsSection = () => {
 									type="button"
 									onClick={() => openFullscreen(project.id)}
 									aria-label={`${t.projects.viewImage} ${project.title}`}
-									className="relative flow-root w-full max-md:mt-auto tablet:col-span-2 tablet:self-stretch tablet:pb-6 tablet:before:block tablet:before:aspect-[var(--project-image-aspect-ratio)] tablet-portrait:col-span-1 tablet-portrait:self-stretch tablet-portrait:mt-0 tablet-portrait:pb-6 tablet-portrait:before:block tablet-portrait:before:aspect-[var(--project-image-aspect-ratio)] cursor-zoom-in focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white/40"
+									className="relative flow-root w-full tablet:col-span-2 tablet:self-stretch tablet:pb-6 tablet:before:block tablet:before:aspect-[var(--project-image-aspect-ratio)] tablet-portrait:col-span-1 tablet-portrait:self-stretch tablet-portrait:mt-0 tablet-portrait:pb-6 tablet-portrait:before:block tablet-portrait:before:aspect-[var(--project-image-aspect-ratio)] cursor-zoom-in focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white/40"
 								>
 									<Image
 										src={project.image}

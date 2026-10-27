@@ -24,7 +24,7 @@ export const Footer = () => {
 		<footer className="relative z-0 overflow-x-clip">
 			<div className="pointer-events-none absolute bottom-0 left-1/2 h-[400px] w-[1600px] -translate-x-1/2 bg-emerald-300/30 [mask-image:radial-gradient(50%_50%_at_bottom_center,black,transparent)] -z-10" />
 			<div className="container">
-				<div className="border-t border-white/15 py-6 text-sm flex flex-col md:flex-row md:justify-between items-center gap-4 md:gap-8">
+				<div className="border-t border-white/15 py-6 text-sm flex flex-col-reverse md:flex-row md:justify-between items-center gap-4 md:gap-8">
 					<div className="text-white/40">
 						&copy; {new Date().getFullYear()}. {t.footer.rights}
 					</div>

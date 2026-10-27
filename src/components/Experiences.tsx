@@ -218,7 +218,7 @@ export const ExperiencesSection = () => {
 	return (
 		<section
 			id="experiences"
-			className="scroll-mt-36 md:scroll-mt-40 lg:scroll-mt-44 py-20 lg:py-28"
+			className="scroll-mt-36 md:scroll-mt-40 lg:scroll-mt-44 py-16 md:py-20 lg:py-28"
 		>
 			<SectionBackground />
 			<div className="container tablet-portrait:max-w-none">
@@ -228,7 +228,7 @@ export const ExperiencesSection = () => {
 					description={t.experiences.description}
 				/>
 
-				<div className="mt-20 relative">
+				<div className="mt-10 md:mt-20 relative">
 					<motion.div
 						className="absolute left-1/2 -translate-x-1/2 w-0.5 h-full bg-linear-to-b/srgb from-emerald-300 to-sky-400 hidden md:block tablet-portrait:hidden"
 						initial={{ opacity: 0, scaleY: 0.9 }}
