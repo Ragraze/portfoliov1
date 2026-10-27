@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useSyncExternalStore, type ReactNode } from "react";
+import { domAnimation, LazyMotion, MotionConfig } from "framer-motion";
 import { translations, type Language, type Translations } from "@/lib/translations";
 
 const storageKey = "portfolio-language";
@@ -63,7 +64,11 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 		<LanguageContext.Provider
 			value={{ language, setLanguage: changeLanguage, t: translations[language] }}
 		>
-			{children}
+			<MotionConfig reducedMotion="user">
+				<LazyMotion features={domAnimation} strict>
+					{children}
+				</LazyMotion>
+			</MotionConfig>
 		</LanguageContext.Provider>
 	);
 };

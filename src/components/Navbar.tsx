@@ -21,7 +21,7 @@ export const Header = () => {
 	const scrollToSection = useCallback((id: string, behavior: ScrollBehavior) => {
 		const target = document.getElementById(id);
 		if (!target) return;
-		const headerOffset = (navRef.current?.getBoundingClientRect().bottom ?? 64) + 16;
+		const headerOffset = (navRef.current?.parentElement?.getBoundingClientRect().bottom ?? 64) + 16;
 		const elementPosition = target.getBoundingClientRect().top + window.scrollY;
 		const offsetPosition = Math.max(0, elementPosition - headerOffset);
 		window.scrollTo({ top: offsetPosition, behavior });
@@ -49,7 +49,8 @@ export const Header = () => {
 		};
 
 		const scrollHandler = () => {
-			const headerOffset = (navRef.current?.getBoundingClientRect().bottom ?? 64) + 16;
+			const headerOffset =
+				(navRef.current?.parentElement?.getBoundingClientRect().bottom ?? 64) + 16;
 			let found = false;
 			for (let i = links.length - 1; i >= 0; i--) {
 				const section = document.getElementById(links[i].id);
@@ -82,28 +83,36 @@ export const Header = () => {
 
 	return (
 		<div className="flex justify-center items-center fixed top-3 w-full z-10 max-md:inset-x-0">
-			<nav
-				id="main-navigation"
-				ref={navRef}
-				aria-label={t.nav.label}
-				className="flex max-w-full overflow-x-auto gap-1 p-0.5 border border-white/15 rounded-full bg-white/10 backdrop-blur-sm"
-			>
-				{links.map((link) => (
-					<a
-						key={link.id}
-						href={link.href}
-						onClick={(e) => handleClick(e, link.id, link.href)}
-						aria-current={active === link.id ? "location" : undefined}
-						className={`nav-item shrink-0 whitespace-nowrap max-md:px-1.5 max-md:text-[11px] ${
-							active === link.id
-								? "bg-white text-gray-900 hover:bg-white/70 hover:text-gray-900"
-								: ""
-						}`}
-					>
-						{t.nav[link.label]}
-					</a>
-				))}
-			</nav>
+			<div className="relative flex max-w-full">
+				<div
+					aria-hidden="true"
+					className="pointer-events-none absolute inset-0 rounded-full border border-white/15 bg-white/10 backdrop-blur-sm"
+				/>
+				<nav
+					id="main-navigation"
+					ref={navRef}
+					aria-label={t.nav.label}
+					className="relative -my-1.5 flex max-w-full overflow-x-auto gap-1 p-0.5 border border-transparent rounded-full"
+				>
+					{links.map((link) => (
+						<a
+							key={link.id}
+							href={link.href}
+							onClick={(e) => handleClick(e, link.id, link.href)}
+							aria-current={active === link.id ? "location" : undefined}
+							className={`nav-item group shrink-0 whitespace-nowrap max-md:px-1.5 max-md:text-[11px] ${
+								active === link.id ? "text-gray-900 hover:text-gray-900" : ""
+							}`}
+						>
+							<span
+								aria-hidden="true"
+								className={`pointer-events-none absolute inset-x-0 inset-y-1.5 -z-10 rounded-full transition duration-300 ${active === link.id ? "bg-white group-hover:bg-white/70" : "group-hover:bg-white/10"}`}
+							/>
+							{t.nav[link.label]}
+						</a>
+					))}
+				</nav>
+			</div>
 		</div>
 	);
 };

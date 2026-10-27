@@ -5,19 +5,28 @@ import { SectionBackground } from "@/components/SectionBackground";
 import expressJsCertificate from "../../public/certificates/expressjs.webp";
 import msibCertificate from "../../public/certificates/msib.webp";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { Card } from "@/components/Card";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { ImageViewer } from "@/components/ImageViewer";
 import {
-	motion,
+	domAnimation,
+	frame,
+	cancelFrame,
+	LazyMotion,
+	m as motion,
 	useMotionValue,
-	useAnimationFrame,
 	useReducedMotion,
 	useTransform,
+	useInView,
+	type FeatureBundle,
 	type MotionValue,
 } from "framer-motion";
 import { useLanguage } from "@/lib/LanguageContext";
 import type { Translations } from "@/lib/translations";
+
+const ImageViewer = dynamic(() =>
+	import("@/components/ImageViewer").then((module) => module.ImageViewer),
+);
 
 const certificateAssets: {
 	id: keyof Translations["certificates"]["items"];
@@ -195,11 +204,26 @@ export const CertificatesSection = () => {
 
 	const containerRef = useRef<HTMLElement | null>(null);
 	const trackRef = useRef<HTMLDivElement | null>(null);
+	const wasDragged = useRef(false);
 
 	const x = useMotionValue(0);
 	const [speed, setSpeed] = useState(40);
 	const [isHover, setIsHover] = useState(false);
 	const [isDragging, setIsDragging] = useState(false);
+	const [isFocused, setIsFocused] = useState(false);
+	const isNearViewport = useInView(containerRef, { margin: "200px" });
+	const [dragFeatures, setDragFeatures] = useState<FeatureBundle>(domAnimation);
+
+	useEffect(() => {
+		if (!isNearViewport || dragFeatures !== domAnimation) return;
+		let active = true;
+		void import("@/lib/motionFeatures").then((module) => {
+			if (active) setDragFeatures(module.default);
+		});
+		return () => {
+			active = false;
+		};
+	}, [isNearViewport, dragFeatures]);
 
 	const [chunk, setChunk] = useState(0);
 	const [metrics, setMetrics] = useState<CarouselMetrics>({ width: 0, step: 0, cardWidth: 0 });
@@ -232,12 +256,25 @@ export const CertificatesSection = () => {
 		return () => ro.disconnect();
 	}, []);
 
-	useAnimationFrame((_time, delta) => {
-		if (reduceMotion || isHover || isDragging || isFullscreen || chunk <= 0) return;
-		const dx = (speed * delta) / 1000;
-		const next = x.get() - dx;
-		x.set(-(((-next % chunk) + chunk) % chunk));
-	});
+	useEffect(() => {
+		if (
+			!isNearViewport ||
+			reduceMotion ||
+			isHover ||
+			isDragging ||
+			isFocused ||
+			isFullscreen ||
+			chunk <= 0
+		)
+			return;
+		const advance = ({ delta }: { delta: number }) => {
+			const dx = (speed * delta) / 1000;
+			const next = x.get() - dx;
+			x.set(-(((-next % chunk) + chunk) % chunk));
+		};
+		frame.update(advance, true);
+		return () => cancelFrame(advance);
+	}, [isNearViewport, reduceMotion, isHover, isDragging, isFocused, isFullscreen, chunk, speed, x]);
 
 	const dragConstraints = useMemo(() => {
 		return { left: -chunk, right: 0 };
@@ -255,7 +292,7 @@ export const CertificatesSection = () => {
 		setCurrentCertificateIndex((p) => (p === 0 ? certificates.length - 1 : p - 1));
 
 	return (
-		<>
+		<LazyMotion features={dragFeatures} strict>
 			<section
 				id="certificates"
 				className="relative isolate scroll-mt-36 md:scroll-mt-40 lg:scroll-mt-44 py-16 lg:py-24"
@@ -274,6 +311,10 @@ export const CertificatesSection = () => {
 						className="md:mt-12 lg:mt-20 relative overflow-hidden max-md:left-1/2 max-md:-translate-x-1/2 max-md:w-screen lg:left-1/2 lg:-translate-x-1/2 lg:w-[min(1280px,calc(100vw-4rem))] tablet-portrait:left-1/2 tablet-portrait:-translate-x-1/2 tablet-portrait:w-screen"
 						onMouseEnter={() => setIsHover(true)}
 						onMouseLeave={() => setIsHover(false)}
+						onFocusCapture={() => setIsFocused(true)}
+						onBlurCapture={(event) => {
+							if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false);
+						}}
 					>
 						<div
 							className="py-10 md:py-12"
@@ -287,7 +328,10 @@ export const CertificatesSection = () => {
 								dragConstraints={dragConstraints}
 								dragElastic={0.2}
 								dragMomentum
-								onDragStart={() => setIsDragging(true)}
+								onDragStart={() => {
+									wasDragged.current = true;
+									setIsDragging(true);
+								}}
 								onDragEnd={() => {
 									setSpeed(40);
 								}}
@@ -307,9 +351,14 @@ export const CertificatesSection = () => {
 												<button
 													type="button"
 													className="w-full h-48 sm:h-56 md:h-60 bg-gray-700 inline-flex items-center justify-center rounded-lg shrink-0 mx-auto mb-4 cursor-zoom-in focus:outline-hidden focus:ring-2 focus:ring-white/40"
-													onClick={() => openFullscreen(idx)}
+													onClick={(event) => {
+														if (event.detail === 0 || !wasDragged.current) openFullscreen(idx);
+													}}
 													aria-label={`${t.certificates.viewImage} ${certificate.title}`}
-													onPointerDownCapture={() => setSpeed(10)}
+													onPointerDownCapture={() => {
+														wasDragged.current = false;
+														setSpeed(10);
+													}}
 													onPointerUp={() => setSpeed(40)}
 													onPointerCancel={() => setSpeed(40)}
 												>
@@ -336,16 +385,18 @@ export const CertificatesSection = () => {
 				</div>
 			</section>
 
-			<ImageViewer
-				isOpen={isFullscreen}
-				onClose={closeFullscreen}
-				images={certificates}
-				currentIndex={currentCertificateIndex}
-				onNext={nextCertificate}
-				onPrev={prevCertificate}
-				label={t.certificates.imageLabel}
-				imageClassName="h-[calc(100dvh-7rem)] w-full"
-			/>
-		</>
+			{isFullscreen && (
+				<ImageViewer
+					isOpen={isFullscreen}
+					onClose={closeFullscreen}
+					images={certificates}
+					currentIndex={currentCertificateIndex}
+					onNext={nextCertificate}
+					onPrev={prevCertificate}
+					label={t.certificates.imageLabel}
+					imageClassName="h-[calc(100dvh-7rem)] w-full"
+				/>
+			)}
+		</LazyMotion>
 	);
 };

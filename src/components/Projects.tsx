@@ -9,6 +9,7 @@ import twiLandingPage from "@/assets/images/tri-wall-indonesia-landing-page.webp
 import twnsLandingPage from "@/assets/images/tri-wall-natura-surabaya-landing-page.webp";
 import inductionImage from "@/assets/images/safety-induction.webp";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { ArrowUpRightIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
 import NextjsIcon from "simple-icons/icons/nextdotjs.svg";
 import ReactIcon from "simple-icons/icons/react.svg";
@@ -39,10 +40,13 @@ import VegasIcon from "simple-icons/icons/vegas.svg";
 import { SectionHeader } from "@/components/SectionHeader";
 import { SectionBackground } from "@/components/SectionBackground";
 import { Card } from "@/components/Card";
-import { ImageViewer } from "@/components/ImageViewer";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { twMerge } from "tailwind-merge";
+
+const ImageViewer = dynamic(() =>
+	import("@/components/ImageViewer").then((module) => module.ImageViewer),
+);
 
 const projectAssets = [
 	{
@@ -274,15 +278,12 @@ export const ProjectsSection = () => {
 					{filteredProjects.map((project, projectIndex) => (
 						<Card
 							key={project.id}
-							className="px-8 pt-8 pb-0 md:p-6 desktop:pt-16 desktop:px-20 desktop:pb-0 flex flex-col md:grid md:grid-cols-5 desktop:grid-cols-2 md:gap-4 desktop:gap-16 tablet:pb-0 tablet-portrait:grid tablet-portrait:grid-cols-2 tablet-portrait:gap-4 tablet-portrait:p-6 tablet-portrait:pb-0 sticky top-16 desktop:top-28 tablet:[--project-card-min-height:min(var(--project-card-height),calc(100svh-5rem))] tablet:max-h-[calc(100svh-5rem)] tablet:overflow-y-auto after:z-10"
+							className="px-8 pt-8 pb-0 md:p-6 desktop:pt-16 desktop:px-20 desktop:pb-0 flex flex-col md:grid md:grid-cols-5 md:min-h-[var(--project-card-min-height,var(--project-card-height))] desktop:grid-cols-2 md:gap-4 desktop:gap-16 tablet:pb-0 tablet-portrait:grid tablet-portrait:grid-cols-2 tablet-portrait:min-h-[var(--project-card-min-height,var(--project-card-height))] tablet-portrait:gap-4 tablet-portrait:p-6 tablet-portrait:pb-0 sticky top-16 desktop:top-28 tablet:[--project-card-min-height:min(var(--project-card-height),calc(100svh-5rem))] tablet:max-h-[calc(100svh-5rem)] tablet:overflow-y-auto after:z-10"
 							style={
 								{
 									"--project-card-height": `${cardHeight}px`,
 									"--project-image-aspect-ratio": project.image
 										? `${project.image.width} / ${project.image.height}`
-										: undefined,
-									minHeight: cardHeight
-										? `var(--project-card-min-height, ${cardHeight}px)`
 										: undefined,
 									zIndex: projectIndex + 1,
 								} as CSSProperties
@@ -364,7 +365,7 @@ export const ProjectsSection = () => {
 									type="button"
 									onClick={() => openFullscreen(project.id)}
 									aria-label={`${t.projects.viewImage} ${project.title}`}
-									className="relative flow-root w-full max-md:mt-auto tablet:col-span-2 tablet:self-stretch tablet:pb-6 tablet:before:block tablet:before:aspect-[var(--project-image-aspect-ratio)] tablet-portrait:col-span-1 tablet-portrait:self-stretch tablet-portrait:mt-0 tablet-portrait:pb-6 tablet-portrait:before:block tablet-portrait:before:aspect-[var(--project-image-aspect-ratio)] cursor-zoom-in focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white/40"
+									className="relative flow-root w-full tablet:col-span-2 tablet:self-stretch tablet:pb-6 tablet:before:block tablet:before:aspect-[var(--project-image-aspect-ratio)] tablet-portrait:col-span-1 tablet-portrait:self-stretch tablet-portrait:mt-0 tablet-portrait:pb-6 tablet-portrait:before:block tablet-portrait:before:aspect-[var(--project-image-aspect-ratio)] cursor-zoom-in focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white/40"
 								>
 									<Image
 										src={project.image}
@@ -383,16 +384,18 @@ export const ProjectsSection = () => {
 				</div>
 			</div>
 
-			<ImageViewer
-				isOpen={isFullscreen}
-				onClose={closeFullscreen}
-				images={projectImages}
-				currentIndex={currentProjectIndex}
-				onNext={nextProject}
-				onPrev={prevProject}
-				label={t.projects.imageLabel}
-				imageClassName="[clip-path:inset(1px_round_3%/5%)]"
-			/>
+			{isFullscreen && (
+				<ImageViewer
+					isOpen={isFullscreen}
+					onClose={closeFullscreen}
+					images={projectImages}
+					currentIndex={currentProjectIndex}
+					onNext={nextProject}
+					onPrev={prevProject}
+					label={t.projects.imageLabel}
+					imageClassName="[clip-path:inset(1px_round_3%/5%)]"
+				/>
+			)}
 		</section>
 	);
 };

@@ -3,15 +3,15 @@
 import { SectionHeader } from "@/components/SectionHeader";
 import { SectionBackground } from "@/components/SectionBackground";
 import { Card } from "@/components/Card";
-import { Modal } from "@/components/Modal";
 import triwallImage from "@/assets/images/tri-wall-indonesia.webp";
 import twnsImage from "@/assets/images/tri-wall-natura-surabaya.webp";
 import bangkitImage from "@/assets/images/bangkit.webp";
 import assistantImage from "@/assets/images/teaching-assistant.webp";
 import emifImage from "@/assets/images/emif.webp";
 import Image, { type StaticImageData } from "next/image";
+import dynamic from "next/dynamic";
 import { useState, type ComponentType, type ReactNode, type SVGProps } from "react";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { CodeBracketIcon, ServerStackIcon } from "@heroicons/react/24/solid";
 import { twMerge } from "tailwind-merge";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -28,6 +28,8 @@ import LaravelIcon from "simple-icons/icons/laravel.svg";
 import FigmaIcon from "simple-icons/icons/figma.svg";
 import CanvaIcon from "@/assets/icons/canva.svg";
 import WordpressIcon from "simple-icons/icons/wordpress.svg";
+
+const Modal = dynamic(() => import("@/components/Modal").then((module) => module.Modal));
 
 interface Experience {
 	id: keyof Translations["experiences"]["items"];

@@ -8,7 +8,7 @@ import StarIcon from "@/assets/icons/star.svg";
 import SparkleIcon from "@/assets/icons/sparkle.svg";
 import { HeroOrbit } from "@/components/HeroOrbit";
 import { useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m as motion, useReducedMotion } from "framer-motion";
 import { useLanguage } from "@/lib/LanguageContext";
 import { Typewriter } from "@/components/Typewriter";
 
@@ -281,13 +281,10 @@ export const HeroSection = () => {
 					}}
 					className="inline-flex size-12 items-center justify-center text-white/70 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
 				>
-					<motion.span
-						aria-hidden="true"
-						animate={{ y: reduceMotion ? 0 : [0, 6, 0] }}
-						transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-					>
+					<span className="sr-only">{t.hero.scrollToAbout}</span>
+					<span aria-hidden="true" className="inline-block motion-safe:animate-scroll-cue">
 						<ArrowDown className="size-5" />
-					</motion.span>
+					</span>
 				</a>
 			</div>
 		</section>

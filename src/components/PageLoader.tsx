@@ -38,15 +38,6 @@ export const PageLoader = ({ children }: { children: ReactNode }) => {
 		};
 
 		const timeout = window.setTimeout(finish, 8000);
-		const pageLoaded =
-			document.readyState === "complete"
-				? Promise.resolve()
-				: new Promise<void>((resolve) => {
-						window.addEventListener("load", () => resolve(), {
-							once: true,
-							signal: controller.signal,
-						});
-					});
 		const images = Array.from(document.images).filter((image) => {
 			if (image.loading !== "lazy") return true;
 			const bounds = image.getBoundingClientRect();
@@ -58,11 +49,9 @@ export const PageLoader = ({ children }: { children: ReactNode }) => {
 			);
 		});
 
-		void Promise.allSettled([
-			pageLoaded,
-			document.fonts.ready,
-			...images.map((image) => image.decode()),
-		]).then(finish);
+		void Promise.allSettled([document.fonts.ready, ...images.map((image) => image.decode())]).then(
+			finish,
+		);
 
 		return () => {
 			controller.abort();

@@ -59,7 +59,7 @@ import mapImage from "@/assets/images/map.webp";
 import smileMemoji from "@/assets/images/memoji-smile.webp";
 import { CardHeader } from "@/components/CardHeader";
 import { ToolboxItems } from "@/components/ToolboxItems";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { Fragment } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 

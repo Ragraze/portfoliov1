@@ -14,29 +14,7 @@ export const AudioPlayer = ({ isVisible = true }: { isVisible?: boolean }) => {
 		const audio = audioRef.current;
 		if (!audio) return;
 
-		const removeListeners = () => {
-			window.removeEventListener("click", startPlayback);
-			window.removeEventListener("touchend", startPlayback);
-			window.removeEventListener("keydown", startPlayback);
-		};
-
-		function startPlayback() {
-			if (!audio) return;
-			void audio
-				.play()
-				.then(removeListeners)
-				.catch(() => {
-					// Retry on the next user interaction if the browser blocks autoplay.
-				});
-		}
-
-		window.addEventListener("click", startPlayback);
-		window.addEventListener("touchend", startPlayback, { passive: true });
-		window.addEventListener("keydown", startPlayback);
-		startPlayback();
-
 		return () => {
-			removeListeners();
 			audio.pause();
 		};
 	}, []);
@@ -45,10 +23,9 @@ export const AudioPlayer = ({ isVisible = true }: { isVisible?: boolean }) => {
 		<>
 			<audio
 				ref={audioRef}
-				autoPlay
 				muted={isMuted}
 				loop
-				preload="auto"
+				preload="none"
 				hidden
 				onVolumeChange={() => setIsMuted(audioRef.current?.muted ?? false)}
 			>
@@ -59,7 +36,13 @@ export const AudioPlayer = ({ isVisible = true }: { isVisible?: boolean }) => {
 				aria-label={isMuted ? t.controls.unmute : t.controls.mute}
 				onClick={() => {
 					const audio = audioRef.current;
-					if (audio) audio.muted = !audio.muted;
+					if (!audio) return;
+					audio.muted = !audio.muted;
+					if (!audio.muted) {
+						void audio.play().catch(() => {
+							audio.muted = true;
+						});
+					}
 				}}
 			>
 				{isMuted ? <SpeakerXMarkIcon className="size-5" /> : <SpeakerWaveIcon className="size-5" />}

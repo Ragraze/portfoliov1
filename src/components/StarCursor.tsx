@@ -2,7 +2,7 @@
 
 import StarIcon from "@/assets/icons/star.svg";
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { m as motion, useMotionValue, useSpring } from "framer-motion";
 
 const trailSlots = Array.from({ length: 12 }, (_, id) => id);
 const spring = { stiffness: 300, damping: 28, mass: 0.5 };

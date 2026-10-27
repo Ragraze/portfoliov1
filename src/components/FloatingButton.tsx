@@ -2,7 +2,7 @@
 
 import grainImage from "@/assets/images/grain.webp";
 import { forwardRef, type PropsWithChildren } from "react";
-import { motion, useReducedMotion, type HTMLMotionProps } from "framer-motion";
+import { m as motion, useReducedMotion, type HTMLMotionProps } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 
 type FloatingButtonProps = PropsWithChildren<Omit<HTMLMotionProps<"button">, "children">>;
