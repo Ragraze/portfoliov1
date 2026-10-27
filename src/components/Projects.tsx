@@ -3,6 +3,7 @@
 import portfolioImage from "@/assets/images/portfolio.webp";
 import homeServerTopology from "@/assets/images/home-server-topology.webp";
 import sentimentAnalysisImage from "@/assets/images/ikn-sentiment-analysis.webp";
+import agrisenseImage from "@/assets/images/agrisense.webp";
 import osteoporosisImage from "@/assets/images/classify-osteoporosis.webp";
 import twiLandingPage from "@/assets/images/tri-wall-indonesia-landing-page.webp";
 import twnsLandingPage from "@/assets/images/tri-wall-natura-surabaya-landing-page.webp";
@@ -19,6 +20,17 @@ import JavascriptIcon from "simple-icons/icons/javascript.svg";
 import TypescriptIcon from "simple-icons/icons/typescript.svg";
 import WordpressIcon from "simple-icons/icons/wordpress.svg";
 import PythonIcon from "simple-icons/icons/python.svg";
+import PytorchIcon from "simple-icons/icons/pytorch.svg";
+import HuggingFaceIcon from "simple-icons/icons/huggingface.svg";
+import NumpyIcon from "simple-icons/icons/numpy.svg";
+import TensorflowIcon from "simple-icons/icons/tensorflow.svg";
+import UltralyticsIcon from "simple-icons/icons/ultralytics.svg";
+import FlaskIcon from "simple-icons/icons/flask.svg";
+import NuxtIcon from "simple-icons/icons/nuxt.svg";
+import VueIcon from "simple-icons/icons/vuedotjs.svg";
+import ViteIcon from "simple-icons/icons/vite.svg";
+import SqliteIcon from "simple-icons/icons/sqlite.svg";
+import DockerIcon from "simple-icons/icons/docker.svg";
 import CloudflareIcon from "simple-icons/icons/cloudflare.svg";
 import LinuxIcon from "simple-icons/icons/linux.svg";
 import GmailIcon from "simple-icons/icons/gmail.svg";
@@ -30,6 +42,7 @@ import { Card } from "@/components/Card";
 import { ImageViewer } from "@/components/ImageViewer";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
+import { twMerge } from "tailwind-merge";
 
 const projectAssets = [
 	{
@@ -37,13 +50,12 @@ const projectAssets = [
 		year: "2026",
 		category: "App/Website",
 		techStack: [
-			{ title: "HTML", iconType: HTMLIcon },
-			{ title: "CSS", iconType: CssIcon },
-			{ title: "TypeScript", iconType: TypescriptIcon },
 			{ title: "Next.js", iconType: NextjsIcon },
 			{ title: "ReactJS", iconType: ReactIcon },
-			{ title: "Framer Motion", iconType: FramerIcon },
+			{ title: "TypeScript", iconType: TypescriptIcon },
 			{ title: "Tailwind CSS", iconType: TailwindCssIcon },
+			{ title: "Framer Motion", iconType: FramerIcon },
+			{ title: "Docker", iconType: DockerIcon },
 		],
 		link: "https://rakanfadhil.com",
 		image: portfolioImage,
@@ -76,17 +88,54 @@ const projectAssets = [
 	},
 	{
 		id: "sentiment" as const,
-		year: "2026",
+		year: "2025",
 		category: "Data Science/AI",
-		techStack: [{ title: "Python", iconType: PythonIcon }],
+		techStack: [
+			{ title: "Python", iconType: PythonIcon },
+			{ title: "PyTorch", iconType: PytorchIcon },
+			{ title: "Hugging Face Transformers", iconType: HuggingFaceIcon },
+			{ title: "NumPy", iconType: NumpyIcon },
+			{ title: "Flask", iconType: FlaskIcon },
+			{ title: "Next.js", iconType: NextjsIcon },
+			{ title: "ReactJS", iconType: ReactIcon },
+			{ title: "TypeScript", iconType: TypescriptIcon },
+			{ title: "Docker", iconType: DockerIcon },
+		],
 		link: "https://github.com/Ragraze/ikn-sentiment-analysis",
 		image: sentimentAnalysisImage,
+	},
+	{
+		id: "agrisense" as const,
+		year: "2024",
+		category: "Data Science/AI",
+		techStack: [
+			{ title: "Python", iconType: PythonIcon },
+			{ title: "TensorFlow Lite", iconType: TensorflowIcon },
+			{ title: "NumPy", iconType: NumpyIcon },
+			{ title: "Flask", iconType: FlaskIcon },
+			{ title: "Nuxt", iconType: NuxtIcon },
+			{ title: "Vue.js", iconType: VueIcon },
+			{ title: "TypeScript", iconType: TypescriptIcon },
+			{ title: "Docker", iconType: DockerIcon },
+		],
+		link: "https://github.com/Ragraze/agrisense-webapp",
+		image: agrisenseImage,
 	},
 	{
 		id: "osteoporosis" as const,
 		year: "2023",
 		category: "Data Science/AI",
-		techStack: [{ title: "Python", iconType: PythonIcon }],
+		techStack: [
+			{ title: "Python", iconType: PythonIcon },
+			{ title: "PyTorch", iconType: PytorchIcon },
+			{ title: "Ultralytics YOLOv8", iconType: UltralyticsIcon },
+			{ title: "Flask", iconType: FlaskIcon },
+			{ title: "ReactJS", iconType: ReactIcon },
+			{ title: "JavaScript", iconType: JavascriptIcon },
+			{ title: "Vite", iconType: ViteIcon },
+			{ title: "SQLite", iconType: SqliteIcon },
+			{ title: "Docker", iconType: DockerIcon },
+		],
 		link: "https://github.com/Ragraze/classify-osteoporosis",
 		image: osteoporosisImage,
 	},
@@ -119,6 +168,7 @@ export const ProjectsSection = () => {
 	const portfolioProjects = projectAssets.map((project) => ({
 		...project,
 		...t.projects.items[project.id],
+		imageClassName: project.id === "agrisense" ? "agrisense-image" : undefined,
 	}));
 	const [activeFilter, setActiveFilter] = useState("App/Website");
 	const [isFullscreen, setIsFullscreen] = useState(false);
@@ -316,7 +366,10 @@ export const ProjectsSection = () => {
 										alt={project.title}
 										draggable={false}
 										sizes="(min-width: 768px) and (orientation: portrait) and (pointer: coarse) calc(50vw - 2.5rem), (min-width: 600px) and (orientation: portrait) and (pointer: coarse) calc(50vw - 1.5rem), (min-width: 1200px) and (pointer: coarse) 380px, (min-width: 1200px) 1000px, (min-width: 768px) 277px, (min-width: 375px) 279px, calc(100vw - 6rem)"
-										className="mt-4 -mb-4 h-auto w-full object-cover object-left-top [clip-path:inset(1px_round_3%/5%)] md:mt-0 md:-mb-0 md:h-full tablet:absolute tablet:top-0 tablet:left-0 tablet:w-auto tablet:max-w-none tablet-portrait:absolute tablet-portrait:top-0 tablet-portrait:left-0 tablet-portrait:mt-0 tablet-portrait:mb-0 tablet-portrait:h-full tablet-portrait:w-auto tablet-portrait:max-w-none desktop:absolute desktop:top-0 desktop:left-0 desktop:h-full desktop:w-auto desktop:max-w-none"
+										className={twMerge(
+											"mt-4 -mb-4 h-auto w-full object-cover object-left-top [clip-path:inset(1px_round_3%/5%)] md:mt-0 md:-mb-0 md:h-full tablet:absolute tablet:top-0 tablet:left-0 tablet:w-auto tablet:max-w-none tablet-portrait:absolute tablet-portrait:top-0 tablet-portrait:left-0 tablet-portrait:mt-0 tablet-portrait:mb-0 tablet-portrait:h-full tablet-portrait:w-auto tablet-portrait:max-w-none desktop:absolute desktop:top-0 desktop:left-0 desktop:h-full desktop:w-auto desktop:max-w-none",
+											project.imageClassName,
+										)}
 									/>
 								</button>
 							)}

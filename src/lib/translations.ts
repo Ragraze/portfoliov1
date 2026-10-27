@@ -179,9 +179,9 @@ const en = {
 				company: "Personal Project",
 				title: "Portfoliov1",
 				results: [
-					"Responsive personal portfolio built with Next.js and Tailwind CSS",
-					"Interactive sections for experiences, certificates, and projects",
-					"Smooth animations and category-based project filtering",
+					"Responsive portfolio with English and Indonesian content and saved language preference",
+					"Category-based project filtering, experience dialogs, and keyboard image navigation",
+					"Draggable certificate carousel, animated tech stack, and audio controls",
 				],
 			},
 			twi: {
@@ -206,18 +206,27 @@ const en = {
 				company: "Thesis",
 				title: "IKN Sentiment Analysis",
 				results: [
-					"Text preprocessing for sentiment classification",
-					"Classify text into positive, negative, and neutral sentiments",
-					"Explore sentiment trends through data visualization",
+					"Classify IKN opinions as positive, neutral, or negative with IndoBERT",
+					"Discover topics within each sentiment using Top2Vec",
+					"Search and filter opinions, export CSV, and compare model evaluation reports",
+				],
+			},
+			agrisense: {
+				company: "Bangkit Capstone",
+				title: "AgriSense",
+				results: [
+					"Classify rice panicle images as ripe or unripe using MobileNetV2 and TensorFlow Lite",
+					"Review class probabilities and keep prediction history in the browser",
+					"Inspect dataset splits, evaluation metrics, and the model confusion matrix",
 				],
 			},
 			osteoporosis: {
 				company: "Digital Image Processing",
 				title: "Classify Osteoporosis",
 				results: [
-					"Knee osteoporosis image classification using YOLOv8",
-					"Train and evaluate nano, small, medium, large, and extra-large model variants",
-					"Digital image processing course project at the Faculty of Computer Science",
+					"Experimental knee X-ray classification into normal and osteoporosis with YOLOv8",
+					"Compare training metrics and confusion matrices across five YOLOv8 variants",
+					"Browse the dataset and save prediction history in SQLite with CSV export",
 				],
 			},
 			server: {
@@ -555,9 +564,9 @@ const id: Translations = {
 				company: "Proyek Pribadi",
 				title: "Portfoliov1",
 				results: [
-					"Portofolio pribadi responsif yang dibangun dengan Next.js dan Tailwind CSS",
-					"Bagian interaktif untuk pengalaman, sertifikat, dan proyek",
-					"Animasi halus dan penyaringan proyek berdasarkan kategori",
+					"Portofolio responsif dengan konten Indonesia dan Inggris serta preferensi bahasa tersimpan",
+					"Filter kategori proyek, dialog pengalaman, dan navigasi gambar melalui keyboard",
+					"Carousel sertifikat yang dapat digeser, animasi tech stack, dan kontrol audio",
 				],
 			},
 			twi: {
@@ -582,18 +591,27 @@ const id: Translations = {
 				company: "Skripsi",
 				title: "IKN Sentiment Analysis",
 				results: [
-					"Prapemrosesan teks untuk klasifikasi sentimen",
-					"Mengelompokkan teks ke dalam sentimen positif, negatif, dan netral",
-					"Mengeksplorasi tren sentimen melalui visualisasi data",
+					"Klasifikasi opini tentang IKN menjadi positif, netral, atau negatif menggunakan IndoBERT",
+					"Pemodelan topik dalam setiap sentimen menggunakan Top2Vec",
+					"Pencarian dan filter opini, ekspor CSV, serta perbandingan laporan evaluasi model",
+				],
+			},
+			agrisense: {
+				company: "Bangkit Capstone",
+				title: "AgriSense",
+				results: [
+					"Klasifikasi citra malai padi menjadi matang atau belum matang dengan MobileNetV2 dan TensorFlow Lite",
+					"Probabilitas tiap kelas dan riwayat prediksi yang tersimpan di browser",
+					"Rincian pembagian dataset, metrik evaluasi, dan confusion matrix model",
 				],
 			},
 			osteoporosis: {
 				company: "Pengolahan Citra Digital",
 				title: "Classify Osteoporosis",
 				results: [
-					"Klasifikasi citra osteoporosis lutut menggunakan YOLOv8",
-					"Melatih dan mengevaluasi varian model nano, small, medium, large, dan extra-large",
-					"Proyek mata kuliah Pengolahan Citra Digital di Fakultas Ilmu Komputer",
+					"Eksperimen klasifikasi citra rontgen lutut menjadi normal atau osteoporosis dengan YOLOv8",
+					"Perbandingan metrik pelatihan dan confusion matrix pada lima varian YOLOv8",
+					"Eksplorasi dataset dan penyimpanan riwayat prediksi di SQLite dengan ekspor CSV",
 				],
 			},
 			server: {

@@ -122,7 +122,7 @@ All content is stored locally. Keep existing section IDs and their mappings in `
 
 Use lowercase, hyphen-separated asset filenames and update their imports or public URLs when renaming them. The CV keeps the filename `CV_Rakan Fadhil Prayata.pdf`.
 
-Use the existing WebP versions for image imports and certificate URLs. The `main` branch contains the application and its active assets. Original PNG, JPG, and JPEG images, unused WebP previews, and unused local SVG icons are archived on the `master` branch. These backup files may remain locally and are ignored on `main`.
+Use the existing WebP versions for image imports and certificate URLs. The `main` branch contains the application and its active assets. Original PNG, JPG, and JPEG images and retired WebP previews are archived on the `master` branch. These backup images may remain locally and are ignored on `main`. Icons supplied by Simple Icons and Heroicons are imported from dependencies; seven active local SVG icons remain in `src/assets/icons/`.
 
 ## Routes and deployment
 

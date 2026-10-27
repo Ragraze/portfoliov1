@@ -24,6 +24,8 @@ import PhpIcon from "simple-icons/icons/php.svg";
 import FirebaseIcon from "simple-icons/icons/firebase.svg";
 import GoogleCloudIcon from "simple-icons/icons/googlecloud.svg";
 import NextjsIcon from "simple-icons/icons/nextdotjs.svg";
+import NuxtIcon from "simple-icons/icons/nuxt.svg";
+import VueIcon from "simple-icons/icons/vuedotjs.svg";
 import ProxmoxIcon from "simple-icons/icons/proxmox.svg";
 import LinuxIcon from "simple-icons/icons/linux.svg";
 import WindowsIcon from "@/assets/icons/windows.svg";
@@ -31,12 +33,18 @@ import GitIcon from "simple-icons/icons/git.svg";
 import BootstrapIcon from "simple-icons/icons/bootstrap.svg";
 import OpencodeIcon from "simple-icons/icons/opencode.svg";
 import PostgresqlIcon from "simple-icons/icons/postgresql.svg";
+import SqliteIcon from "simple-icons/icons/sqlite.svg";
 import DockerIcon from "simple-icons/icons/docker.svg";
 import ViteIcon from "simple-icons/icons/vite.svg";
 import ObsStudioIcon from "simple-icons/icons/obsstudio.svg";
 import VegasIcon from "simple-icons/icons/vegas.svg";
 import ClaudeCodeIcon from "simple-icons/icons/claudecode.svg";
 import PythonIcon from "simple-icons/icons/python.svg";
+import NumpyIcon from "simple-icons/icons/numpy.svg";
+import PytorchIcon from "simple-icons/icons/pytorch.svg";
+import HuggingFaceIcon from "simple-icons/icons/huggingface.svg";
+import TensorflowIcon from "simple-icons/icons/tensorflow.svg";
+import UltralyticsIcon from "simple-icons/icons/ultralytics.svg";
 import AstroIcon from "simple-icons/icons/astro.svg";
 import VercelIcon from "simple-icons/icons/vercel.svg";
 import MongodbIcon from "simple-icons/icons/mongodb.svg";
@@ -69,6 +77,7 @@ const topToolboxItems = [
 	{ title: "Linux", iconType: LinuxIcon },
 	{ title: "Windows", iconType: WindowsIcon },
 	{ title: "PostgreSQL", iconType: PostgresqlIcon },
+	{ title: "SQLite", iconType: SqliteIcon },
 	{ title: "MongoDB", iconType: MongodbIcon },
 	{ title: "Firebase", iconType: FirebaseIcon },
 	{ title: "Google Cloud", iconType: GoogleCloudIcon },
@@ -86,12 +95,19 @@ const bottomToolboxItems = [
 	{ title: "JavaScript", iconType: JavascriptIcon },
 	{ title: "TypeScript", iconType: TypescriptIcon },
 	{ title: "Python", iconType: PythonIcon },
+	{ title: "NumPy", iconType: NumpyIcon },
+	{ title: "PyTorch", iconType: PytorchIcon },
+	{ title: "TensorFlow", iconType: TensorflowIcon },
+	{ title: "Hugging Face", iconType: HuggingFaceIcon },
+	{ title: "Ultralytics", iconType: UltralyticsIcon },
 	{ title: "PHP", iconType: PhpIcon },
 	{ title: "HTML5", iconType: HTMLIcon },
 	{ title: "CSS3", iconType: CssIcon },
 	{ title: "ReactJS", iconType: ReactIcon },
 	{ title: "Framer Motion", iconType: FramerIcon },
 	{ title: "Next.js", iconType: NextjsIcon },
+	{ title: "Vue.js", iconType: VueIcon },
+	{ title: "Nuxt", iconType: NuxtIcon },
 	{ title: "Astro", iconType: AstroIcon },
 	{ title: "Laravel", iconType: LaravelIcon },
 	{ title: "Node.js", iconType: NodeIcon },

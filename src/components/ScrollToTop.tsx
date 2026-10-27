@@ -12,6 +12,7 @@ import { scrollToSection } from "@/lib/navigation";
 export const ScrollToTop = () => {
 	const { t } = useLanguage();
 	const [isOpen, setIsOpen] = useState(false);
+	const [isHiddenAtFooter, setIsHiddenAtFooter] = useState(false);
 	const containerRef = useRef<HTMLFieldSetElement>(null);
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const isHover = useRef(false);
@@ -19,6 +20,38 @@ export const ScrollToTop = () => {
 	const touchShouldOpen = useRef(false);
 	const controlsId = useId();
 	const reduceMotion = useReducedMotion();
+
+	useEffect(() => {
+		const footer = document.querySelector("footer");
+		if (!footer) return;
+
+		const mobileQuery = window.matchMedia("(max-width: 767.98px)");
+		const tabletPortraitQuery = window.matchMedia(
+			"(min-width: 600px) and (orientation: portrait) and (pointer: coarse)",
+		);
+		let isFooterVisible = false;
+		const updateVisibility = () => {
+			const shouldHide = mobileQuery.matches && !tabletPortraitQuery.matches && isFooterVisible;
+			setIsHiddenAtFooter(shouldHide);
+			if (shouldHide) {
+				isHover.current = false;
+				setIsOpen(false);
+			}
+		};
+		const observer = new IntersectionObserver(([entry]) => {
+			isFooterVisible = entry.isIntersecting;
+			updateVisibility();
+		});
+		observer.observe(footer);
+		mobileQuery.addEventListener("change", updateVisibility);
+		tabletPortraitQuery.addEventListener("change", updateVisibility);
+
+		return () => {
+			observer.disconnect();
+			mobileQuery.removeEventListener("change", updateVisibility);
+			tabletPortraitQuery.removeEventListener("change", updateVisibility);
+		};
+	}, []);
 
 	const closeControls = useCallback(() => {
 		if (containerRef.current?.contains(document.activeElement)) {
@@ -41,7 +74,8 @@ export const ScrollToTop = () => {
 		<fieldset
 			ref={containerRef}
 			aria-label={t.controls.scrollToTop}
-			className="fixed bottom-4 right-4 z-40 size-12 min-w-0 md:bottom-6 md:right-6"
+			inert={isHiddenAtFooter}
+			className={`fixed bottom-4 right-4 z-40 size-12 min-w-0 transition-opacity duration-300 motion-reduce:transition-none md:bottom-6 md:right-6 ${isHiddenAtFooter ? "pointer-events-none opacity-0" : "opacity-100"}`}
 			onPointerEnter={(event) => {
 				if (event.pointerType === "touch") return;
 				isHover.current = true;

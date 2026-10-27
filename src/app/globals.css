@@ -117,6 +117,12 @@
 }
 
 @layer components {
+	.agrisense-image {
+		mask-image: url("/images/agrisense-mask.svg");
+		mask-size: 100% 100%;
+		mask-repeat: no-repeat;
+	}
+
 	.footer-glow {
 		opacity: 0.5;
 	}
