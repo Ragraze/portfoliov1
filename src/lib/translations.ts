@@ -203,7 +203,7 @@ const en = {
 				],
 			},
 			sentiment: {
-				company: "Personal Project",
+				company: "Thesis",
 				title: "IKN Sentiment Analysis",
 				results: [
 					"Text preprocessing for sentiment classification",
@@ -212,7 +212,7 @@ const en = {
 				],
 			},
 			osteoporosis: {
-				company: "Universitas Brawijaya",
+				company: "Digital Image Processing",
 				title: "Classify Osteoporosis",
 				results: [
 					"Knee osteoporosis image classification using YOLOv8",
@@ -579,7 +579,7 @@ const id: Translations = {
 				],
 			},
 			sentiment: {
-				company: "Proyek Pribadi",
+				company: "Skripsi",
 				title: "IKN Sentiment Analysis",
 				results: [
 					"Prapemrosesan teks untuk klasifikasi sentimen",
@@ -588,7 +588,7 @@ const id: Translations = {
 				],
 			},
 			osteoporosis: {
-				company: "Universitas Brawijaya",
+				company: "Pengolahan Citra Digital",
 				title: "Classify Osteoporosis",
 				results: [
 					"Klasifikasi citra osteoporosis lutut menggunakan YOLOv8",
