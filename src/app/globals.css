@@ -67,6 +67,7 @@
 	}
 }
 @custom-variant tablet-portrait (@media (min-width: 600px) and (orientation: portrait) and (pointer: coarse));
+@custom-variant tablet-portrait-wide (@media (min-width: 1024px) and (orientation: portrait) and (pointer: coarse));
 @custom-variant tablet-landscape (@media (min-width: 768px) and (orientation: landscape) and (pointer: coarse));
 @custom-variant desktop (@media (min-width: 1200px) and (pointer: fine));
 

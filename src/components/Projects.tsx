@@ -206,9 +206,12 @@ export const ProjectsSection = () => {
 				const card = content.parentElement;
 				if (!card) return 0;
 				const styles = window.getComputedStyle(card);
-				if (styles.display === "flex") return 0;
+				const image = card.querySelector<HTMLElement>("[data-project-image]");
+				const imageHeight =
+					styles.display === "flex" ? (image?.getBoundingClientRect().height ?? 0) : 0;
 				return (
 					content.getBoundingClientRect().height +
+					imageHeight +
 					parseFloat(styles.paddingTop) +
 					parseFloat(styles.paddingBottom)
 				);
@@ -220,6 +223,8 @@ export const ProjectsSection = () => {
 		const observer = new ResizeObserver(measure);
 		contents.forEach((content) => {
 			observer.observe(content);
+			const image = content.parentElement?.querySelector<HTMLElement>("[data-project-image]");
+			if (image) observer.observe(image);
 		});
 		window.addEventListener("resize", measure);
 		return () => {
@@ -359,7 +364,7 @@ export const ProjectsSection = () => {
 									type="button"
 									onClick={() => openFullscreen(project.id)}
 									aria-label={`${t.projects.viewImage} ${project.title}`}
-									className="relative flow-root w-full tablet:col-span-2 tablet:self-stretch tablet:pb-6 tablet:before:block tablet:before:aspect-[var(--project-image-aspect-ratio)] tablet-portrait:col-span-1 tablet-portrait:self-stretch tablet-portrait:mt-0 tablet-portrait:pb-6 tablet-portrait:before:block tablet-portrait:before:aspect-[var(--project-image-aspect-ratio)] cursor-zoom-in focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white/40"
+									className="relative flow-root w-full max-md:mt-auto tablet:col-span-2 tablet:self-stretch tablet:pb-6 tablet:before:block tablet:before:aspect-[var(--project-image-aspect-ratio)] tablet-portrait:col-span-1 tablet-portrait:self-stretch tablet-portrait:mt-0 tablet-portrait:pb-6 tablet-portrait:before:block tablet-portrait:before:aspect-[var(--project-image-aspect-ratio)] cursor-zoom-in focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white/40"
 								>
 									<Image
 										src={project.image}
