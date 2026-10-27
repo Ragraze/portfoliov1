@@ -177,8 +177,10 @@ export const ProjectsSection = () => {
 	const [activeFilter, setActiveFilter] = useState("App/Website");
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-	const [cardHeight, setCardHeight] = useState(0);
+	const [cardHeights, setCardHeights] = useState<number[]>([]);
 	const projectsRef = useRef<HTMLDivElement>(null);
+	// Shared sticky bounds keep taller cards from leaving the stack before the last card.
+	const cardHeight = Math.ceil(Math.max(0, ...cardHeights));
 
 	const filteredProjects = portfolioProjects.filter((project) => project.category === activeFilter);
 	const projectImages = filteredProjects.flatMap((project) =>
@@ -201,7 +203,7 @@ export const ProjectsSection = () => {
 			projectsRef.current?.querySelectorAll<HTMLDivElement>("[data-project-content]") ?? [],
 		);
 		if (contents.length < 2) {
-			setCardHeight(0);
+			setCardHeights([]);
 			return;
 		}
 
@@ -220,7 +222,12 @@ export const ProjectsSection = () => {
 					parseFloat(styles.paddingBottom)
 				);
 			});
-			setCardHeight(Math.ceil(Math.max(...heights)));
+			setCardHeights((current) =>
+				current.length === heights.length &&
+				heights.every((height, index) => height === current[index])
+					? current
+					: heights,
+			);
 		};
 
 		measure();
@@ -240,10 +247,10 @@ export const ProjectsSection = () => {
 	return (
 		<section
 			id="projects"
-			className="scroll-mt-36 md:scroll-mt-40 desktop:scroll-mt-44 max-md:pt-16 pb-16 desktop:py-24"
+			className="scroll-mt-36 md:scroll-mt-40 project-desktop:scroll-mt-44 max-md:pt-16 pb-16 project-desktop:py-24"
 		>
 			<SectionBackground />
-			<div className="container tablet-portrait:max-w-none">
+			<div className="container tablet-portrait:max-w-5xl">
 				<SectionHeader
 					eyebrow={t.projects.eyebrow}
 					title={t.projects.title}
@@ -270,116 +277,133 @@ export const ProjectsSection = () => {
 
 				<div
 					ref={projectsRef}
-					className="isolate mt-10 md:mt-12 desktop:mt-20 flex flex-col gap-20 tablet-landscape:gap-[max(5rem,30svh)]"
+					className="isolate mt-10 md:mt-12 project-desktop:mt-20 mb-[var(--project-stack-margin)] md:mb-0 tablet-portrait:mb-0 flex flex-col gap-20 tablet-landscape:gap-[max(5rem,30svh)] project-desktop:gap-20"
+					style={
+						{
+							"--project-card-height": `${cardHeight}px`,
+							"--project-stack-margin": `${(cardHeights.at(-1) ?? cardHeight) - cardHeight}px`,
+						} as CSSProperties
+					}
 				>
 					{filteredProjects.length === 0 && (
 						<p className="text-center text-sm md:text-base text-white/60">{t.projects.empty}</p>
 					)}
 					{filteredProjects.map((project, projectIndex) => (
-						<Card
+						<div
 							key={project.id}
-							className="px-8 pt-8 pb-0 md:p-6 desktop:pt-16 desktop:px-20 desktop:pb-0 flex flex-col md:grid md:grid-cols-5 md:min-h-[var(--project-card-min-height,var(--project-card-height))] desktop:grid-cols-2 md:gap-4 desktop:gap-16 tablet:pb-0 tablet-portrait:grid tablet-portrait:grid-cols-2 tablet-portrait:min-h-[var(--project-card-min-height,var(--project-card-height))] tablet-portrait:gap-4 tablet-portrait:p-6 tablet-portrait:pb-0 sticky top-16 desktop:top-28 tablet:[--project-card-min-height:min(var(--project-card-height),calc(100svh-5rem))] tablet:max-h-[calc(100svh-5rem)] tablet:overflow-y-auto after:z-10"
+							className="sticky top-16 project-desktop:top-28 min-h-[var(--project-card-height)] mt-[var(--project-stack-margin)] md:min-h-0 md:mt-0 tablet-portrait:min-h-0 tablet-portrait:mt-0"
 							style={
 								{
-									"--project-card-height": `${cardHeight}px`,
-									"--project-image-aspect-ratio": project.image
-										? `${project.image.width} / ${project.image.height}`
-										: undefined,
+									"--project-stack-margin": `${(cardHeights[projectIndex - 1] ?? cardHeight) - cardHeight}px`,
 									zIndex: projectIndex + 1,
 								} as CSSProperties
 							}
 						>
-							<div
-								data-project-content
-								className={`md:self-start desktop:pb-16 tablet:pb-6 tablet-portrait:self-start tablet-portrait:pb-6 ${project.image ? "tablet:col-span-3 tablet-portrait:col-span-1" : "max-md:pb-8 md:col-span-full tablet-portrait:col-span-full"}`}
+							<Card
+								className="px-8 pt-8 pb-0 md:p-6 project-desktop:pt-16 project-desktop:px-20 project-desktop:pb-0 flex flex-col md:grid md:grid-cols-5 md:min-h-[var(--project-card-min-height,var(--project-card-height))] project-desktop:grid-cols-2 md:gap-4 project-desktop:gap-16 project-tablet:pb-0 tablet-portrait:grid tablet-portrait:grid-cols-2 tablet-portrait:min-h-[var(--project-card-min-height,var(--project-card-height))] tablet-portrait:gap-4 tablet-portrait:p-6 tablet-portrait:pb-0 project-tablet:[--project-card-min-height:min(var(--project-card-height),calc(100svh-5rem))] project-tablet:max-h-[calc(100svh-5rem)] project-tablet:overflow-y-auto after:z-10"
+								style={
+									{
+										"--project-image-aspect-ratio": project.image
+											? `${project.image.width} / ${project.image.height}`
+											: undefined,
+									} as CSSProperties
+								}
 							>
-								<div className="bg-linear-to-r/srgb from-emerald-300 to-sky-400 inline-flex flex-wrap items-center gap-x-2 gap-y-1 font-bold uppercase tracking-widest text-sm md:text-xs desktop:text-sm text-transparent bg-clip-text">
-									<StarIcon className="size-5 shrink-0 text-emerald-300" aria-hidden="true" />
-									<span>{project.company}</span>
-									<span>&bull;</span>
-									<span>{project.year}</span>
-								</div>
-								<h3 className="font-serif text-xl mt-2 desktop:mt-5 desktop:text-4xl break-words">
-									{project.title}
-								</h3>
-								<hr className="border-t-2 border-white/5 mt-4 md:mt-3 desktop:mt-5" />
-								<ul className="flex flex-col gap-4 md:gap-2 desktop:gap-4 mt-4 md:mt-3 desktop:mt-5">
-									{project.results.map((result) => (
-										<li key={result} className="flex gap-2 text-sm desktop:text-base text-white/50">
-											<CheckCircleIcon className="size-5 desktop:size-6 shrink-0" />
-											<span>{result}</span>
-										</li>
-									))}
-								</ul>
-								{project.techStack.length > 0 && (
-									<div className="mt-6 md:mt-4 desktop:mt-6">
-										<p className="text-xs font-semibold text-white/60">
-											{project.category === "Digital Content"
-												? t.projects.skills
-												: t.projects.techStack}
-										</p>
-										<div className="flex flex-wrap gap-3 md:gap-2 desktop:gap-3 mt-2">
-											{project.techStack.map((tech) => {
-												const Icon = tech.iconType;
-												return (
-													<span key={tech.title} title={tech.title}>
-														<Icon
-															className="size-5 desktop:size-6 fill-current text-white/80"
-															role="img"
-															aria-label={tech.title}
-														/>
-													</span>
-												);
-											})}
-										</div>
-									</div>
-								)}
-								{(project.link || project.category === "App/Website") && (
-									<div className="flex items-center gap-3 mt-8 md:mt-4 desktop:mt-8">
-										{project.link ? (
-											<a
-												href={project.link}
-												target="_blank"
-												rel="noopener noreferrer"
-												className="bg-white text-gray-950 hover:bg-gray-900 hover:text-white transition-colors duration-200 h-12 md:h-11 desktop:h-12 w-full md:w-auto tablet-portrait:w-auto px-6 rounded-xl font-semibold inline-flex items-center justify-center gap-2"
-											>
-												<span>{t.projects.view}</span>
-												<ArrowUpRightIcon className="size-4" strokeWidth={2} />
-											</a>
-										) : (
-											<button
-												type="button"
-												disabled
-												className="bg-white/60 text-gray-950 h-12 md:h-11 desktop:h-12 w-full md:w-auto tablet-portrait:w-auto px-6 rounded-xl font-semibold inline-flex items-center justify-center gap-2 cursor-not-allowed"
-											>
-												<span>{t.projects.view}</span>
-											</button>
-										)}
-									</div>
-								)}
-							</div>
-							{/* Keep the tablet card height while the image extends to its edges. */}
-							{project.image && (
-								<button
-									data-project-image
-									type="button"
-									onClick={() => openFullscreen(project.id)}
-									aria-label={`${t.projects.viewImage} ${project.title}`}
-									className="relative flow-root w-full tablet:col-span-2 tablet:self-stretch tablet:pb-6 tablet:before:block tablet:before:aspect-[var(--project-image-aspect-ratio)] tablet-portrait:col-span-1 tablet-portrait:self-stretch tablet-portrait:mt-0 tablet-portrait:pb-6 tablet-portrait:before:block tablet-portrait:before:aspect-[var(--project-image-aspect-ratio)] cursor-zoom-in focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white/40"
+								<div
+									data-project-content
+									className={`md:self-start project-desktop:pb-16 project-tablet:pb-6 tablet-portrait:self-start tablet-portrait:pb-6 ${project.image ? "project-tablet:col-span-3 tablet-portrait:col-span-1" : "max-md:pb-8 md:col-span-full tablet-portrait:col-span-full"}`}
 								>
-									<Image
-										src={project.image}
-										alt={project.title}
-										draggable={false}
-										sizes="(min-width: 768px) and (orientation: portrait) and (pointer: coarse) calc(50vw - 2.5rem), (min-width: 600px) and (orientation: portrait) and (pointer: coarse) calc(50vw - 1.5rem), (min-width: 1200px) and (pointer: coarse) 380px, (min-width: 1200px) 1000px, (min-width: 768px) 277px, (min-width: 375px) 279px, calc(100vw - 6rem)"
-										className={twMerge(
-											"mt-4 -mb-4 h-auto w-full object-cover object-left-top [clip-path:inset(1px_round_3%/5%)] md:mt-0 md:-mb-0 md:h-full tablet:absolute tablet:top-0 tablet:left-0 tablet:w-auto tablet:max-w-none tablet-portrait:absolute tablet-portrait:top-0 tablet-portrait:left-0 tablet-portrait:mt-0 tablet-portrait:mb-0 tablet-portrait:h-full tablet-portrait:w-auto tablet-portrait:max-w-none desktop:absolute desktop:top-0 desktop:left-0 desktop:h-full desktop:w-auto desktop:max-w-none",
-											project.imageClassName,
-										)}
-									/>
-								</button>
-							)}
-						</Card>
+									<div className="bg-linear-to-r/srgb from-emerald-300 to-sky-400 inline-flex flex-wrap items-center gap-x-2 gap-y-1 font-bold uppercase tracking-widest text-sm md:text-xs project-desktop:text-sm text-transparent bg-clip-text">
+										<StarIcon className="size-5 shrink-0 text-emerald-300" aria-hidden="true" />
+										<span>{project.company}</span>
+										<span>&bull;</span>
+										<span>{project.year}</span>
+									</div>
+									<h3 className="font-serif text-xl mt-2 project-desktop:mt-5 project-desktop:text-4xl break-words">
+										{project.title}
+									</h3>
+									<hr className="border-t-2 border-white/5 mt-4 md:mt-3 project-desktop:mt-5" />
+									<ul className="flex flex-col gap-4 md:gap-2 project-desktop:gap-4 mt-4 md:mt-3 project-desktop:mt-5">
+										{project.results.map((result) => (
+											<li
+												key={result}
+												className="flex gap-2 text-sm project-desktop:text-base text-white/50"
+											>
+												<CheckCircleIcon className="size-5 project-desktop:size-6 shrink-0" />
+												<span>{result}</span>
+											</li>
+										))}
+									</ul>
+									{project.techStack.length > 0 && (
+										<div className="mt-6 md:mt-4 project-desktop:mt-6">
+											<p className="text-xs font-semibold text-white/60">
+												{project.category === "Digital Content"
+													? t.projects.skills
+													: t.projects.techStack}
+											</p>
+											<div className="flex flex-wrap gap-3 md:gap-2 project-desktop:gap-3 mt-2">
+												{project.techStack.map((tech) => {
+													const Icon = tech.iconType;
+													return (
+														<span key={tech.title} title={tech.title}>
+															<Icon
+																className="size-5 project-desktop:size-6 fill-current text-white/80"
+																role="img"
+																aria-label={tech.title}
+															/>
+														</span>
+													);
+												})}
+											</div>
+										</div>
+									)}
+									{(project.link || project.category === "App/Website") && (
+										<div className="flex items-center gap-3 mt-8 md:mt-4 project-desktop:mt-8">
+											{project.link ? (
+												<a
+													href={project.link}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="bg-white text-gray-950 hover:bg-gray-900 hover:text-white transition-colors duration-200 h-12 md:h-11 project-desktop:h-12 w-full md:w-auto tablet-portrait:w-auto px-6 rounded-xl font-semibold inline-flex items-center justify-center gap-2"
+												>
+													<span>{t.projects.view}</span>
+													<ArrowUpRightIcon className="size-4" strokeWidth={2} />
+												</a>
+											) : (
+												<button
+													type="button"
+													disabled
+													className="bg-white/60 text-gray-950 h-12 md:h-11 project-desktop:h-12 w-full md:w-auto tablet-portrait:w-auto px-6 rounded-xl font-semibold inline-flex items-center justify-center gap-2 cursor-not-allowed"
+												>
+													<span>{t.projects.view}</span>
+												</button>
+											)}
+										</div>
+									)}
+								</div>
+								{/* Keep the tablet card height while the image extends to its edges. */}
+								{project.image && (
+									<button
+										data-project-image
+										type="button"
+										onClick={() => openFullscreen(project.id)}
+										aria-label={`${t.projects.viewImage} ${project.title}`}
+										className="relative flow-root w-full project-tablet:col-span-2 project-tablet:self-stretch project-tablet:pb-6 project-tablet:before:block project-tablet:before:aspect-[var(--project-image-aspect-ratio)] tablet-portrait:col-span-1 tablet-portrait:self-stretch tablet-portrait:mt-0 tablet-portrait:pb-6 tablet-portrait:before:block tablet-portrait:before:aspect-[var(--project-image-aspect-ratio)] cursor-zoom-in focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white/40"
+									>
+										<Image
+											src={project.image}
+											alt={project.title}
+											draggable={false}
+											sizes="(min-width: 768px) and (orientation: portrait) and (pointer: coarse) calc(50vw - 2.5rem), (min-width: 600px) and (orientation: portrait) and (pointer: coarse) calc(50vw - 1.5rem), (min-width: 1200px) 1000px, (min-width: 768px) 277px, (min-width: 375px) 279px, calc(100vw - 6rem)"
+											className={twMerge(
+												"mt-4 -mb-4 h-auto w-full object-cover object-left-top [clip-path:inset(1px_round_3%/5%)] md:mt-0 md:-mb-0 md:h-full project-tablet:absolute project-tablet:top-0 project-tablet:left-0 project-tablet:w-auto project-tablet:max-w-none tablet-portrait:absolute tablet-portrait:top-0 tablet-portrait:left-0 tablet-portrait:mt-0 tablet-portrait:mb-0 tablet-portrait:h-full tablet-portrait:w-auto tablet-portrait:max-w-none project-desktop:absolute project-desktop:top-0 project-desktop:left-0 project-desktop:h-full project-desktop:w-auto project-desktop:max-w-none",
+												project.imageClassName,
+											)}
+										/>
+									</button>
+								)}
+							</Card>
+						</div>
 					))}
 				</div>
 			</div>

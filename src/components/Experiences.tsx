@@ -223,7 +223,7 @@ export const ExperiencesSection = () => {
 			className="scroll-mt-36 md:scroll-mt-40 lg:scroll-mt-44 py-16 md:py-20 lg:py-28"
 		>
 			<SectionBackground />
-			<div className="container tablet-portrait:max-w-none">
+			<div className="container tablet-portrait:max-w-5xl">
 				<SectionHeader
 					eyebrow={t.experiences.eyebrow}
 					title={t.experiences.title}
