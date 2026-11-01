@@ -179,71 +179,90 @@ const en = {
 				company: "Personal Project",
 				title: "Portfoliov1",
 				results: [
-					"Responsive portfolio with English and Indonesian content and saved language preference",
-					"Category-based project filtering, experience dialogs, and keyboard image navigation",
-					"Draggable certificate carousel, animated tech stack, and audio controls",
+					"A bilingual portfolio presenting my experience, projects, and certificates",
+					"Filter projects by category and browse certificates in a draggable carousel",
+					"Built with Next.js, TypeScript, and Tailwind CSS, with Framer Motion animations",
 				],
 			},
 			twi: {
 				company: "Tri-Wall Indonesia",
 				title: "Landing Page — tri-wallindonesia.co.id",
 				results: [
-					"Multilingual company website supporting four languages",
-					"Company and product information with responsive layouts",
-					"SEO optimization and multilingual content management",
+					"A company website introducing Tri-Wall Indonesia in four languages",
+					"Responsive company and product pages with multilingual content management",
+					"Built with WordPress, HTML, CSS, and JavaScript, with SEO optimization",
 				],
 			},
 			twns: {
 				company: "Tri-Wall Natura Surabaya",
 				title: "Landing Page — twns.co.id",
 				results: [
-					"Bilingual company website for product visibility and lead generation",
-					"Landing page introducing the company and its packaging products",
-					"On-page SEO for packaging-related product articles",
+					"A bilingual website introducing the company and its packaging products",
+					"Company and product information designed to support product visibility and leads",
+					"Built with WordPress and on-page SEO for packaging-related articles",
+				],
+			},
+			codeventure: {
+				company: "Academic Project",
+				title: "Codeventure",
+				results: [
+					"A web learning platform with 60 lessons in HTML, CSS, JavaScript, and PHP/Laravel",
+					"48 interactive exercises with live previews, a JavaScript console, and quizzes",
+					"Built with Laravel and Vite, with progress and notes saved in the browser",
+				],
+			},
+			flavory: {
+				company: "Personal Project",
+				title: "Flavory",
+				results: [
+					"A recipe application for finding dishes, including the Mustika Rasa collection",
+					"Edit recipes, adjust servings, use cooking timers, and plan weekly meals",
+					"Built with Laravel and Vite, with browser-saved favorites and recipe import/export",
 				],
 			},
 			sentiment: {
 				company: "Thesis",
 				title: "IKN Sentiment Analysis",
 				results: [
-					"Classify IKN opinions as positive, neutral, or negative with IndoBERT",
-					"Discover topics within each sentiment using Top2Vec",
+					"A thesis project analyzing IKN opinions as positive, neutral, or negative",
 					"Search and filter opinions, export CSV, and compare model evaluation reports",
+					"IndoBERT for sentiment classification and Top2Vec for topic discovery",
 				],
 			},
 			agrisense: {
 				company: "Bangkit Capstone",
 				title: "AgriSense",
 				results: [
-					"Classify rice panicle images as ripe or unripe using MobileNetV2 and TensorFlow Lite",
-					"Review class probabilities and keep prediction history in the browser",
-					"Inspect dataset splits, evaluation metrics, and the model confusion matrix",
+					"An image classification app that identifies ripe and unripe rice panicles",
+					"View class probabilities, prediction history, and model evaluation results",
+					"Uses MobileNetV2 and TensorFlow Lite with Flask, Nuxt, and Vue.js",
 				],
 			},
 			osteoporosis: {
 				company: "Digital Image Processing",
 				title: "Classify Osteoporosis",
 				results: [
-					"Experimental knee X-ray classification into normal and osteoporosis with YOLOv8",
-					"Compare training metrics and confusion matrices across five YOLOv8 variants",
-					"Browse the dataset and save prediction history in SQLite with CSV export",
+					"An experimental app classifying knee X-rays into normal or osteoporosis classes",
+					"Compare five YOLOv8 variants and browse prediction history with CSV export",
+					"YOLOv8 classification through a Django API, with a React dashboard for evaluation",
 				],
 			},
 			server: {
 				company: "Personal Project",
 				title: "Self-Hosted Home Server with Hyper-V & Cloudflare Tunnel",
 				results: [
-					"Home server lab using Hyper-V virtual machines",
-					"Publish self-hosted services through Cloudflare Tunnel",
-					"Explore virtual networking and remote service access",
+					"A home server lab for running self-hosted services on virtual machines",
+					"Publish self-hosted services for remote access through Cloudflare Tunnel",
+					"Hyper-V virtualization for exploring virtual networks and self-hosted services",
 				],
 			},
 			induction: {
 				company: "Tri-Wall Indonesia",
 				title: "Safety Induction Video",
 				results: [
-					"Safety induction video for internal company use",
-					"Produced as part of my IT Staff internship",
+					"A safety induction video produced for internal use at Tri-Wall Indonesia",
+					"Created as part of my responsibilities during the IT Staff internship",
+					"Edited with VEGAS Pro as the production tool for the safety induction video",
 				],
 			},
 		},
@@ -251,7 +270,7 @@ const en = {
 	certificates: {
 		eyebrow: "Achievements",
 		title: "My Certificates",
-		description: "See my professional badges and achievements",
+		description: "See my professional badges and awards",
 		viewImage: "View certificate:",
 		imageLabel: "Certificate",
 		items: {
@@ -376,6 +395,7 @@ const en = {
 	footer: {
 		rights: "All rights reserved.",
 		socialLinks: "Social Links",
+		backToTop: "Back to top",
 	},
 };
 
@@ -564,71 +584,90 @@ const id: Translations = {
 				company: "Proyek Pribadi",
 				title: "Portfoliov1",
 				results: [
-					"Portofolio responsif dengan konten Indonesia dan Inggris serta preferensi bahasa tersimpan",
-					"Filter kategori proyek, dialog pengalaman, dan navigasi gambar melalui keyboard",
-					"Carousel sertifikat yang dapat digeser, animasi tech stack, dan kontrol audio",
+					"Portofolio dua bahasa untuk menampilkan pengalaman, proyek, dan sertifikat",
+					"Filter proyek per kategori dan carousel sertifikat yang dapat digeser",
+					"Next.js, TypeScript, dan Tailwind CSS dengan animasi Framer Motion",
 				],
 			},
 			twi: {
 				company: "Tri-Wall Indonesia",
 				title: "Halaman Utama — tri-wallindonesia.co.id",
 				results: [
-					"Situs perusahaan multibahasa dengan dukungan empat bahasa",
-					"Informasi perusahaan dan produk dengan tata letak responsif",
-					"Optimasi SEO dan pengelolaan konten multibahasa",
+					"Situs perusahaan untuk memperkenalkan Tri-Wall Indonesia dalam empat bahasa",
+					"Halaman perusahaan dan produk responsif dengan pengelolaan konten multibahasa",
+					"Dibangun dengan WordPress, HTML, CSS, dan JavaScript serta optimasi SEO",
 				],
 			},
 			twns: {
 				company: "Tri-Wall Natura Surabaya",
 				title: "Halaman Utama — twns.co.id",
 				results: [
-					"Situs perusahaan dalam dua bahasa untuk memperluas jangkauan produk dan menarik calon pelanggan",
-					"Halaman utama yang memperkenalkan perusahaan dan produk kemasannya",
-					"SEO on-page untuk artikel produk terkait kemasan",
+					"Situs dua bahasa untuk memperkenalkan perusahaan dan produk kemasannya",
+					"Informasi produk untuk memperluas jangkauan dan menarik calon pelanggan",
+					"Dibangun dengan WordPress dan SEO on-page untuk artikel terkait kemasan",
+				],
+			},
+			codeventure: {
+				company: "Proyek Akademik",
+				title: "Codeventure",
+				results: [
+					"Platform belajar web dengan 60 materi HTML, CSS, JavaScript, dan PHP/Laravel",
+					"48 latihan interaktif dengan pratinjau kode, konsol JavaScript, dan kuis",
+					"Laravel dan Vite dengan penyimpanan progres dan catatan belajar di browser",
+				],
+			},
+			flavory: {
+				company: "Proyek Pribadi",
+				title: "Flavory",
+				results: [
+					"Aplikasi pencarian resep masakan yang mencakup koleksi Mustika Rasa",
+					"Sunting resep, sesuaikan porsi, gunakan timer, dan rencanakan menu mingguan",
+					"Laravel dan Vite dengan favorit tersimpan di browser serta impor/ekspor resep",
 				],
 			},
 			sentiment: {
 				company: "Skripsi",
 				title: "IKN Sentiment Analysis",
 				results: [
-					"Klasifikasi opini tentang IKN menjadi positif, netral, atau negatif menggunakan IndoBERT",
-					"Pemodelan topik dalam setiap sentimen menggunakan Top2Vec",
-					"Pencarian dan filter opini, ekspor CSV, serta perbandingan laporan evaluasi model",
+					"Proyek skripsi untuk menganalisis opini IKN menjadi positif, netral, dan negatif",
+					"Pencarian dan filter opini, ekspor CSV, serta perbandingan evaluasi model",
+					"IndoBERT untuk klasifikasi sentimen dan Top2Vec untuk pemodelan topik",
 				],
 			},
 			agrisense: {
 				company: "Bangkit Capstone",
 				title: "AgriSense",
 				results: [
-					"Klasifikasi citra malai padi menjadi matang atau belum matang dengan MobileNetV2 dan TensorFlow Lite",
-					"Probabilitas tiap kelas dan riwayat prediksi yang tersimpan di browser",
-					"Rincian pembagian dataset, metrik evaluasi, dan confusion matrix model",
+					"Aplikasi klasifikasi citra malai padi untuk membedakan matang dan belum matang",
+					"Probabilitas tiap kelas, riwayat prediksi, dan hasil evaluasi model",
+					"MobileNetV2 dan TensorFlow Lite dengan Flask, Nuxt, serta Vue.js",
 				],
 			},
 			osteoporosis: {
 				company: "Pengolahan Citra Digital",
 				title: "Classify Osteoporosis",
 				results: [
-					"Eksperimen klasifikasi citra rontgen lutut menjadi normal atau osteoporosis dengan YOLOv8",
-					"Perbandingan metrik pelatihan dan confusion matrix pada lima varian YOLOv8",
-					"Eksplorasi dataset dan penyimpanan riwayat prediksi di SQLite dengan ekspor CSV",
+					"Aplikasi eksperimen klasifikasi rontgen lutut ke kelas normal atau osteoporosis",
+					"Perbandingan lima varian YOLOv8 dan riwayat prediksi dengan ekspor CSV",
+					"Klasifikasi YOLOv8 melalui API Django dengan dashboard React untuk evaluasi",
 				],
 			},
 			server: {
 				company: "Proyek Pribadi",
 				title: "Server Rumahan Mandiri dengan Hyper-V & Cloudflare Tunnel",
 				results: [
-					"Laboratorium server rumahan menggunakan mesin virtual Hyper-V",
-					"Mempublikasikan layanan yang dikelola sendiri melalui Cloudflare Tunnel",
-					"Mengeksplorasi jaringan virtual dan akses layanan jarak jauh",
+					"Lab server rumahan untuk menjalankan layanan mandiri pada mesin virtual",
+					"Publikasi layanan mandiri untuk akses jarak jauh melalui Cloudflare Tunnel",
+					"Virtualisasi Hyper-V untuk eksplorasi jaringan virtual dan layanan mandiri",
 				],
 			},
 			induction: {
 				company: "Tri-Wall Indonesia",
 				title: "Video Induksi Keselamatan",
 				results: [
-					"Video induksi keselamatan untuk kebutuhan internal perusahaan",
-					"Diproduksi sebagai bagian dari magang staf TI",
+					"Video induksi keselamatan untuk kebutuhan internal Tri-Wall Indonesia",
+					"Diproduksi sebagai bagian dari tanggung jawab selama magang staf TI",
+					"Disunting menggunakan VEGAS Pro sebagai perangkat produksi video induksi",
 				],
 			},
 		},
@@ -636,7 +675,7 @@ const id: Translations = {
 	certificates: {
 		eyebrow: "Pencapaian",
 		title: "Sertifikat Saya",
-		description: "Lihat sertifikat profesional dan pencapaian saya",
+		description: "Lihat sertifikat profesional dan penghargaan saya",
 		viewImage: "Lihat sertifikat:",
 		imageLabel: "Sertifikat",
 		items: {
@@ -760,6 +799,7 @@ const id: Translations = {
 	footer: {
 		rights: "Hak cipta dilindungi.",
 		socialLinks: "Tautan media sosial",
+		backToTop: "Kembali ke atas",
 	},
 };
 

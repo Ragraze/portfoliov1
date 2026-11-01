@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
 import { useReducedMotion } from "framer-motion";
 import { useLanguage } from "@/lib/LanguageContext";
+import { scrollToSection as scrollSection } from "@/lib/navigation";
 
 const links = [
 	{ id: "/", label: "home", href: "/" },
@@ -19,13 +20,7 @@ export const Header = () => {
 	const navRef = useRef<HTMLElement>(null);
 
 	const scrollToSection = useCallback((id: string, behavior: ScrollBehavior) => {
-		const target = document.getElementById(id);
-		if (!target) return;
-		const headerOffset = (navRef.current?.parentElement?.getBoundingClientRect().bottom ?? 64) + 16;
-		const elementPosition = target.getBoundingClientRect().top + window.scrollY;
-		const offsetPosition = Math.max(0, elementPosition - headerOffset);
-		window.scrollTo({ top: offsetPosition, behavior });
-		setActive(id);
+		if (scrollSection(id, behavior)) setActive(id);
 	}, []);
 
 	const handleClick = (e: MouseEvent<HTMLAnchorElement>, id: string, href: string) => {

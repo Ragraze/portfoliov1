@@ -10,13 +10,29 @@ const localOrigins = Object.values(networkInterfaces()).flatMap((interfaces) =>
 const nextConfig = {
   output: process.env.PORTFOLIO_STANDALONE === "true" ? "standalone" : undefined,
   agentRules: false,
+  poweredByHeader: false,
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
+  experimental: {
+    inlineCss: true,
+  },
   devIndicators: false,
   deploymentId: process.env.NODE_ENV === "development" ? "dev-no-store-v1" : undefined,
   allowedDevOrigins: ["127.0.0.1", "rakanfadhil.com", ...localOrigins],
   async headers() {
-    if (process.env.NODE_ENV !== "development") return [];
+    const securityHeaders = {
+      source: "/:path*",
+      headers: [
+        { key: "X-Content-Type-Options", value: "nosniff" },
+        { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      ],
+    };
+
+    if (process.env.NODE_ENV !== "development") return [securityHeaders];
 
     return [
+      securityHeaders,
       {
         source: "/_next/static/:path*",
         headers: [

@@ -54,6 +54,7 @@ import CiscoIcon from "simple-icons/icons/cisco.svg";
 import VisualStudioCodeIcon from "@/assets/icons/visual-studio-code.svg";
 import CursorIcon from "simple-icons/icons/cursor.svg";
 import FlaskIcon from "simple-icons/icons/flask.svg";
+import DjangoIcon from "simple-icons/icons/django.svg";
 import CodexIcon from "@/assets/icons/codex.svg";
 import mapImage from "@/assets/images/map.webp";
 import smileMemoji from "@/assets/images/memoji-smile.webp";
@@ -115,6 +116,7 @@ const bottomToolboxItems = [
 	{ title: "Node.js", iconType: NodeIcon },
 	{ title: "Express.js", iconType: ExpressIcon },
 	{ title: "Flask", iconType: FlaskIcon },
+	{ title: "Django", iconType: DjangoIcon },
 	{ title: "Tailwind CSS", iconType: TailwindCssIcon },
 	{ title: "Bootstrap", iconType: BootstrapIcon },
 ];
@@ -134,7 +136,7 @@ export const AboutSection = () => {
 			id="about"
 			className="relative scroll-mt-36 md:scroll-mt-40 lg:scroll-mt-44 py-16 md:py-20 lg:py-28"
 		>
-			<SectionBackground />
+			<SectionBackground variant="about" />
 			<div className="container tablet-portrait:max-w-5xl">
 				<SectionHeader
 					eyebrow={t.about.eyebrow}
@@ -235,7 +237,7 @@ export const AboutSection = () => {
 									src={mapImage}
 									alt={t.about.mapAlt}
 									fill
-									sizes="(min-width: 1024px) and (orientation: portrait) and (pointer: coarse) 304px, (min-width: 768px) and (orientation: portrait) and (pointer: coarse) calc(50vw - 3rem), (min-width: 600px) and (orientation: portrait) and (pointer: coarse) calc(50vw - 2rem), (min-width: 1200px) 304px, (min-width: 768px) 40vw, 100vw"
+									sizes="(min-width: 1024px) and (orientation: portrait) and (pointer: coarse) 304px, (min-width: 768px) and (orientation: portrait) and (pointer: coarse) calc(50vw - 3rem), (min-width: 600px) and (orientation: portrait) and (pointer: coarse) calc(50vw - 2rem), (min-width: 1200px) 304px, (min-width: 768px) calc(40vw - 2.4rem), calc(100vw - 2rem)"
 									className="object-cover object-left-top md:object-center tablet-portrait:max-[1024px]:origin-right tablet-portrait:max-[1024px]:scale-115"
 								/>
 								<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-12 rounded-full">

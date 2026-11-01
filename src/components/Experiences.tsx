@@ -10,8 +10,16 @@ import assistantImage from "@/assets/images/teaching-assistant.webp";
 import emifImage from "@/assets/images/emif.webp";
 import Image, { type StaticImageData } from "next/image";
 import dynamic from "next/dynamic";
-import { useState, type ComponentType, type ReactNode, type SVGProps } from "react";
-import { m as motion } from "framer-motion";
+import {
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+	type ComponentType,
+	type ReactNode,
+	type SVGProps,
+} from "react";
+import { m as motion, scroll } from "framer-motion";
 import { CodeBracketIcon, ServerStackIcon } from "@heroicons/react/24/solid";
 import { twMerge } from "tailwind-merge";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -207,22 +215,65 @@ function SlideInOnView({
 export const ExperiencesSection = () => {
 	const { t } = useLanguage();
 	const [selectedExperienceId, setSelectedExperienceId] = useState<string | null>(null);
-	const experiences: Experience[] = experienceAssets.map((experience) => ({
-		...experience,
-		...t.experiences.items[experience.id],
-	}));
+	const timelineRef = useRef<HTMLDivElement>(null);
+	const progressRef = useRef<HTMLDivElement>(null);
+	const experiences = useMemo<Experience[]>(
+		() =>
+			experienceAssets
+				.slice()
+				.reverse()
+				.map((experience) => ({
+					...experience,
+					...t.experiences.items[experience.id],
+				})),
+		[t.experiences.items],
+	);
 	const selectedExperience = experiences.find(
 		(experience) => experience.id === selectedExperienceId,
 	);
 
 	const closeModal = () => setSelectedExperienceId(null);
 
+	useEffect(() => {
+		const timeline = timelineRef.current;
+		const line = progressRef.current;
+		if (!timeline || !line) return;
+		const rows = Array.from(timeline.querySelectorAll<HTMLElement>("[data-experience]"));
+		const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+		const update = () => {
+			const bounds = timeline.getBoundingClientRect();
+			const position = window.innerHeight / 2;
+			const progress = Math.min(1, Math.max(0, (position - bounds.top) / bounds.height));
+			const activeRows = rows.map((row) => {
+				const bounds = row.getBoundingClientRect();
+				return String(bounds.top + bounds.height / 2 <= position);
+			});
+			line.style.transform = `scaleY(${motionPreference.matches ? 1 : progress})`;
+			rows.forEach((row, index) => {
+				if (row.dataset.active !== activeRows[index]) row.dataset.active = activeRows[index];
+			});
+		};
+		const stop = scroll(update, { target: timeline, offset: ["start center", "end center"] });
+		const observer = new ResizeObserver(update);
+		observer.observe(timeline);
+		rows.forEach((row) => {
+			observer.observe(row);
+		});
+		motionPreference.addEventListener("change", update);
+		update();
+		return () => {
+			stop();
+			observer.disconnect();
+			motionPreference.removeEventListener("change", update);
+		};
+	}, []);
+
 	return (
 		<section
 			id="experiences"
 			className="scroll-mt-36 md:scroll-mt-40 lg:scroll-mt-44 py-16 md:py-20 lg:py-28"
 		>
-			<SectionBackground />
+			<SectionBackground variant="experiences" />
 			<div className="container tablet-portrait:max-w-5xl">
 				<SectionHeader
 					eyebrow={t.experiences.eyebrow}
@@ -230,21 +281,26 @@ export const ExperiencesSection = () => {
 					description={t.experiences.description}
 				/>
 
-				<div className="mt-10 md:mt-20 relative">
-					<motion.div
-						className="absolute left-1/2 -translate-x-1/2 w-0.5 h-full bg-linear-to-b/srgb from-emerald-300 to-sky-400 hidden md:block tablet-portrait:hidden"
-						initial={{ opacity: 0, scaleY: 0.9 }}
-						whileInView={{ opacity: 1, scaleY: 1 }}
-						viewport={{ once: true, amount: 0.1 }}
-						transition={{ duration: 0.6, ease: easeOutExpo }}
-						style={{ transformOrigin: "top" }}
-					/>
+				<div ref={timelineRef} className="mt-10 md:mt-20 relative">
+					<div
+						aria-hidden="true"
+						className="absolute left-1/2 -translate-x-1/2 w-0.5 h-full bg-white/10 hidden md:block tablet-portrait:hidden"
+					>
+						<div
+							ref={progressRef}
+							data-timeline-progress
+							className="size-full origin-top bg-linear-to-b/srgb from-emerald-300 to-sky-400"
+							style={{ transform: "scaleY(0)" }}
+						/>
+					</div>
 
 					<div className="space-y-8 md:space-y-16">
 						{experiences.map((experience, index) => (
 							<div
 								key={experience.id}
-								className={`relative flex flex-col md:flex-row items-center gap-8 tablet-portrait:flex-col ${
+								data-experience={experience.id}
+								data-active="false"
+								className={`group/timeline relative flex flex-col md:flex-row items-center gap-8 tablet-portrait:flex-col ${
 									index % 2 === 0 ? "md:flex-row-reverse" : ""
 								}`}
 							>
@@ -258,8 +314,12 @@ export const ExperiencesSection = () => {
 									transition={{ duration: 0.45, ease: easeOutExpo }}
 								>
 									<span className="relative block size-4 rounded-full after:content-[''] after:absolute after:inset-0 after:outline-2 after:outline-offset-2 after:rounded-full after:outline-gray-950/30">
-										<span className="absolute inset-0 rounded-full bg-linear-to-r/srgb from-emerald-300 to-sky-400 -z-20 animate-ping [animation-duration:2s]" />
-										<span className="absolute inset-0 rounded-full bg-linear-to-r/srgb from-emerald-300 to-sky-400 -z-10" />
+										<span className="absolute inset-0 rounded-full bg-gray-700 -z-10" />
+										<span
+											data-experience-pulse
+											className="absolute inset-0 hidden rounded-full bg-linear-to-r/srgb from-emerald-300 to-sky-400 group-data-[active=true]/timeline:block motion-safe:animate-ping motion-safe:[animation-duration:2s]"
+										/>
+										<span className="absolute inset-0 rounded-full bg-linear-to-r/srgb from-emerald-300 to-sky-400 opacity-0 transition-opacity duration-300 motion-reduce:transition-none group-data-[active=true]/timeline:opacity-100" />
 									</span>
 								</motion.div>
 
@@ -271,7 +331,7 @@ export const ExperiencesSection = () => {
 									<div className="block md:hidden tablet-portrait:block">
 										<SlideInOnView dir="up">
 											<Card
-												className="card-focus p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+												className="experience-card card-focus p-6 cursor-pointer"
 												onClick={() => setSelectedExperienceId(experience.id)}
 											>
 												<ExperienceCardInner experience={experience} />
@@ -282,7 +342,7 @@ export const ExperiencesSection = () => {
 									<div className="hidden md:block tablet-portrait:hidden">
 										<SlideInOnView dir={index % 2 === 0 ? "left" : "right"}>
 											<Card
-												className="card-focus p-6 tablet-portrait:p-4 cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+												className="experience-card experience-timeline-card card-focus p-6 tablet-portrait:p-4 cursor-pointer"
 												onClick={() => setSelectedExperienceId(experience.id)}
 											>
 												<ExperienceCardInner experience={experience} />

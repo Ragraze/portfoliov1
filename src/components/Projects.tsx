@@ -1,6 +1,8 @@
 "use client";
 
 import portfolioImage from "@/assets/images/portfolio.webp";
+import codeventureImage from "@/assets/images/codeventure.webp";
+import flavoryImage from "@/assets/images/flavory.webp";
 import homeServerTopology from "@/assets/images/home-server-topology.webp";
 import sentimentAnalysisImage from "@/assets/images/ikn-sentiment-analysis.webp";
 import agrisenseImage from "@/assets/images/agrisense.webp";
@@ -18,6 +20,8 @@ import TailwindCssIcon from "simple-icons/icons/tailwindcss.svg";
 import HTMLIcon from "simple-icons/icons/html5.svg";
 import CssIcon from "simple-icons/icons/css.svg";
 import JavascriptIcon from "simple-icons/icons/javascript.svg";
+import PhpIcon from "simple-icons/icons/php.svg";
+import LaravelIcon from "simple-icons/icons/laravel.svg";
 import TypescriptIcon from "simple-icons/icons/typescript.svg";
 import WordpressIcon from "simple-icons/icons/wordpress.svg";
 import PythonIcon from "simple-icons/icons/python.svg";
@@ -27,10 +31,10 @@ import NumpyIcon from "simple-icons/icons/numpy.svg";
 import TensorflowIcon from "simple-icons/icons/tensorflow.svg";
 import UltralyticsIcon from "simple-icons/icons/ultralytics.svg";
 import FlaskIcon from "simple-icons/icons/flask.svg";
+import DjangoIcon from "simple-icons/icons/django.svg";
 import NuxtIcon from "simple-icons/icons/nuxt.svg";
 import VueIcon from "simple-icons/icons/vuedotjs.svg";
 import ViteIcon from "simple-icons/icons/vite.svg";
-import SqliteIcon from "simple-icons/icons/sqlite.svg";
 import DockerIcon from "simple-icons/icons/docker.svg";
 import CloudflareIcon from "simple-icons/icons/cloudflare.svg";
 import LinuxIcon from "simple-icons/icons/linux.svg";
@@ -40,9 +44,10 @@ import VegasIcon from "simple-icons/icons/vegas.svg";
 import { SectionHeader } from "@/components/SectionHeader";
 import { SectionBackground } from "@/components/SectionBackground";
 import { Card } from "@/components/Card";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { twMerge } from "tailwind-merge";
+import { scroll } from "framer-motion";
 
 const ImageViewer = dynamic(() =>
 	import("@/components/ImageViewer").then((module) => module.ImageViewer),
@@ -91,6 +96,38 @@ const projectAssets = [
 		image: twnsLandingPage,
 	},
 	{
+		id: "codeventure" as const,
+		year: "2023",
+		category: "App/Website",
+		techStack: [
+			{ title: "PHP", iconType: PhpIcon },
+			{ title: "Laravel", iconType: LaravelIcon },
+			{ title: "HTML", iconType: HTMLIcon },
+			{ title: "CSS", iconType: CssIcon },
+			{ title: "JavaScript", iconType: JavascriptIcon },
+			{ title: "Vite", iconType: ViteIcon },
+			{ title: "Docker", iconType: DockerIcon },
+		],
+		link: "https://github.com/Ragraze/codeventure",
+		image: codeventureImage,
+	},
+	{
+		id: "flavory" as const,
+		year: "2023",
+		category: "App/Website",
+		techStack: [
+			{ title: "PHP", iconType: PhpIcon },
+			{ title: "Laravel", iconType: LaravelIcon },
+			{ title: "HTML", iconType: HTMLIcon },
+			{ title: "CSS", iconType: CssIcon },
+			{ title: "JavaScript", iconType: JavascriptIcon },
+			{ title: "Vite", iconType: ViteIcon },
+			{ title: "Docker", iconType: DockerIcon },
+		],
+		link: "https://github.com/Ragraze/flavory",
+		image: flavoryImage,
+	},
+	{
 		id: "sentiment" as const,
 		year: "2025",
 		category: "Data Science/AI",
@@ -133,11 +170,10 @@ const projectAssets = [
 			{ title: "Python", iconType: PythonIcon },
 			{ title: "PyTorch", iconType: PytorchIcon },
 			{ title: "Ultralytics YOLOv8", iconType: UltralyticsIcon },
-			{ title: "Flask", iconType: FlaskIcon },
+			{ title: "Django", iconType: DjangoIcon },
 			{ title: "ReactJS", iconType: ReactIcon },
 			{ title: "JavaScript", iconType: JavascriptIcon },
 			{ title: "Vite", iconType: ViteIcon },
-			{ title: "SQLite", iconType: SqliteIcon },
 			{ title: "Docker", iconType: DockerIcon },
 		],
 		link: "https://github.com/Ragraze/classify-osteoporosis",
@@ -169,11 +205,15 @@ const filterCategories = ["App/Website", "Data Science/AI", "Network", "Digital 
 
 export const ProjectsSection = () => {
 	const { language, t } = useLanguage();
-	const portfolioProjects = projectAssets.map((project) => ({
-		...project,
-		...t.projects.items[project.id],
-		imageClassName: project.id === "agrisense" ? "agrisense-image" : undefined,
-	}));
+	const portfolioProjects = useMemo(
+		() =>
+			projectAssets.map((project) => ({
+				...project,
+				...t.projects.items[project.id],
+				imageClassName: project.id === "agrisense" ? "agrisense-image" : undefined,
+			})),
+		[t.projects.items],
+	);
 	const [activeFilter, setActiveFilter] = useState("App/Website");
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
@@ -182,9 +222,16 @@ export const ProjectsSection = () => {
 	// Shared sticky bounds keep taller cards from leaving the stack before the last card.
 	const cardHeight = Math.ceil(Math.max(0, ...cardHeights));
 
-	const filteredProjects = portfolioProjects.filter((project) => project.category === activeFilter);
-	const projectImages = filteredProjects.flatMap((project) =>
-		project.image ? [{ ...project, image: project.image }] : [],
+	const filteredProjects = useMemo(
+		() => portfolioProjects.filter((project) => project.category === activeFilter),
+		[portfolioProjects, activeFilter],
+	);
+	const projectImages = useMemo(
+		() =>
+			filteredProjects.flatMap((project) =>
+				project.image ? [{ ...project, image: project.image }] : [],
+			),
+		[filteredProjects],
 	);
 
 	const openFullscreen = (id: string) => {
@@ -213,10 +260,13 @@ export const ProjectsSection = () => {
 				if (!card) return 0;
 				const styles = window.getComputedStyle(card);
 				const image = card.querySelector<HTMLElement>("[data-project-image]");
+				// Read layout sizes so entrance transforms cannot change the sticky bounds.
 				const imageHeight =
-					styles.display === "flex" ? (image?.getBoundingClientRect().height ?? 0) : 0;
+					styles.display === "flex" && image
+						? parseFloat(window.getComputedStyle(image).height)
+						: 0;
 				return (
-					content.getBoundingClientRect().height +
+					parseFloat(window.getComputedStyle(content).height) +
 					imageHeight +
 					parseFloat(styles.paddingTop) +
 					parseFloat(styles.paddingBottom)
@@ -244,12 +294,63 @@ export const ProjectsSection = () => {
 		};
 	}, [activeFilter, language]);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Category and language changes replace the cards being animated.
+	useEffect(() => {
+		const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+		const compactPreference = window.matchMedia("(max-width: 767.98px), (pointer: coarse)");
+		const wrappers = Array.from(
+			projectsRef.current?.querySelectorAll<HTMLDivElement>("[data-project-card]") ?? [],
+		);
+		let cleanups: (() => void)[] = [];
+		const animateCards = () => {
+			cleanups.forEach((cleanup) => {
+				cleanup();
+			});
+			cleanups = [];
+			if (motionPreference.matches) return;
+
+			cleanups = wrappers.map((wrapper) => {
+				const card = wrapper.firstElementChild;
+				if (!(card instanceof HTMLElement)) return () => undefined;
+
+				const stop = scroll(
+					(progress: number) => {
+						const compact = compactPreference.matches;
+						const remaining = (1 - progress) ** 1.5;
+						const y = remaining * (compact ? 28 : 56);
+						const rotateX = remaining * (compact ? 8 : 18);
+						const scale = 1 - remaining * (compact ? 0.05 : 0.12);
+						card.style.transform = remaining
+							? `perspective(1000px) translateY(${y}px) rotateX(${rotateX}deg) scale(${scale})`
+							: "";
+						card.style.willChange = progress > 0 && progress < 1 ? "transform" : "";
+					},
+					{ target: wrapper, offset: ["start end", "start center"] },
+				);
+
+				return () => {
+					stop();
+					card.style.removeProperty("transform");
+					card.style.removeProperty("will-change");
+				};
+			});
+		};
+		animateCards();
+		motionPreference.addEventListener("change", animateCards);
+		return () => {
+			motionPreference.removeEventListener("change", animateCards);
+			cleanups.forEach((cleanup) => {
+				cleanup();
+			});
+		};
+	}, [activeFilter, language]);
+
 	return (
 		<section
 			id="projects"
-			className="scroll-mt-36 md:scroll-mt-40 project-desktop:scroll-mt-44 max-md:pt-16 pb-16 project-desktop:py-24"
+			className="scroll-mt-36 md:scroll-mt-40 project-desktop:scroll-mt-44 max-md:pt-16 md:max-lg:pt-16 pb-16 project-desktop:py-24"
 		>
-			<SectionBackground />
+			<SectionBackground variant="projects" />
 			<div className="container tablet-portrait:max-w-5xl">
 				<SectionHeader
 					eyebrow={t.projects.eyebrow}
@@ -291,6 +392,7 @@ export const ProjectsSection = () => {
 					{filteredProjects.map((project, projectIndex) => (
 						<div
 							key={project.id}
+							data-project-card
 							className="sticky top-16 project-desktop:top-28 min-h-[var(--project-card-height)] mt-[var(--project-stack-margin)] md:min-h-0 md:mt-0 tablet-portrait:min-h-0 tablet-portrait:mt-0"
 							style={
 								{
@@ -300,7 +402,7 @@ export const ProjectsSection = () => {
 							}
 						>
 							<Card
-								className="px-8 pt-8 pb-0 md:p-6 project-desktop:pt-16 project-desktop:px-20 project-desktop:pb-0 flex flex-col md:grid md:grid-cols-5 md:min-h-[var(--project-card-min-height,var(--project-card-height))] project-desktop:grid-cols-2 md:gap-4 project-desktop:gap-16 project-tablet:pb-0 tablet-portrait:grid tablet-portrait:grid-cols-2 tablet-portrait:min-h-[var(--project-card-min-height,var(--project-card-height))] tablet-portrait:gap-4 tablet-portrait:p-6 tablet-portrait:pb-0 project-tablet:[--project-card-min-height:min(var(--project-card-height),calc(100svh-5rem))] project-tablet:max-h-[calc(100svh-5rem)] project-tablet:overflow-y-auto after:z-10"
+								className="isolate origin-top [clip-path:inset(0_round_1.5rem)] px-8 pt-8 pb-0 md:p-6 project-desktop:pt-16 project-desktop:px-20 project-desktop:pb-0 flex flex-col md:grid md:grid-cols-5 md:min-h-[var(--project-card-min-height,var(--project-card-height))] project-desktop:grid-cols-2 md:gap-4 project-desktop:gap-16 project-tablet:pb-0 tablet-portrait:grid tablet-portrait:grid-cols-2 tablet-portrait:min-h-[var(--project-card-min-height,var(--project-card-height))] tablet-portrait:gap-4 tablet-portrait:p-6 tablet-portrait:pb-0 project-tablet:[--project-card-min-height:min(var(--project-card-height),calc(100svh-5rem))] project-tablet:max-h-[calc(100svh-5rem)] project-tablet:overflow-y-auto after:z-10"
 								style={
 									{
 										"--project-image-aspect-ratio": project.image
@@ -324,13 +426,13 @@ export const ProjectsSection = () => {
 									</h3>
 									<hr className="border-t-2 border-white/5 mt-4 md:mt-3 project-desktop:mt-5" />
 									<ul className="flex flex-col gap-4 md:gap-2 project-desktop:gap-4 mt-4 md:mt-3 project-desktop:mt-5">
-										{project.results.map((result) => (
+										{project.results.slice(0, 3).map((result) => (
 											<li
 												key={result}
 												className="flex gap-2 text-sm project-desktop:text-base text-white/50"
 											>
 												<CheckCircleIcon className="size-5 project-desktop:size-6 shrink-0" />
-												<span>{result}</span>
+												<span className="min-w-0 flex-1">{result}</span>
 											</li>
 										))}
 									</ul>

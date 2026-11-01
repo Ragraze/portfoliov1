@@ -24,7 +24,7 @@ export default function RootLayout({
 	children: ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" className="relative">
 			<body
 				className={twMerge(
 					inter.variable,

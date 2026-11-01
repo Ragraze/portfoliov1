@@ -191,12 +191,20 @@ const CertificateSlide = ({
 
 export const CertificatesSection = () => {
 	const { t } = useLanguage();
-	const certificates = certificateAssets.map((certificate) => ({
-		...certificate,
-		...t.certificates.items[certificate.id],
-	}));
-	const loopedCertificates = ["first", "second"].flatMap((copy) =>
-		certificates.map((certificate) => ({ ...certificate, key: `${certificate.id}-${copy}` })),
+	const certificates = useMemo(
+		() =>
+			certificateAssets.map((certificate) => ({
+				...certificate,
+				...t.certificates.items[certificate.id],
+			})),
+		[t.certificates.items],
+	);
+	const loopedCertificates = useMemo(
+		() =>
+			["first", "second"].flatMap((copy) =>
+				certificates.map((certificate) => ({ ...certificate, key: `${certificate.id}-${copy}` })),
+			),
+		[certificates],
 	);
 	const reduceMotion = useReducedMotion();
 	const [isFullscreen, setIsFullscreen] = useState(false);
@@ -297,7 +305,7 @@ export const CertificatesSection = () => {
 				id="certificates"
 				className="relative isolate scroll-mt-36 md:scroll-mt-40 lg:scroll-mt-44 py-16 lg:py-24"
 			>
-				<SectionBackground />
+				<SectionBackground variant="certificates" />
 				<div className="container relative z-10">
 					<SectionHeader
 						title={t.certificates.title}
