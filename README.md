@@ -94,7 +94,10 @@ public/
   audio/             Background audio
   certificates/      Certificate images
   curriculum-vitae/  Downloadable curriculum vitae
-  robots.txt         Crawler directives
+  .well-known/       ARD manifest
+  llms.txt           Portfolio summary and links for agents
+  robots.txt         Crawler directives, sitemap, and Agentmap
+  sitemap.xml        Canonical page index
 src/
   app/            Page composition, layout, metadata, and global CSS
   assets/
@@ -127,6 +130,16 @@ Use the existing WebP versions for image imports and certificate URLs. The `main
 ## Routes and deployment
 
 `/about`, `/experience`, `/project`, and `/certificates` rewrite to the main page. Client-side navigation scrolls to the matching section and updates the URL.
+
+### Search and agent discovery
+
+The canonical origin is `https://rakanfadhil.com`. The page metadata includes a canonical URL, Open Graph metadata, and Schema.org `ProfilePage` / `Person` JSON-LD. Section routes share the homepage canonical because they render the same document; `public/sitemap.xml` therefore lists only `/`. No synthetic modification dates or separate language URLs are published.
+
+- `/llms.txt` follows the [llms.txt proposal](https://llmstxt.org/) and provides a short portfolio summary, section links, repositories, and contact links. `/llm.txt` permanently redirects to it.
+- `/.well-known/ard.json` follows the [ARD v0.91 manifest format](https://github.com/ards-project/ard-spec/blob/main/spec/ard.md). Its `entries` array is empty because the portfolio does not expose any callable agentic resources. Add entries only when a real MCP server, A2A agent, skill, or other agent service is published, with its actual descriptor URL and media type.
+- `robots.txt` allows crawling and advertises the sitemap and ARD manifest through `Sitemap` and `Agentmap`. HTML head links also advertise the summary, manifest, and sitemap.
+
+When changing the domain, update `src/app/layout.tsx`, the JSON-LD in `src/app/page.tsx`, and these public discovery files together. Keep `llms.txt` synchronized with the content in `src/lib/translations.ts` and the project and contact links in the components. The public files are copied into the Docker image with the other public assets.
 
 Deploy with a hosting provider that supports Next.js, or run it on a Node.js server:
 

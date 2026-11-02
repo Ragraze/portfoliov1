@@ -43,6 +43,9 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [{ source: "/llm.txt", destination: "/llms.txt", permanent: true }];
+  },
   async rewrites() {
     return [
       { source: "/about", destination: "/" },

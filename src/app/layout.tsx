@@ -14,8 +14,20 @@ const calistoga = Calistoga({
 });
 
 export const metadata: Metadata = {
-	title: "Rakan's Portfolio",
-	description: "Created with the help of Frontend Tribe",
+	metadataBase: new URL("https://rakanfadhil.com"),
+	title: "Rakan Fadhil Prayata | Portfolio",
+	description:
+		"Portfolio of Rakan Fadhil Prayata, an Informatics Engineering graduate from Universitas Brawijaya. Web development, IT operations, projects, and certificates.",
+	authors: [{ name: "Rakan Fadhil Prayata", url: "https://rakanfadhil.com/" }],
+	alternates: { canonical: "/" },
+	openGraph: {
+		type: "website",
+		url: "/",
+		siteName: "Rakan Fadhil Prayata",
+		title: "Rakan Fadhil Prayata | Portfolio",
+		description:
+			"Web development, IT operations, projects, and certificates of Rakan Fadhil Prayata, an Informatics Engineering graduate from Universitas Brawijaya.",
+	},
 };
 
 export default function RootLayout({
@@ -25,6 +37,11 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" className="relative">
+			<head>
+				<link rel="describedby" href="/llms.txt" type="text/plain" />
+				<link rel="ard" href="/.well-known/ard.json" type="application/json" />
+				<link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+			</head>
 			<body
 				className={twMerge(
 					inter.variable,

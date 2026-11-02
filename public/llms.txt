@@ -1,0 +1,39 @@
+# Rakan Fadhil Prayata
+
+> Personal portfolio of Rakan Fadhil Prayata, an Informatics Engineering graduate from Universitas Brawijaya with experience in web development and IT operations, and interests in AI, cloud computing, and networking.
+
+The canonical website is https://rakanfadhil.com/. It is a single-page portfolio available in English and Indonesian through a browser language toggle. The section URLs below render the same page and scroll to the relevant section with JavaScript; they are not separate articles. Experience details open in dialogs, and projects can be filtered by category.
+
+Experience includes web development at Tri-Wall Natura Surabaya, IT Staff at Tri-Wall Indonesia, the Bangkit Academy Cloud Computing learning path, and a Web Programming teaching assistant role at Universitas Brawijaya. Project categories are App/Website, Data Science/AI, Network, and Digital Content.
+
+This website publishes portfolio information and a downloadable CV. It does not expose a public API, MCP server, A2A agent, or callable agent service. The ARD manifest therefore has an empty entries array. Contact links are for reaching the portfolio owner.
+
+## Portfolio
+
+- [Home](https://rakanfadhil.com/): Introduction and contact options.
+- [About](https://rakanfadhil.com/about): Biography, education, interests, and technical stack.
+- [Experience](https://rakanfadhil.com/experience): Roles, organizations, dates, and responsibilities.
+- [Projects](https://rakanfadhil.com/project): Websites, applications, machine learning projects, home server, and multimedia work.
+- [Certificates](https://rakanfadhil.com/certificates): Training and professional certificates.
+- [Curriculum vitae](https://rakanfadhil.com/curriculum-vitae/CV_Rakan%20Fadhil%20Prayata.pdf): Downloadable CV in PDF format.
+
+## Project repositories
+
+- [Portfolio source](https://github.com/Ragraze/portfoliov1): This Next.js, React, TypeScript, and Tailwind CSS portfolio.
+- [Codeventure](https://github.com/Ragraze/codeventure): Web programming learning platform built with Laravel and Vite.
+- [Flavory](https://github.com/Ragraze/flavory): Recipe application with meal planning and browser-saved favorites.
+- [IKN Sentiment Analysis](https://github.com/Ragraze/ikn-sentiment-analysis): Thesis project using IndoBERT for sentiment classification and Top2Vec for topic discovery.
+- [AgriSense](https://github.com/Ragraze/agrisense-webapp): Rice panicle maturity classification project using MobileNetV2 and TensorFlow Lite.
+- [Classify Osteoporosis](https://github.com/Ragraze/classify-osteoporosis): Experimental knee X-ray classification project.
+
+## Contact and profiles
+
+- [LinkedIn](https://www.linkedin.com/in/rakanfadhilp/): Professional profile.
+- [GitHub](https://github.com/Ragraze): Public code repositories.
+- [Email](mailto:contact@rakanfadhil.com): Contact address linked from the portfolio introduction.
+
+## Optional
+
+- [Sitemap](https://rakanfadhil.com/sitemap.xml): Canonical indexable page.
+- [Robots](https://rakanfadhil.com/robots.txt): Crawler directives and discovery locations.
+- [ARD manifest](https://rakanfadhil.com/.well-known/ard.json): Agentic Resource Discovery manifest; no callable resources are currently published.

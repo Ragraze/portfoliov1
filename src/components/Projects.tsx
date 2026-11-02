@@ -269,7 +269,9 @@ export const ProjectsSection = () => {
 					parseFloat(window.getComputedStyle(content).height) +
 					imageHeight +
 					parseFloat(styles.paddingTop) +
-					parseFloat(styles.paddingBottom)
+					parseFloat(styles.paddingBottom) +
+					parseFloat(styles.borderTopWidth) +
+					parseFloat(styles.borderBottomWidth)
 				);
 			});
 			setCardHeights((current) =>
@@ -402,7 +404,7 @@ export const ProjectsSection = () => {
 							}
 						>
 							<Card
-								className="isolate origin-top [clip-path:inset(0_round_1.5rem)] px-8 pt-8 pb-0 md:p-6 project-desktop:pt-16 project-desktop:px-20 project-desktop:pb-0 flex flex-col md:grid md:grid-cols-5 md:min-h-[var(--project-card-min-height,var(--project-card-height))] project-desktop:grid-cols-2 md:gap-4 project-desktop:gap-16 project-tablet:pb-0 tablet-portrait:grid tablet-portrait:grid-cols-2 tablet-portrait:min-h-[var(--project-card-min-height,var(--project-card-height))] tablet-portrait:gap-4 tablet-portrait:p-6 tablet-portrait:pb-0 project-tablet:[--project-card-min-height:min(var(--project-card-height),calc(100svh-5rem))] project-tablet:max-h-[calc(100svh-5rem)] project-tablet:overflow-y-auto after:z-10"
+								className="isolate origin-top border-2 border-white/20 [clip-path:inset(0_round_1.5rem)] px-8 pt-8 pb-0 md:p-6 project-desktop:pt-16 project-desktop:px-20 project-desktop:pb-0 flex flex-col md:grid md:grid-cols-5 md:min-h-[var(--project-card-min-height,var(--project-card-height))] project-desktop:grid-cols-2 md:gap-4 project-desktop:gap-16 project-tablet:pb-0 tablet-portrait:grid tablet-portrait:grid-cols-2 tablet-portrait:min-h-[var(--project-card-min-height,var(--project-card-height))] tablet-portrait:gap-4 tablet-portrait:p-6 tablet-portrait:pb-0 project-tablet:[--project-card-min-height:min(var(--project-card-height),calc(100svh-5rem))] project-tablet:max-h-[calc(100svh-5rem)] project-tablet:overflow-y-auto after:hidden"
 								style={
 									{
 										"--project-image-aspect-ratio": project.image

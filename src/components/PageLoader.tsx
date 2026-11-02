@@ -17,9 +17,6 @@ export const PageLoader = ({ children }: { children: ReactNode }) => {
 		let secondFrame = 0;
 		let isFinishing = false;
 
-		document.documentElement.style.overflow = "hidden";
-		document.body.style.overflow = "hidden";
-
 		const restoreScrolling = () => {
 			document.documentElement.style.overflow = rootOverflow;
 			document.body.style.overflow = bodyOverflow;
@@ -48,6 +45,9 @@ export const PageLoader = ({ children }: { children: ReactNode }) => {
 				bounds.right > 0
 			);
 		});
+
+		document.documentElement.style.overflow = "hidden";
+		document.body.style.overflow = "hidden";
 
 		void Promise.allSettled([document.fonts.ready, ...images.map((image) => image.decode())]).then(
 			finish,

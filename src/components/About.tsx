@@ -154,7 +154,7 @@ export const AboutSection = () => {
 							transition={{ ...spring, delay: 0.05 }}
 							className="md:col-span-2 lg:col-span-1 tablet-portrait:col-span-1 tablet-portrait:min-w-0"
 						>
-							<Card className="about-card [--about-card-tilt:-1.5deg] h-[320px]">
+							<Card className="about-card [--about-card-tilt:-1.5deg] h-[320px] after:z-10">
 								<CardHeader
 									title={t.about.profile}
 									description=""
