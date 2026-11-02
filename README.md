@@ -119,7 +119,7 @@ src/
 - **Experience:** update `experienceAssets` in `src/data/experiences.ts` and the matching translation IDs.
 - **Projects:** update `projectAssets` in `src/data/projects.ts`, the matching translation IDs, and the images in `src/assets/images/`.
 - **Certificates:** add images to `public/certificates/`, update `certificateAssets` in `src/data/certificates.ts`, and add the matching translation IDs. Array order controls display order.
-- **Contact links:** edit `src/components/sections/Hero.tsx` and `src/components/Footer.tsx`.
+- **Contact links:** edit `src/components/sections/HeroSection.tsx` and `src/components/Footer.tsx`.
 - **Metadata and theme:** edit `src/app/layout.tsx` and `src/app/globals.css`.
 
 All content is stored locally. Keep existing section IDs and their mappings in `Header.tsx` and `next.config.mjs` synchronized when changing navigation.
