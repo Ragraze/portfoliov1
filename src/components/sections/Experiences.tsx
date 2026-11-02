@@ -3,177 +3,15 @@
 import { SectionHeader } from "@/components/SectionHeader";
 import { SectionBackground } from "@/components/SectionBackground";
 import { Card } from "@/components/Card";
-import triwallImage from "@/assets/images/tri-wall-indonesia.webp";
-import twnsImage from "@/assets/images/tri-wall-natura-surabaya.webp";
-import bangkitImage from "@/assets/images/bangkit.webp";
-import assistantImage from "@/assets/images/teaching-assistant.webp";
-import emifImage from "@/assets/images/emif.webp";
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import dynamic from "next/dynamic";
-import {
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-	type ComponentType,
-	type ReactNode,
-	type SVGProps,
-} from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { m as motion, scroll } from "framer-motion";
-import { CodeBracketIcon, ServerStackIcon } from "@heroicons/react/24/solid";
 import { twMerge } from "tailwind-merge";
-import { useLanguage } from "@/lib/LanguageContext";
-import type { Translations } from "@/lib/translations";
-
-import JavascriptIcon from "simple-icons/icons/javascript.svg";
-import GithubIcon from "simple-icons/icons/github.svg";
-import CssIcon from "simple-icons/icons/css.svg";
-import HTMLIcon from "simple-icons/icons/html5.svg";
-import GoogleCloudIcon from "simple-icons/icons/googlecloud.svg";
-import NodeIcon from "simple-icons/icons/nodedotjs.svg";
-import PhpIcon from "simple-icons/icons/php.svg";
-import LaravelIcon from "simple-icons/icons/laravel.svg";
-import FigmaIcon from "simple-icons/icons/figma.svg";
-import CanvaIcon from "@/assets/icons/canva.svg";
-import WordpressIcon from "simple-icons/icons/wordpress.svg";
+import { useLanguage } from "@/providers/LanguageProvider";
+import { experienceAssets, type Experience } from "@/data/experiences";
 
 const Modal = dynamic(() => import("@/components/Modal").then((module) => module.Modal));
-
-interface Experience {
-	id: keyof Translations["experiences"]["items"];
-	title: string;
-	company: string;
-	period: string;
-	logo: StaticImageData;
-	logoClassName?: string;
-	description: string;
-	techStack: {
-		name: string;
-		icon?: ComponentType<SVGProps<SVGSVGElement>>;
-	}[];
-	responsibilities: string[];
-}
-
-const experienceAssets: Omit<
-	Experience,
-	"title" | "company" | "period" | "description" | "responsibilities"
->[] = [
-	{
-		id: "5",
-		logo: twnsImage,
-		techStack: [
-			{
-				name: "WordPress",
-				icon: WordpressIcon,
-			},
-			{
-				name: "JavaScript",
-				icon: JavascriptIcon,
-			},
-			{
-				name: "HTML",
-				icon: HTMLIcon,
-			},
-			{
-				name: "CSS",
-				icon: CssIcon,
-			},
-		],
-	},
-	{
-		id: "4",
-		logo: triwallImage,
-		techStack: [
-			{
-				name: "WordPress",
-				icon: WordpressIcon,
-			},
-			{
-				name: "JavaScript",
-				icon: JavascriptIcon,
-			},
-			{
-				name: "HTML",
-				icon: HTMLIcon,
-			},
-			{
-				name: "CSS",
-				icon: CssIcon,
-			},
-		],
-	},
-	{
-		id: "3",
-		logo: bangkitImage,
-		techStack: [
-			{
-				name: "Google Cloud",
-				icon: GoogleCloudIcon,
-			},
-			{
-				name: "Node.js",
-				icon: NodeIcon,
-			},
-			{
-				name: "GitHub",
-				icon: GithubIcon,
-			},
-			{
-				name: "REST API",
-				icon: CodeBracketIcon,
-			},
-			{
-				name: "JavaScript",
-				icon: JavascriptIcon,
-			},
-			{
-				name: "Back-End",
-				icon: ServerStackIcon,
-			},
-		],
-	},
-	{
-		id: "2",
-		logo: assistantImage,
-		techStack: [
-			{
-				name: "HTML",
-				icon: HTMLIcon,
-			},
-			{
-				name: "CSS",
-				icon: CssIcon,
-			},
-			{
-				name: "JavaScript",
-				icon: JavascriptIcon,
-			},
-			{
-				name: "PHP",
-				icon: PhpIcon,
-			},
-			{
-				name: "Laravel",
-				icon: LaravelIcon,
-			},
-		],
-	},
-	{
-		id: "1",
-		logo: emifImage,
-		logoClassName: "object-cover",
-		techStack: [
-			{
-				name: "Figma",
-				icon: FigmaIcon,
-			},
-			{
-				name: "Canva",
-				icon: CanvaIcon,
-			},
-		],
-	},
-];
 
 const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -240,21 +78,30 @@ export const ExperiencesSection = () => {
 		if (!timeline || !line) return;
 		const rows = Array.from(timeline.querySelectorAll<HTMLElement>("[data-experience]"));
 		const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+		let progress = 0;
+		let thresholds: number[] = [];
 		const update = () => {
-			const bounds = timeline.getBoundingClientRect();
-			const position = window.innerHeight / 2;
-			const progress = Math.min(1, Math.max(0, (position - bounds.top) / bounds.height));
-			const activeRows = rows.map((row) => {
-				const bounds = row.getBoundingClientRect();
-				return String(bounds.top + bounds.height / 2 <= position);
-			});
 			line.style.transform = `scaleY(${motionPreference.matches ? 1 : progress})`;
 			rows.forEach((row, index) => {
-				if (row.dataset.active !== activeRows[index]) row.dataset.active = activeRows[index];
+				const active = String(progress >= thresholds[index]);
+				if (row.dataset.active !== active) row.dataset.active = active;
 			});
 		};
-		const stop = scroll(update, { target: timeline, offset: ["start center", "end center"] });
-		const observer = new ResizeObserver(update);
+		const stop = scroll(
+			(value: number) => {
+				progress = value;
+				update();
+			},
+			{ target: timeline, offset: ["start center", "end center"] },
+		);
+		const observer = new ResizeObserver(() => {
+			const bounds = timeline.getBoundingClientRect();
+			thresholds = rows.map((row) => {
+				const rowBounds = row.getBoundingClientRect();
+				return (rowBounds.top + rowBounds.height / 2 - bounds.top) / bounds.height;
+			});
+			update();
+		});
 		observer.observe(timeline);
 		rows.forEach((row) => {
 			observer.observe(row);

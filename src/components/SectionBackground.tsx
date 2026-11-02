@@ -1,24 +1,14 @@
 "use client";
 
-import grainImage from "@/assets/images/grain.webp";
+import grainImage from "@/assets/images/grain.avif";
 import { useEffect, useRef, type CSSProperties } from "react";
 
-const createDotWave = (wave: (x: number, y: number) => number) => {
-	const dots = Array.from({ length: 600 }, (_, index) => {
-		const column = index % 30;
-		const row = Math.floor(index / 30);
-		const strength = ((wave((column / 30) * Math.PI * 2, (row / 20) * Math.PI * 2) + 1) / 2) ** 2;
-		return `<circle cx="${column * 28 + 14}" cy="${row * 28 + 14}" r="${(0.35 + strength * 1.15).toFixed(2)}"/>`;
-	}).join("");
-	return `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="840" height="560" viewBox="0 0 840 560"><g fill="white" opacity="0.12">${dots}</g></svg>`)}")`;
-};
-
 const dotWaves = {
-	about: createDotWave((x, y) => Math.sin(x + Math.sin(y))),
-	experiences: createDotWave((x, y) => Math.sin(y + Math.sin(x * 2) * 0.6)),
-	projects: createDotWave((x, y) => Math.sin(x + y + Math.sin(x - y) * 0.8)),
-	certificates: createDotWave((x, y) => Math.cos(Math.hypot(Math.sin(x / 2), Math.sin(y / 2)) * 8)),
-	curriculumVitae: createDotWave((x, y) => Math.cos(x - y) * Math.sin(x + y)),
+	about: 'url("/backgrounds/about.svg")',
+	experiences: 'url("/backgrounds/experiences.svg")',
+	projects: 'url("/backgrounds/projects.svg")',
+	certificates: 'url("/backgrounds/certificates.svg")',
+	curriculumVitae: 'url("/backgrounds/curriculum-vitae.svg")',
 };
 
 export const SectionBackground = ({ variant }: { variant: keyof typeof dotWaves }) => {
@@ -30,14 +20,13 @@ export const SectionBackground = ({ variant }: { variant: keyof typeof dotWaves 
 		if (!background || !section) return;
 		let isInView = false;
 		let reactionIndex = 0;
+		const animations: (Animation | undefined)[] = [];
 		let lastPointer = { x: 0, y: 0, time: 0 };
 		const pointerPreference = window.matchMedia("(hover: hover) and (pointer: fine)");
 		const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
 		const stopRipples = () => {
-			reactionRefs.current.forEach((reaction) => {
-				reaction?.getAnimations().forEach((animation) => {
-					animation.cancel();
-				});
+			animations.forEach((animation) => {
+				animation?.cancel();
 			});
 		};
 		const update = () => {
@@ -61,10 +50,8 @@ export const SectionBackground = ({ variant }: { variant: keyof typeof dotWaves 
 				return;
 			const reaction = reactionRefs.current[reactionIndex];
 			if (!reaction) return;
-			reaction.getAnimations().forEach((animation) => {
-				animation.cancel();
-			});
 			const bounds = background.getBoundingClientRect();
+			animations[reactionIndex]?.cancel();
 			const x = event.clientX - bounds.left;
 			const y = event.clientY - bounds.top;
 			// Align the reaction tile with the existing dot grid.
@@ -73,7 +60,7 @@ export const SectionBackground = ({ variant }: { variant: keyof typeof dotWaves 
 			reaction.style.left = `${left}px`;
 			reaction.style.top = `${top}px`;
 			const center = `${x - left}px ${y - top}px`;
-			reaction.animate(
+			animations[reactionIndex] = reaction.animate(
 				[
 					{ clipPath: `circle(0px at ${center})`, opacity: 0 },
 					{ clipPath: `circle(90px at ${center})`, opacity: 0.8, offset: 0.2 },

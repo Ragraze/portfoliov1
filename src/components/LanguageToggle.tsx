@@ -1,6 +1,6 @@
 "use client";
 
-import { useLanguage } from "@/lib/LanguageContext";
+import { useLanguage } from "@/providers/LanguageProvider";
 import { FloatingButton } from "@/components/FloatingButton";
 
 export const LanguageToggle = ({ isVisible = true }: { isVisible?: boolean }) => {

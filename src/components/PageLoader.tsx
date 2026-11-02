@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
-import { useLanguage } from "@/lib/LanguageContext";
-import { useHydrated } from "@/lib/useHydrated";
+import { useLanguage } from "@/providers/LanguageProvider";
+import { useHydrated } from "@/hooks/useHydrated";
 
 export const PageLoader = ({ children }: { children: ReactNode }) => {
 	const { t } = useLanguage();
@@ -35,16 +35,8 @@ export const PageLoader = ({ children }: { children: ReactNode }) => {
 		};
 
 		const timeout = window.setTimeout(finish, 8000);
-		const images = Array.from(document.images).filter((image) => {
-			if (image.loading !== "lazy") return true;
-			const bounds = image.getBoundingClientRect();
-			return (
-				bounds.top < window.innerHeight &&
-				bounds.bottom > 0 &&
-				bounds.left < window.innerWidth &&
-				bounds.right > 0
-			);
-		});
+		// Only eager images belong to the initial loading path.
+		const images = Array.from(document.images).filter((image) => image.loading !== "lazy");
 
 		document.documentElement.style.overflow = "hidden";
 		document.body.style.overflow = "hidden";

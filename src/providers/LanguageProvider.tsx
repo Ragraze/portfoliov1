@@ -1,8 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useSyncExternalStore, type ReactNode } from "react";
-import { domAnimation, LazyMotion, MotionConfig } from "framer-motion";
-import { translations, type Language, type Translations } from "@/lib/translations";
+import { translations, type Language, type Translations } from "@/data/translations";
 
 const storageKey = "portfolio-language";
 const listeners = new Set<() => void>();
@@ -12,11 +11,15 @@ const getLanguage = (): Language => {
 	if (selectedLanguage) return selectedLanguage;
 	try {
 		const savedLanguage = localStorage.getItem(storageKey);
-		if (savedLanguage === "en" || savedLanguage === "id") return savedLanguage;
+		if (savedLanguage === "en" || savedLanguage === "id") {
+			selectedLanguage = savedLanguage;
+			return savedLanguage;
+		}
 	} catch {
 		// Language switching still works when browser storage is unavailable.
 	}
-	return "en";
+	selectedLanguage = "en";
+	return selectedLanguage;
 };
 
 const getServerLanguage = (): Language => "en";
@@ -64,11 +67,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 		<LanguageContext.Provider
 			value={{ language, setLanguage: changeLanguage, t: translations[language] }}
 		>
-			<MotionConfig reducedMotion="user">
-				<LazyMotion features={domAnimation} strict>
-					{children}
-				</LazyMotion>
-			</MotionConfig>
+			{children}
 		</LanguageContext.Provider>
 	);
 };

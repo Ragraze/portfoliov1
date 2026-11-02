@@ -4,7 +4,7 @@ import Image, { type StaticImageData } from "next/image";
 import type { KeyboardEvent } from "react";
 import { twMerge } from "tailwind-merge";
 import { Modal } from "./Modal";
-import { useLanguage } from "@/lib/LanguageContext";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 interface ViewerImage {
 	title: string;

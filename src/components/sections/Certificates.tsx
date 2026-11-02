@@ -2,14 +2,11 @@
 
 import { SectionHeader } from "@/components/SectionHeader";
 import { SectionBackground } from "@/components/SectionBackground";
-import expressJsCertificate from "../../public/certificates/expressjs.webp";
-import msibCertificate from "../../public/certificates/msib.webp";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { Card } from "@/components/Card";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
-	domAnimation,
 	frame,
 	cancelFrame,
 	LazyMotion,
@@ -21,145 +18,39 @@ import {
 	type FeatureBundle,
 	type MotionValue,
 } from "framer-motion";
-import { useLanguage } from "@/lib/LanguageContext";
-import type { Translations } from "@/lib/translations";
+import { useLanguage } from "@/providers/LanguageProvider";
+import { certificateAssets } from "@/data/certificates";
+
+const loadFeatures = () => import("@/lib/animation-features").then((module) => module.default);
 
 const ImageViewer = dynamic(() =>
 	import("@/components/ImageViewer").then((module) => module.ImageViewer),
 );
-
-const certificateAssets: {
-	id: keyof Translations["certificates"]["items"];
-	image: string;
-}[] = [
-	{
-		id: "21",
-		image: "/certificates/maganghub-tri-wall-indonesia.webp",
-	},
-	{
-		id: "25",
-		image: "/certificates/internship-tri-wall-indonesia.webp",
-	},
-	{
-		id: "22",
-		image: "/certificates/bangkit-academy.webp",
-	},
-	{
-		id: "23",
-		image: "/certificates/teaching-assistant.webp",
-	},
-	{
-		id: "26",
-		image: msibCertificate.src,
-	},
-	{
-		id: "2",
-		image: "/certificates/google-cloud.webp",
-	},
-	{
-		id: "8",
-		image: "/certificates/web-programming.webp",
-	},
-	{
-		id: "9",
-		image: "/certificates/javascript.webp",
-	},
-	{
-		id: "10",
-		image: "/certificates/git.webp",
-	},
-	{
-		id: "11",
-		image: "/certificates/data-science.webp",
-	},
-	{
-		id: "12",
-		image: "/certificates/python.webp",
-	},
-	{
-		id: "13",
-		image: "/certificates/sql.webp",
-	},
-	{
-		id: "17",
-		image: "/certificates/back-end.webp",
-	},
-	{
-		id: "18",
-		image: "/certificates/front-end.webp",
-	},
-	{
-		id: "19",
-		image: "/certificates/java.webp",
-	},
-	{
-		id: "20",
-		image: "/certificates/machine-learning.webp",
-	},
-	{
-		id: "1",
-		image: "/certificates/it-support.webp",
-	},
-	{
-		id: "3",
-		image: "/certificates/cybersecurity.webp",
-	},
-	{
-		id: "4",
-		image: "/certificates/ccna-itn.webp",
-	},
-	{
-		id: "5",
-		image: "/certificates/alibaba.webp",
-	},
-	{
-		id: "6",
-		image: "/certificates/mongodb.webp",
-	},
-	{
-		id: "7",
-		image: "/certificates/reactjs.webp",
-	},
-	{
-		id: "16",
-		image: expressJsCertificate.src,
-	},
-	{
-		id: "14",
-		image: "/certificates/office.webp",
-	},
-	{
-		id: "15",
-		image: "/certificates/toefl.webp",
-	},
-	{
-		id: "27",
-		image: "/certificates/pkm-rsh2-maba.webp",
-	},
-	{
-		id: "24",
-		image: "/certificates/accreditation.webp",
-	},
-];
 
 const maskImage =
 	"linear-gradient(to right, transparent, rgba(0,0,0,0.15) 4%, rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.85) 16%, black 20%, black 80%, rgba(0,0,0,0.85) 84%, rgba(0,0,0,0.5) 90%, rgba(0,0,0,0.15) 96%, transparent)";
 
 type CarouselMetrics = { width: number; step: number; cardWidth: number };
 
-const CertificateSlide = ({
-	children,
-	index,
-	x,
-	metrics,
-	reduceMotion,
-}: {
+type CertificateSlideProps = {
 	children: ReactNode;
 	index: number;
 	x: MotionValue<number>;
 	metrics: CarouselMetrics;
-	reduceMotion: boolean | null;
-}) => {
+};
+
+const slideClassName = "relative pointer-events-auto w-72 sm:w-80 md:w-96 shrink-0";
+
+const CertificateSlide = ({ active, ...props }: CertificateSlideProps & { active: boolean }) =>
+	active ? (
+		<AnimatedCertificateSlide {...props} />
+	) : (
+		<div className={slideClassName} style={{ transformStyle: "preserve-3d", zIndex: 0 }}>
+			{props.children}
+		</div>
+	);
+
+const AnimatedCertificateSlide = ({ children, index, x, metrics }: CertificateSlideProps) => {
 	const progress = useTransform(x, (offset) => {
 		if (!metrics.width) return 0;
 		const center = offset + index * metrics.step + metrics.cardWidth / 2;
@@ -171,16 +62,15 @@ const CertificateSlide = ({
 	const zIndex = useTransform(progress, (value) =>
 		Math.round(100 - Math.min(Math.abs(value), 1) * 50),
 	);
-	const hasDepth = metrics.width > 0 && !reduceMotion;
 
 	return (
 		<motion.div
-			className="relative pointer-events-auto w-72 sm:w-80 md:w-96 shrink-0"
+			className={slideClassName}
 			style={{
-				scale: hasDepth ? scale : 1,
-				rotateY: hasDepth ? rotateY : 0,
-				z: hasDepth ? depth : 0,
-				zIndex: hasDepth ? zIndex : 0,
+				scale,
+				rotateY,
+				z: depth,
+				zIndex,
 				transformStyle: "preserve-3d",
 			}}
 		>
@@ -220,12 +110,12 @@ export const CertificatesSection = () => {
 	const [isDragging, setIsDragging] = useState(false);
 	const [isFocused, setIsFocused] = useState(false);
 	const isNearViewport = useInView(containerRef, { margin: "200px" });
-	const [dragFeatures, setDragFeatures] = useState<FeatureBundle>(domAnimation);
+	const [dragFeatures, setDragFeatures] = useState<FeatureBundle | null>(null);
 
 	useEffect(() => {
-		if (!isNearViewport || dragFeatures !== domAnimation) return;
+		if (!isNearViewport || dragFeatures) return;
 		let active = true;
-		void import("@/lib/motionFeatures").then((module) => {
+		void import("@/lib/drag-features").then((module) => {
 			if (active) setDragFeatures(module.default);
 		});
 		return () => {
@@ -256,7 +146,6 @@ export const CertificatesSection = () => {
 				);
 			}
 		};
-		measure();
 		const ro = new ResizeObserver(measure);
 		if (containerRef.current) ro.observe(containerRef.current);
 		if (trackRef.current) ro.observe(trackRef.current);
@@ -300,7 +189,7 @@ export const CertificatesSection = () => {
 		setCurrentCertificateIndex((p) => (p === 0 ? certificates.length - 1 : p - 1));
 
 	return (
-		<LazyMotion features={dragFeatures} strict>
+		<LazyMotion features={dragFeatures ?? loadFeatures} strict>
 			<section
 				id="certificates"
 				className="relative isolate scroll-mt-36 md:scroll-mt-40 lg:scroll-mt-44 py-16 lg:py-24"
@@ -351,7 +240,7 @@ export const CertificatesSection = () => {
 										index={idx}
 										x={x}
 										metrics={metrics}
-										reduceMotion={reduceMotion}
+										active={isNearViewport && metrics.width > 0 && reduceMotion === false}
 									>
 										<Card className="card-focus h-full p-4 sm:p-6 md:p-8">
 											<div className="text-center w-full">

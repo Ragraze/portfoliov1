@@ -1,4 +1,4 @@
-import grainImage from "@/assets/images/grain.webp";
+import grainImage from "@/assets/images/grain.avif";
 import type { ComponentPropsWithoutRef } from "react";
 import { twMerge } from "tailwind-merge";
 

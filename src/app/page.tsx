@@ -1,9 +1,9 @@
-import { Header } from "@/components/Navbar";
-import { HeroSection } from "@/components/Hero";
-import { AboutSection } from "@/components/About";
-import { ExperiencesSection } from "@/components/Experiences";
-import { ProjectsSection } from "@/components/Projects";
-import { CertificatesSection } from "@/components/Certificates";
+import { Header } from "@/components/Header";
+import { HeroSection } from "@/components/sections/Hero";
+import { AboutSection } from "@/components/sections/About";
+import { ExperiencesSection } from "@/components/sections/Experiences";
+import { ProjectsSection } from "@/components/sections/Projects";
+import { CertificatesSection } from "@/components/sections/Certificates";
 import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { StarCursor } from "@/components/StarCursor";

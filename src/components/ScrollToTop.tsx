@@ -3,7 +3,7 @@
 import { ArrowDownIcon as ArrowDown } from "@heroicons/react/24/outline";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { m as motion, useReducedMotion } from "framer-motion";
-import { useLanguage } from "@/lib/LanguageContext";
+import { useLanguage } from "@/providers/LanguageProvider";
 import { AudioPlayer } from "@/components/AudioPlayer";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { FloatingButton } from "@/components/FloatingButton";

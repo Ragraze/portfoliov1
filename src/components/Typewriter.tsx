@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
-import { useHydrated } from "@/lib/useHydrated";
+import { useHydrated } from "@/hooks/useHydrated";
 
 export const Typewriter = ({ words }: { words: string[] }) => {
 	const isHydrated = useHydrated();
 	const reduceMotion = useReducedMotion();
 	const [wordIndex, setWordIndex] = useState(0);
-	const [charIndex, setCharIndex] = useState(0);
+	const [charIndex, setCharIndex] = useState(words[0].length);
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	useEffect(() => {

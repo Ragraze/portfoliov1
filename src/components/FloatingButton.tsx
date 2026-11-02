@@ -1,6 +1,6 @@
 "use client";
 
-import grainImage from "@/assets/images/grain.webp";
+import grainImage from "@/assets/images/grain.avif";
 import { forwardRef, type PropsWithChildren } from "react";
 import { m as motion, useReducedMotion, type HTMLMotionProps } from "framer-motion";
 import { twMerge } from "tailwind-merge";

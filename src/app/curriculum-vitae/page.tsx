@@ -6,7 +6,7 @@ import profile from "@/assets/images/profile.webp";
 import { Card } from "@/components/Card";
 import { SectionBackground } from "@/components/SectionBackground";
 import { StarCursor } from "@/components/StarCursor";
-import { curriculumVitae as cv, cvPdfUrl } from "@/lib/curriculum-vitae";
+import { curriculumVitae as cv, cvPdfUrl } from "@/data/curriculum-vitae";
 import "./curriculum-vitae.css";
 
 export const metadata: Metadata = {

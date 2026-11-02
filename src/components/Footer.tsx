@@ -2,7 +2,7 @@
 
 import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
 import { useReducedMotion } from "framer-motion";
-import { useLanguage } from "@/lib/LanguageContext";
+import { useLanguage } from "@/providers/LanguageProvider";
 import { scrollToSection } from "@/lib/navigation";
 
 const footerLinks = [
@@ -87,7 +87,7 @@ export const Footer = () => {
 				</div>
 			</div>
 			<div aria-hidden="true" className="relative -mb-[2.5vw] pt-[1vw] select-none">
-				<p className="whitespace-nowrap text-center text-[8.3vw] font-bold leading-[0.9] tracking-[-0.045em] text-white/20">
+				<p className="whitespace-nowrap text-center text-[8.3vw] font-bold leading-[0.9] tracking-[-0.045em] text-white/50">
 					RAKAN FADHIL PRAYATA
 				</p>
 			</div>

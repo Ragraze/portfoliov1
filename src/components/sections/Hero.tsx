@@ -3,13 +3,13 @@
 import memojiImage from "@/assets/images/memoji-computer.webp";
 import Image from "next/image";
 import { ArrowDownIcon as ArrowDown } from "@heroicons/react/24/outline";
-import grainImage from "@/assets/images/grain.webp";
+import grainImage from "@/assets/images/grain.avif";
 import StarIcon from "@/assets/icons/star.svg";
 import SparkleIcon from "@/assets/icons/sparkle.svg";
 import { HeroOrbit } from "@/components/HeroOrbit";
 import { useRef, useState } from "react";
 import { m as motion, useReducedMotion } from "framer-motion";
-import { useLanguage } from "@/lib/LanguageContext";
+import { useLanguage } from "@/providers/LanguageProvider";
 import { Typewriter } from "@/components/Typewriter";
 
 export const HeroSection = () => {
