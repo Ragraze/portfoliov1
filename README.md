@@ -1,6 +1,6 @@
 # Portfolio asset archive
 
-This branch stores original images, retired WebP previews, unused icons, and the old curriculum vitae PDF.
+This branch stores original images, retired WebP previews, unused icons and masks, and the old curriculum vitae PDF.
 
 The complete application, configuration, documentation, and active assets are on the [main branch](https://github.com/Ragraze/portfoliov1/tree/main).
 
@@ -9,9 +9,10 @@ The complete application, configuration, documentation, and active assets are on
 - `public/certificates/`: 27 original JPG, JPEG, and PNG certificate images.
 - `src/assets/images/`: 22 original JPG and PNG project, profile, and decorative images, plus 2 retired WebP previews.
 - `src/assets/icons/`: the unused LinkedIn SVG icon.
+- `public/images/`: the retired AgriSense SVG mask.
 - `public/curriculum-vitae/`: the old curriculum vitae PDF. The application on `main` links to the current CV through `https://s.id/rakan-curriculum-vitae`.
 
-The 51 raster images, one SVG icon, and the PDF retain their original paths. The application uses WebP images, dependency icons, and six active local SVG icons kept on `main`. Icons supplied by Simple Icons and Heroicons are imported from dependencies.
+The 51 raster images, two SVG assets, and the PDF retain their original paths. The application uses WebP images, dependency icons, and six active local SVG icons kept on `main`. Icons supplied by Simple Icons and Heroicons are imported from dependencies.
 
 ## Using the application
 
