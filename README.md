@@ -96,7 +96,7 @@ public/
   curriculum-vitae/  Downloadable curriculum vitae
   .well-known/       ARD manifest
   llms.txt           Portfolio summary and links for agents
-  robots.txt         Crawler directives, sitemap, and Agentmap
+  robots.txt         Crawler directives and sitemap
   sitemap.xml        Canonical page index
 src/
   app/            Page composition, layout, metadata, and global CSS
@@ -137,7 +137,7 @@ The canonical origin is `https://rakanfadhil.com`. The page metadata includes a 
 
 - `/llms.txt` follows the [llms.txt proposal](https://llmstxt.org/) and provides a short portfolio summary, section links, repositories, and contact links. `/llm.txt` permanently redirects to it.
 - `/.well-known/ard.json` follows the [ARD v0.91 manifest format](https://github.com/ards-project/ard-spec/blob/main/spec/ard.md). Its `entries` array is empty because the portfolio does not expose any callable agentic resources. Add entries only when a real MCP server, A2A agent, skill, or other agent service is published, with its actual descriptor URL and media type.
-- `robots.txt` allows crawling and advertises the sitemap and ARD manifest through `Sitemap` and `Agentmap`. HTML head links also advertise the summary, manifest, and sitemap.
+- `robots.txt` allows crawling and advertises the sitemap through `Sitemap`. It uses only fields supported by Google's robots.txt parser. HTML head links advertise the summary, ARD manifest, and sitemap; the manifest is also discoverable at its well-known URL.
 
 When changing the domain, update `src/app/layout.tsx`, the JSON-LD in `src/app/page.tsx`, and these public discovery files together. Keep `llms.txt` synchronized with the content in `src/lib/translations.ts` and the project and contact links in the components. The public files are copied into the Docker image with the other public assets.
 

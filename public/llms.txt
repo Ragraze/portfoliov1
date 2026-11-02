@@ -35,5 +35,5 @@ This website publishes portfolio information and a downloadable CV. It does not 
 ## Optional
 
 - [Sitemap](https://rakanfadhil.com/sitemap.xml): Canonical indexable page.
-- [Robots](https://rakanfadhil.com/robots.txt): Crawler directives and discovery locations.
+- [Robots](https://rakanfadhil.com/robots.txt): Crawler directives and sitemap location.
 - [ARD manifest](https://rakanfadhil.com/.well-known/ard.json): Agentic Resource Discovery manifest; no callable resources are currently published.
