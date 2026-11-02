@@ -13,7 +13,6 @@ interface ViewerImage {
 }
 
 interface ImageViewerProps {
-	isOpen: boolean;
 	onClose: () => void;
 	images: ViewerImage[];
 	currentIndex: number;
@@ -24,7 +23,6 @@ interface ImageViewerProps {
 }
 
 export const ImageViewer = ({
-	isOpen,
 	onClose,
 	images,
 	currentIndex,
@@ -46,7 +44,7 @@ export const ImageViewer = ({
 		}
 	};
 
-	if (!isOpen || !currentImage) return null;
+	if (!currentImage) return null;
 
 	return (
 		<Modal

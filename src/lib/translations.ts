@@ -21,8 +21,8 @@ const en = {
 		intro: "Hi, I’m ",
 		description:
 			", an IT graduate from Universitas Brawijaya. I’ve built company websites and supported IT operations during internships. I’m interested in web development, AI, cloud computing, and networking. I’m looking for an opportunity where I can contribute and keep learning.",
-		downloadCv: "Download My CV",
-		downloadCvLabel: "Download my CV",
+		downloadCv: "View My CV",
+		downloadCvLabel: "View my curriculum vitae",
 		connect: "Let’s Connect",
 		scrollToAbout: "Scroll to About",
 		imageAlt: "Person peeking from behind laptop",
@@ -425,8 +425,8 @@ const id: Translations = {
 		intro: "Halo, saya ",
 		description:
 			", lulusan Informatika dari Universitas Brawijaya. Saya pernah membangun situs perusahaan dan mendukung operasional TI selama magang. Saya tertarik pada pengembangan web, AI, cloud computing, dan jaringan. Saya mencari kesempatan untuk berkontribusi sambil terus belajar.",
-		downloadCv: "Unduh CV Saya",
-		downloadCvLabel: "Unduh CV saya",
+		downloadCv: "Lihat CV Saya",
+		downloadCvLabel: "Lihat curriculum vitae saya",
 		connect: "Mari Terhubung",
 		scrollToAbout: "Gulir ke Tentang Saya",
 		imageAlt: "Seseorang mengintip dari balik laptop",

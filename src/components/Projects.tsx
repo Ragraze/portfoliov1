@@ -226,23 +226,15 @@ export const ProjectsSection = () => {
 		() => portfolioProjects.filter((project) => project.category === activeFilter),
 		[portfolioProjects, activeFilter],
 	);
-	const projectImages = useMemo(
-		() =>
-			filteredProjects.flatMap((project) =>
-				project.image ? [{ ...project, image: project.image }] : [],
-			),
-		[filteredProjects],
-	);
-
 	const openFullscreen = (id: string) => {
-		setCurrentProjectIndex(projectImages.findIndex((project) => project.id === id));
+		setCurrentProjectIndex(filteredProjects.findIndex((project) => project.id === id));
 		setIsFullscreen(true);
 	};
 	const closeFullscreen = () => setIsFullscreen(false);
 	const nextProject = () =>
-		setCurrentProjectIndex((p) => (p === projectImages.length - 1 ? 0 : p + 1));
+		setCurrentProjectIndex((p) => (p === filteredProjects.length - 1 ? 0 : p + 1));
 	const prevProject = () =>
-		setCurrentProjectIndex((p) => (p === 0 ? projectImages.length - 1 : p - 1));
+		setCurrentProjectIndex((p) => (p === 0 ? filteredProjects.length - 1 : p - 1));
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Category and language changes replace the DOM nodes being measured.
 	useEffect(() => {
@@ -395,7 +387,7 @@ export const ProjectsSection = () => {
 						<div
 							key={project.id}
 							data-project-card
-							className="sticky top-16 project-desktop:top-28 min-h-[var(--project-card-height)] mt-[var(--project-stack-margin)] md:min-h-0 md:mt-0 tablet-portrait:min-h-0 tablet-portrait:mt-0"
+							className="sticky top-16 desktop:top-28 tablet-landscape:top-[82px] min-h-[var(--project-card-height)] mt-[var(--project-stack-margin)] md:min-h-0 md:mt-0 tablet-portrait:min-h-0 tablet-portrait:mt-0"
 							style={
 								{
 									"--project-stack-margin": `${(cardHeights[projectIndex - 1] ?? cardHeight) - cardHeight}px`,
@@ -514,9 +506,8 @@ export const ProjectsSection = () => {
 
 			{isFullscreen && (
 				<ImageViewer
-					isOpen={isFullscreen}
 					onClose={closeFullscreen}
-					images={projectImages}
+					images={filteredProjects}
 					currentIndex={currentProjectIndex}
 					onNext={nextProject}
 					onPrev={prevProject}

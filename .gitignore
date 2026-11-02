@@ -5,6 +5,7 @@
 .yarn/install-state.gz
 
 # Original images and retired WebP previews are archived on the master branch.
+/public/curriculum-vitae/
 /public/certificates/*.jpg
 /public/certificates/*.jpeg
 /public/certificates/*.png
@@ -17,7 +18,6 @@
 /src/assets/icons/*.svg
 !/src/assets/icons/canva.svg
 !/src/assets/icons/codex.svg
-!/src/assets/icons/linkedin.svg
 !/src/assets/icons/sparkle.svg
 !/src/assets/icons/star.svg
 !/src/assets/icons/visual-studio-code.svg

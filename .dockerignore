@@ -9,3 +9,15 @@
 !public/
 !public/**
 !LICENSE
+
+# Keep archived assets out of production images even when restored locally.
+public/curriculum-vitae/
+public/certificates/*.jpg
+public/certificates/*.jpeg
+public/certificates/*.png
+src/assets/images/*.jpg
+src/assets/images/*.jpeg
+src/assets/images/*.png
+src/assets/images/accuracy-distribution.webp
+src/assets/images/sentiment-analysis.webp
+src/assets/icons/linkedin.svg

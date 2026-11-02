@@ -395,7 +395,6 @@ export const CertificatesSection = () => {
 
 			{isFullscreen && (
 				<ImageViewer
-					isOpen={isFullscreen}
 					onClose={closeFullscreen}
 					images={certificates}
 					currentIndex={currentCertificateIndex}

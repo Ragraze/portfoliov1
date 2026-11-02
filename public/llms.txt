@@ -15,7 +15,8 @@ This website publishes portfolio information and a downloadable CV. It does not 
 - [Experience](https://rakanfadhil.com/experience): Roles, organizations, dates, and responsibilities.
 - [Projects](https://rakanfadhil.com/project): Websites, applications, machine learning projects, home server, and multimedia work.
 - [Certificates](https://rakanfadhil.com/certificates): Training and professional certificates.
-- [Curriculum vitae](https://rakanfadhil.com/curriculum-vitae/CV_Rakan%20Fadhil%20Prayata.pdf): Downloadable CV in PDF format.
+- [Curriculum vitae online](https://rakanfadhil.com/curriculum-vitae): Readable and printable CV following the downloadable PDF's content and section order.
+- [Curriculum vitae](https://s.id/rakan-curriculum-vitae): Current CV documents hosted outside this website.
 
 ## Project repositories
 
@@ -34,6 +35,6 @@ This website publishes portfolio information and a downloadable CV. It does not 
 
 ## Optional
 
-- [Sitemap](https://rakanfadhil.com/sitemap.xml): Canonical indexable page.
+- [Sitemap](https://rakanfadhil.com/sitemap.xml): Canonical homepage and online CV.
 - [Robots](https://rakanfadhil.com/robots.txt): Crawler directives and sitemap location.
 - [ARD manifest](https://rakanfadhil.com/.well-known/ard.json): Agentic Resource Discovery manifest; no callable resources are currently published.

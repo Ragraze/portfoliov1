@@ -18,6 +18,7 @@ const dotWaves = {
 	experiences: createDotWave((x, y) => Math.sin(y + Math.sin(x * 2) * 0.6)),
 	projects: createDotWave((x, y) => Math.sin(x + y + Math.sin(x - y) * 0.8)),
 	certificates: createDotWave((x, y) => Math.cos(Math.hypot(Math.sin(x / 2), Math.sin(y / 2)) * 8)),
+	curriculumVitae: createDotWave((x, y) => Math.cos(x - y) * Math.sin(x + y)),
 };
 
 export const SectionBackground = ({ variant }: { variant: keyof typeof dotWaves }) => {

@@ -13,7 +13,7 @@ Personal portfolio of **Rakan Fadhil Prayata**, an IT graduate from Universitas 
 - Shared fullscreen image viewer for projects and certificates, with keyboard navigation.
 - Draggable certificate carousel with automatic scrolling.
 - English and Indonesian content with a saved language preference.
-- CV download, contact links, and a scroll-to-top button that reveals audio and language controls on hover, keyboard focus, or touch.
+- Online CV with PDF download and print formatting, contact links, and a scroll-to-top button that reveals audio and language controls on hover, keyboard focus, or touch.
 
 ## Tech stack
 
@@ -54,7 +54,7 @@ To get the application from `main` and the backup assets from `master` in one lo
 ```sh
 git clone --branch main https://github.com/Ragraze/portfoliov1.git
 cd portfoliov1
-git restore --source=origin/master --worktree --overlay -- src/assets public/certificates
+git restore --source=origin/master --worktree --overlay -- src/assets public/certificates public/curriculum-vitae
 npm ci
 npm run dev
 ```
@@ -93,7 +93,6 @@ npm run audit
 public/
   audio/             Background audio
   certificates/      Certificate images
-  curriculum-vitae/  Downloadable curriculum vitae
   .well-known/       ARD manifest
   llms.txt           Portfolio summary and links for agents
   robots.txt         Crawler directives and sitemap
@@ -113,7 +112,7 @@ tsconfig.check.json
 ## Updating content
 
 - **Text and translations:** edit both languages in `src/lib/translations.ts` and keep their keys and arrays aligned.
-- **Introduction and CV:** edit the text in `src/lib/translations.ts` and the link in `src/components/Hero.tsx`; the PDF lives at `public/curriculum-vitae/CV_Rakan Fadhil Prayata.pdf`.
+- **Introduction and CV:** edit the introduction in `src/lib/translations.ts`. The hero links to `/curriculum-vitae`; its content and external PDF link live in `src/lib/curriculum-vitae.ts`. Keep the online CV aligned with the current documents at `https://s.id/rakan-curriculum-vitae`. Screen and print styles live in `src/app/curriculum-vitae/curriculum-vitae.css`. The old PDF is archived only on `master`.
 - **Biography and tech stack:** edit the text in `src/lib/translations.ts` and the toolbox lists in `src/components/About.tsx`.
 - **Experience:** update `experienceAssets` in `src/components/Experiences.tsx` and the matching translation IDs.
 - **Projects:** update `projectAssets` in `src/components/Projects.tsx`, the matching translation IDs, and the images in `src/assets/images/`.
@@ -123,17 +122,19 @@ tsconfig.check.json
 
 All content is stored locally. Keep existing section IDs and their mappings in `Navbar.tsx` and `next.config.mjs` synchronized when changing navigation.
 
-Use lowercase, hyphen-separated asset filenames and update their imports or public URLs when renaming them. The CV keeps the filename `CV_Rakan Fadhil Prayata.pdf`.
+Use lowercase, hyphen-separated asset filenames and update their imports or public URLs when renaming them. The archived CV keeps the filename `CV_Rakan Fadhil Prayata.pdf` on `master`.
 
-Use the existing WebP versions for image imports and certificate URLs. The `main` branch contains the application and its active assets. Original PNG, JPG, and JPEG images and retired WebP previews are archived on the `master` branch. These backup images may remain locally and are ignored on `main`. Icons supplied by Simple Icons and Heroicons are imported from dependencies; seven active local SVG icons remain in `src/assets/icons/`.
+Use the existing WebP versions for image imports and certificate URLs. The `main` branch contains the application and its active assets. Original PNG, JPG, and JPEG images, retired WebP previews, the unused LinkedIn SVG icon, and the old CV PDF are archived on the `master` branch. These backups may remain locally and are excluded by `.gitignore` and `.dockerignore` on `main`. Icons supplied by Simple Icons and Heroicons are imported from dependencies; six active local SVG icons remain in `src/assets/icons/`.
 
 ## Routes and deployment
 
 `/about`, `/experience`, `/project`, and `/certificates` rewrite to the main page. Client-side navigation scrolls to the matching section and updates the URL.
 
+`/curriculum-vitae` is a separate, server-rendered CV page with a Back link and a Download PDF link to `https://s.id/rakan-curriculum-vitae`. The link is configured through `cvPdfUrl` in `src/lib/curriculum-vitae.ts`; the old PDF is retained on `master` and is not shipped with the application. The page uses its own dot pattern and rotating diamond outlines, sharing the homepage's pointer interactions and star cursor with reduced-motion support. The profile photo is cropped to a 3:4 ratio. The CV remains readable and its PDF link works without JavaScript. Browser print styles retain an A4 layout with a white background.
+
 ### Search and agent discovery
 
-The canonical origin is `https://rakanfadhil.com`. The page metadata includes a canonical URL, Open Graph metadata, and Schema.org `ProfilePage` / `Person` JSON-LD. Section routes share the homepage canonical because they render the same document; `public/sitemap.xml` therefore lists only `/`. No synthetic modification dates or separate language URLs are published.
+The canonical origin is `https://rakanfadhil.com`. The homepage metadata includes a canonical URL, Open Graph metadata, and Schema.org `ProfilePage` / `Person` JSON-LD. Section routes share the homepage canonical because they render the same document. The CV has its own canonical URL; `public/sitemap.xml` lists `/` and `/curriculum-vitae`. No synthetic modification dates or separate language URLs are published.
 
 - `/llms.txt` follows the [llms.txt proposal](https://llmstxt.org/) and provides a short portfolio summary, section links, repositories, and contact links. `/llm.txt` permanently redirects to it.
 - `/.well-known/ard.json` follows the [ARD v0.91 manifest format](https://github.com/ards-project/ard-spec/blob/main/spec/ard.md). Its `entries` array is empty because the portfolio does not expose any callable agentic resources. Add entries only when a real MCP server, A2A agent, skill, or other agent service is published, with its actual descriptor URL and media type.

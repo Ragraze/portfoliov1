@@ -18,7 +18,7 @@ export const HeroSection = () => {
 	const [connectHover, setConnectHover] = useState(false);
 	const [ripples, setRipples] = useState<{ id: number; x: number; y: number; size: number }[]>([]);
 	const rippleId = useRef(0);
-	const cvUrl = "/curriculum-vitae/CV_Rakan%20Fadhil%20Prayata.pdf";
+	const cvUrl = "/curriculum-vitae";
 
 	return (
 		<section
