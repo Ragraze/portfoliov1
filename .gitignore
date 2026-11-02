@@ -13,6 +13,7 @@
 /src/assets/images/*.jpeg
 /src/assets/images/*.png
 /src/assets/images/accuracy-distribution.webp
+/src/assets/images/agrisense-previous.webp
 /src/assets/images/sentiment-analysis.webp
 # Dependency-supplied icons are not stored locally.
 /src/assets/icons/*.svg

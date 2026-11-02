@@ -59,7 +59,7 @@ npm ci
 npm run dev
 ```
 
-`--overlay` adds the archived assets and preserves existing application files. The working branch stays on `main`, and its README is preserved. The archive files keep their original paths and are ignored by `.gitignore` on `main`.
+`--overlay` adds the archived assets and preserves existing application files. The working branch stays on `main`, and its README is preserved. The archive files are ignored by `.gitignore` on `main`. The previous AgriSense preview is named `agrisense-previous.webp` so restoring the archive preserves the active transparent image.
 
 ## Commands
 

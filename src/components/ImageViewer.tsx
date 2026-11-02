@@ -9,7 +9,6 @@ import { useLanguage } from "@/lib/LanguageContext";
 interface ViewerImage {
 	title: string;
 	image: string | StaticImageData;
-	imageClassName?: string;
 }
 
 interface ImageViewerProps {
@@ -94,7 +93,6 @@ export const ImageViewer = ({
 					className={twMerge(
 						"mx-auto h-auto w-auto max-w-full max-h-[calc(100dvh-7rem)] object-contain rounded-lg",
 						imageClassName,
-						currentImage.imageClassName,
 					)}
 				/>
 			</div>

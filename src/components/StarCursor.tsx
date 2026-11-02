@@ -35,9 +35,37 @@ export const StarCursor = () => {
 			});
 		};
 
+		const endNativeDrag = () => {
+			document.documentElement.removeAttribute("data-grab-cursor");
+		};
+		const reset = () => {
+			hide();
+			endNativeDrag();
+		};
+		const startNativeDrag = (event: PointerEvent) => {
+			if (
+				event.pointerType !== "mouse" ||
+				event.button !== 0 ||
+				!(event.target instanceof Element) ||
+				!event.target.closest(".cursor-grab")
+			)
+				return;
+			hide();
+			document.documentElement.setAttribute("data-grab-cursor", "");
+		};
+
 		const handleMove = (event: PointerEvent) => {
 			if (!media.matches || event.pointerType !== "mouse") {
 				hide();
+				return;
+			}
+
+			if (
+				(event.target instanceof Element &&
+					event.target.closest(".cursor-zoom-in, .cursor-grab")) ||
+				document.documentElement.hasAttribute("data-grab-cursor")
+			) {
+				if (visible) hide();
 				return;
 			}
 
@@ -89,24 +117,30 @@ export const StarCursor = () => {
 			if (event.key === "Tab") hide();
 		};
 		const handleMediaChange = () => {
-			if (!media.matches) hide();
+			if (!media.matches) reset();
 		};
 
 		window.addEventListener("pointermove", handleMove, { passive: true });
-		window.addEventListener("blur", hide);
+		window.addEventListener("pointerdown", startNativeDrag, true);
+		window.addEventListener("pointerup", endNativeDrag, true);
+		window.addEventListener("pointercancel", endNativeDrag, true);
+		window.addEventListener("blur", reset);
 		window.addEventListener("keydown", handleKeyDown);
 		document.addEventListener("pointerleave", hide);
-		document.addEventListener("visibilitychange", hide);
+		document.addEventListener("visibilitychange", reset);
 		media.addEventListener("change", handleMediaChange);
 
 		return () => {
 			window.removeEventListener("pointermove", handleMove);
-			window.removeEventListener("blur", hide);
+			window.removeEventListener("pointerdown", startNativeDrag, true);
+			window.removeEventListener("pointerup", endNativeDrag, true);
+			window.removeEventListener("pointercancel", endNativeDrag, true);
+			window.removeEventListener("blur", reset);
 			window.removeEventListener("keydown", handleKeyDown);
 			document.removeEventListener("pointerleave", hide);
-			document.removeEventListener("visibilitychange", hide);
+			document.removeEventListener("visibilitychange", reset);
 			media.removeEventListener("change", handleMediaChange);
-			hide();
+			reset();
 		};
 	}, [x, y, circleX, circleY]);
 

@@ -35,58 +35,55 @@ export const Footer = () => {
 					</p>
 					<nav className="footer-socials" aria-label={t.footer.socialLinks}>
 						{footerLinks.map(({ title, href }) => (
-							<div key={title} className="inline-flex items-center gap-4">
-								<a
-									href={href}
-									aria-label={title}
-									title={title}
-									className="footer-social-link group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
-								>
-									<span className="footer-social-label relative z-10">
-										{title}
-										<span
-											aria-hidden
-											className="footer-social-underline pointer-events-none absolute -bottom-1 left-0 h-[2px] w-full overflow-hidden opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
-										>
-											<span className="block h-full w-[200%] -translate-x-1/2 bg-linear-to-r/srgb from-emerald-300 via-cyan-300 to-blue-500 transition-transform duration-500 ease-out group-hover:translate-x-0" />
-										</span>
-									</span>
-									<ArrowUpRightIcon
-										aria-hidden="true"
-										className="footer-social-arrow size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-										strokeWidth={2}
-									/>
-								</a>
-								{title === "Email" && (
-									<button
-										type="button"
-										className="footer-social-link group md:hidden tablet-portrait:hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
-										onClick={() => {
-											scrollToSection("/", reduceMotion ? "instant" : "smooth");
-											if (window.location.pathname !== "/" || window.location.hash) {
-												history.pushState(null, "", "/");
-											}
-										}}
+							<a
+								key={title}
+								href={href}
+								aria-label={title}
+								title={title}
+								className="footer-social-link group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
+							>
+								<span className="footer-social-label relative z-10">
+									{title}
+									<span
+										aria-hidden
+										className="footer-social-underline pointer-events-none absolute -bottom-1 left-0 h-[2px] w-full overflow-hidden opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
 									>
-										<span className="footer-social-label relative z-10 whitespace-nowrap">
-											{t.footer.backToTop}
-											<span
-												aria-hidden
-												className="footer-social-underline pointer-events-none absolute -bottom-1 left-0 h-[2px] w-full overflow-hidden opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
-											>
-												<span className="block h-full w-[200%] -translate-x-1/2 bg-linear-to-r/srgb from-emerald-300 via-cyan-300 to-blue-500 transition-transform duration-500 ease-out group-hover:translate-x-0" />
-											</span>
-										</span>
-										<ArrowUpRightIcon
-											aria-hidden="true"
-											className="footer-social-arrow size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-											strokeWidth={2}
-										/>
-									</button>
-								)}
-							</div>
+										<span className="block h-full w-[200%] -translate-x-1/2 bg-linear-to-r/srgb from-emerald-300 via-cyan-300 to-blue-500 transition-transform duration-500 ease-out group-hover:translate-x-0" />
+									</span>
+								</span>
+								<ArrowUpRightIcon
+									aria-hidden="true"
+									className="footer-social-arrow size-3 sm:size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+									strokeWidth={2}
+								/>
+							</a>
 						))}
 					</nav>
+					<button
+						type="button"
+						className="footer-social-link group md:hidden tablet-portrait:hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-300"
+						onClick={() => {
+							scrollToSection("/", reduceMotion ? "instant" : "smooth");
+							if (window.location.pathname !== "/" || window.location.hash) {
+								history.pushState(null, "", "/");
+							}
+						}}
+					>
+						<span className="footer-social-label relative z-10 whitespace-nowrap">
+							{t.footer.backToTop}
+							<span
+								aria-hidden
+								className="footer-social-underline pointer-events-none absolute -bottom-1 left-0 h-[2px] w-full overflow-hidden opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
+							>
+								<span className="block h-full w-[200%] -translate-x-1/2 bg-linear-to-r/srgb from-emerald-300 via-cyan-300 to-blue-500 transition-transform duration-500 ease-out group-hover:translate-x-0" />
+							</span>
+						</span>
+						<ArrowUpRightIcon
+							aria-hidden="true"
+							className="footer-social-arrow size-3 sm:size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+							strokeWidth={2}
+						/>
+					</button>
 				</div>
 			</div>
 			<div aria-hidden="true" className="relative -mb-[2.5vw] pt-[1vw] select-none">

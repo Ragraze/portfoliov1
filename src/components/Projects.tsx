@@ -46,7 +46,6 @@ import { SectionBackground } from "@/components/SectionBackground";
 import { Card } from "@/components/Card";
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
-import { twMerge } from "tailwind-merge";
 import { scroll } from "framer-motion";
 
 const ImageViewer = dynamic(() =>
@@ -210,7 +209,6 @@ export const ProjectsSection = () => {
 			projectAssets.map((project) => ({
 				...project,
 				...t.projects.items[project.id],
-				imageClassName: project.id === "agrisense" ? "agrisense-image" : undefined,
 			})),
 		[t.projects.items],
 	);
@@ -387,7 +385,7 @@ export const ProjectsSection = () => {
 						<div
 							key={project.id}
 							data-project-card
-							className="sticky top-16 desktop:top-28 tablet-landscape:top-[82px] min-h-[var(--project-card-height)] mt-[var(--project-stack-margin)] md:min-h-0 md:mt-0 tablet-portrait:min-h-0 tablet-portrait:mt-0"
+							className="sticky top-16 desktop:top-28 tablet-landscape:top-[66px] min-h-[var(--project-card-height)] mt-[var(--project-stack-margin)] md:min-h-0 md:mt-0 tablet-portrait:min-h-0 tablet-portrait:mt-0"
 							style={
 								{
 									"--project-stack-margin": `${(cardHeights[projectIndex - 1] ?? cardHeight) - cardHeight}px`,
@@ -491,10 +489,7 @@ export const ProjectsSection = () => {
 											alt={project.title}
 											draggable={false}
 											sizes="(min-width: 768px) and (orientation: portrait) and (pointer: coarse) calc(50vw - 2.5rem), (min-width: 600px) and (orientation: portrait) and (pointer: coarse) calc(50vw - 1.5rem), (min-width: 1200px) 1000px, (min-width: 768px) 277px, (min-width: 375px) 279px, calc(100vw - 6rem)"
-											className={twMerge(
-												"mt-4 -mb-4 h-auto w-full object-cover object-left-top [clip-path:inset(1px_round_3%/5%)] md:mt-0 md:-mb-0 md:h-full project-tablet:absolute project-tablet:top-0 project-tablet:left-0 project-tablet:w-auto project-tablet:max-w-none tablet-portrait:absolute tablet-portrait:top-0 tablet-portrait:left-0 tablet-portrait:mt-0 tablet-portrait:mb-0 tablet-portrait:h-full tablet-portrait:w-auto tablet-portrait:max-w-none project-desktop:absolute project-desktop:top-0 project-desktop:left-0 project-desktop:h-full project-desktop:w-auto project-desktop:max-w-none",
-												project.imageClassName,
-											)}
+											className="mt-4 -mb-4 h-auto w-full object-cover object-left-top [clip-path:inset(1px_round_3%/5%)] md:mt-0 md:-mb-0 md:h-full project-tablet:absolute project-tablet:top-0 project-tablet:left-0 project-tablet:w-auto project-tablet:max-w-none tablet-portrait:absolute tablet-portrait:top-0 tablet-portrait:left-0 tablet-portrait:mt-0 tablet-portrait:mb-0 tablet-portrait:h-full tablet-portrait:w-auto tablet-portrait:max-w-none project-desktop:absolute project-desktop:top-0 project-desktop:left-0 project-desktop:h-full project-desktop:w-auto project-desktop:max-w-none"
 										/>
 									</button>
 								)}

@@ -123,7 +123,7 @@
 
 	html[data-star-cursor],
 	html[data-star-cursor] * {
-		/* biome-ignore lint/complexity/noImportantStyles: Replace utility and inline drag cursors only while the star cursor is active. */
+		/* biome-ignore lint/complexity/noImportantStyles: Hide native pointers only while the custom star cursor is active. */
 		cursor: none !important;
 	}
 
@@ -132,6 +132,13 @@
 	}
 	.hero-ring {
 		@apply absolute inset-0 border-2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-emerald-300/5 shadow-[0_0_80px_inset] shadow-emerald-300/5;
+	}
+}
+
+@layer utilities {
+	html[data-grab-cursor],
+	html[data-grab-cursor] * {
+		cursor: grabbing;
 	}
 }
 
@@ -152,12 +159,6 @@
 }
 
 @layer components {
-	.agrisense-image {
-		mask-image: url("/images/agrisense-mask.svg");
-		mask-size: 100% 100%;
-		mask-repeat: no-repeat;
-	}
-
 	.footer-glow {
 		opacity: 0.5;
 	}
@@ -173,16 +174,17 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 8px;
-		padding-block: 32px;
+		padding-block: 24px;
 		border-top: 1px solid rgb(255 255 255 / 0.08);
 	}
 
 	.footer-socials {
 		display: flex;
-		flex-wrap: wrap;
+		width: 100%;
+		flex-wrap: nowrap;
 		align-items: center;
-		gap: 0 16px;
+		justify-content: space-between;
+		gap: 0 8px;
 	}
 
 	.footer-social-link {
@@ -205,9 +207,21 @@
 	}
 
 	.footer-copyright {
+		margin-bottom: 8px;
 		color: rgb(255 255 255 / 0.6);
 		font-size: 14px;
 		line-height: 20px;
+	}
+
+	@media (width < 375px) {
+		.footer-social-link {
+			gap: 4px;
+		}
+
+		.footer-social-label,
+		.footer-copyright {
+			font-size: 12px;
+		}
 	}
 
 	@media (min-width: 640px) {
@@ -221,9 +235,15 @@
 			align-items: center;
 			justify-content: space-between;
 			gap: 8px 24px;
+			padding-block: 32px;
+		}
+
+		.footer-copyright {
+			margin-bottom: 0;
 		}
 
 		.footer-socials {
+			width: auto;
 			gap: 0 24px;
 		}
 	}

@@ -344,7 +344,6 @@ export const CertificatesSection = () => {
 									setSpeed(40);
 								}}
 								onDragTransitionEnd={() => setIsDragging(false)}
-								whileTap={{ cursor: "grabbing" }}
 							>
 								{loopedCertificates.map((certificate, idx) => (
 									<CertificateSlide
