@@ -3,8 +3,7 @@ import type { ReactNode } from "react";
 import { Inter, Calistoga } from "next/font/google";
 import "./globals.css";
 import { twMerge } from "tailwind-merge";
-import { LanguageProvider } from "@/providers/LanguageProvider";
-import { MotionProvider } from "@/providers/MotionProvider";
+import { LanguageProvider } from "@/lib/LanguageContext";
 import { PageLoader } from "@/components/PageLoader";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -51,9 +50,7 @@ export default function RootLayout({
 				)}
 			>
 				<LanguageProvider>
-					<MotionProvider>
-						<PageLoader>{children}</PageLoader>
-					</MotionProvider>
+					<PageLoader>{children}</PageLoader>
 				</LanguageProvider>
 			</body>
 		</html>

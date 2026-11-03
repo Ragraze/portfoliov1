@@ -2,7 +2,7 @@
 
 import { SpeakerWaveIcon, SpeakerXMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useRef, useState } from "react";
-import { useLanguage } from "@/providers/LanguageProvider";
+import { useLanguage } from "@/lib/LanguageContext";
 import { FloatingButton } from "@/components/FloatingButton";
 
 export const AudioPlayer = ({ isVisible = true }: { isVisible?: boolean }) => {

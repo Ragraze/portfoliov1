@@ -22,15 +22,16 @@ export const StarCursor = () => {
 		);
 		let visible = false;
 		let trailIndex = 0;
-		const animations: (Animation | undefined)[] = [];
 		let lastTrail = { x: 0, y: 0, time: 0 };
 
 		const hide = () => {
 			visible = false;
 			setIsVisible(false);
 			document.documentElement.removeAttribute("data-star-cursor");
-			animations.forEach((animation) => {
-				animation?.cancel();
+			trailRefs.current.forEach((trail) => {
+				trail?.getAnimations().forEach((animation) => {
+					animation.cancel();
+				});
 			});
 		};
 
@@ -95,12 +96,15 @@ export const StarCursor = () => {
 
 			const trail = trailRefs.current[trailIndex];
 			if (trail) {
-				animations[trailIndex]?.cancel();
-				const position = `translate3d(${event.clientX}px, ${event.clientY}px, 0) translate(-50%, -50%)`;
-				animations[trailIndex] = trail.animate(
+				trail.getAnimations().forEach((animation) => {
+					animation.cancel();
+				});
+				trail.style.left = `${event.clientX}px`;
+				trail.style.top = `${event.clientY}px`;
+				trail.animate(
 					[
-						{ opacity: 0.6, transform: `${position} rotate(0deg) scale(1)` },
-						{ opacity: 0, transform: `${position} rotate(60deg) scale(0)` },
+						{ opacity: 0.6, transform: "translate(-50%, -50%) rotate(0deg) scale(1)" },
+						{ opacity: 0, transform: "translate(-50%, -50%) rotate(60deg) scale(0)" },
 					],
 					{ duration: 450, easing: "ease-out" },
 				);

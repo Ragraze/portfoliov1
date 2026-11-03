@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
 import { useReducedMotion } from "framer-motion";
-import { useLanguage } from "@/providers/LanguageProvider";
+import { useLanguage } from "@/lib/LanguageContext";
 import { scrollToSection as scrollSection } from "@/lib/navigation";
 
 const links = [
@@ -33,13 +33,6 @@ export const Header = () => {
 	};
 
 	useEffect(() => {
-		const sections = links.flatMap((link) => {
-			const element = document.getElementById(link.id);
-			return element ? [{ id: link.id, element, top: 0 }] : [];
-		});
-		let headerOffset = 80;
-		let frameId = 0;
-
 		const locationHandler = () => {
 			const hash = window.location.hash.replace("#", "");
 			const link = links.find((link) =>
@@ -51,43 +44,35 @@ export const Header = () => {
 		};
 
 		const scrollHandler = () => {
-			frameId = 0;
-			const position = window.scrollY + headerOffset;
-			for (let i = sections.length - 1; i >= 0; i--) {
-				if (sections[i].top <= position) {
-					setActive(sections[i].id);
-					return;
+			const headerOffset =
+				(navRef.current?.parentElement?.getBoundingClientRect().bottom ?? 64) + 16;
+			let found = false;
+			for (let i = links.length - 1; i >= 0; i--) {
+				const section = document.getElementById(links[i].id);
+				if (section) {
+					const rect = section.getBoundingClientRect();
+					if (rect.top <= headerOffset) {
+						setActive(links[i].id);
+						found = true;
+						break;
+					}
 				}
 			}
-			setActive("/");
+			if (!found) setActive("/");
 		};
-		const scheduleScroll = () => {
-			if (!frameId) frameId = window.requestAnimationFrame(scrollHandler);
-		};
-		const observer = new ResizeObserver(() => {
-			headerOffset = (navRef.current?.parentElement?.getBoundingClientRect().bottom ?? 64) + 16;
-			const scrollY = window.scrollY;
-			sections.forEach((section) => {
-				section.top = section.element.getBoundingClientRect().top + scrollY;
-			});
-			scheduleScroll();
-		});
-		sections.forEach(({ element }) => {
-			observer.observe(element);
-		});
-		if (navRef.current?.parentElement) observer.observe(navRef.current.parentElement);
 
+		scrollHandler();
 		locationHandler();
 		window.addEventListener("popstate", locationHandler);
 		window.addEventListener("hashchange", locationHandler);
-		window.addEventListener("scroll", scheduleScroll, { passive: true });
+		window.addEventListener("scroll", scrollHandler, { passive: true });
+		window.addEventListener("resize", scrollHandler);
 
 		return () => {
 			window.removeEventListener("popstate", locationHandler);
 			window.removeEventListener("hashchange", locationHandler);
-			window.removeEventListener("scroll", scheduleScroll);
-			window.cancelAnimationFrame(frameId);
-			observer.disconnect();
+			window.removeEventListener("scroll", scrollHandler);
+			window.removeEventListener("resize", scrollHandler);
 		};
 	}, [scrollToSection]);
 
