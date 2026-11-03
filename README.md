@@ -95,7 +95,6 @@ npm run audit
 public/
   audio/             Background audio
   certificates/      Certificate images
-  backgrounds/       Precomputed SVG dot patterns
   .well-known/       ARD manifest
   llms.txt           Portfolio summary and links for agents
   robots.txt         Crawler directives and sitemap
@@ -130,7 +129,7 @@ Use the existing WebP versions for content images and certificate URLs. The shar
 
 The routes compose sections; sections read typed local data and use shared UI. Browser state belongs in providers and hooks. This static portfolio does not need repository or service layers.
 
-Dot patterns are precomputed in `public/backgrounds/`; their geometry matches the original generated patterns. The loader waits for fonts and eager images, while lazy images keep their native loading behavior. Navigation caches section positions when their sizes change, and timeline scrolling uses cached row thresholds. Motion animation features load asynchronously; drag features and per-slide animation subscriptions activate when the certificate carousel approaches the viewport.
+Dot patterns are precomputed SVG files named `*-background.svg` in `src/assets/images/`; their geometry matches the original generated patterns. Static imports serve them as versioned assets with long-lived caching. The loader waits for fonts and eager images, while lazy images keep their native loading behavior. Navigation caches section positions when their sizes change, and timeline scrolling uses cached row thresholds. Motion animation features load asynchronously; drag features and per-slide animation subscriptions activate when the certificate carousel approaches the viewport.
 
 Next.js still includes its own client runtime and compatibility polyfills. A Lighthouse unused/legacy JavaScript warning can include those framework files; do not strip them with Webpack aliases or patch `node_modules` to clear the audit. Measure production builds, because development bundles are intentionally larger.
 

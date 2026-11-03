@@ -1,14 +1,19 @@
 "use client";
 
 import grainImage from "@/assets/images/grain.avif";
+import aboutBackground from "@/assets/images/about-background.svg?url";
+import experiencesBackground from "@/assets/images/experiences-background.svg?url";
+import projectsBackground from "@/assets/images/projects-background.svg?url";
+import certificatesBackground from "@/assets/images/certificates-background.svg?url";
+import curriculumVitaeBackground from "@/assets/images/curriculum-vitae-background.svg?url";
 import { useEffect, useRef, type CSSProperties } from "react";
 
 const dotWaves = {
-	about: 'url("/backgrounds/about.svg")',
-	experiences: 'url("/backgrounds/experiences.svg")',
-	projects: 'url("/backgrounds/projects.svg")',
-	certificates: 'url("/backgrounds/certificates.svg")',
-	curriculumVitae: 'url("/backgrounds/curriculum-vitae.svg")',
+	about: aboutBackground,
+	experiences: experiencesBackground,
+	projects: projectsBackground,
+	certificates: certificatesBackground,
+	curriculumVitae: curriculumVitaeBackground,
 };
 
 export const SectionBackground = ({ variant }: { variant: keyof typeof dotWaves }) => {
@@ -110,7 +115,7 @@ export const SectionBackground = ({ variant }: { variant: keyof typeof dotWaves 
 			<div
 				className="absolute inset-0"
 				style={{
-					backgroundImage: dotWaves[variant],
+					backgroundImage: `url("${dotWaves[variant].src}")`,
 					backgroundSize: "840px 560px",
 				}}
 			/>
